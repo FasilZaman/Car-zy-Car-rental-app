@@ -1,0 +1,40 @@
+<section class="vh-100 gradient-custom" style="background-image: url(/images/wallpaper2.jpg); background-size: 225vh; background-repeat: no-repeat;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5" style="background-color: rgba(0, 0, 0, 0.356); border-radius: 30px;">
+                
+                    <div class="card-body pl-5 pr-5 text-center">
+                        <form action="\userlogin" method="post" id="userLogin" style="color: white;">
+                            <div class="mb-md-3 mt-md-4 ">
+                                <h2 class="fw-bold mb-2 text-uppercase"><span style="color: rgb(253, 253, 253); font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">LOGIN</span></h2>
+                               {{#if loginerr}}
+                                    <p style="color: red;">invalid emailId or password</p>
+                                {{/if}}
+                                <div class="form-outline form-white mb-3 mt-5">
+                                    <label class="form-label mt-2" for="typeEmailX"><b><span style="color: rgb(253, 253, 253); " >Email</span></b></label><br>
+                                    <input type="email" id="typeEmailX" class=" form-control-lg" style="border-radius: 100px; background:transparent; color: white; width: 350px;" name="email" >
+                                </div>
+
+                                <div class="form-outline form-white mb-3">
+                                    <label class="form-label mt-2" for="typePasswordX"><b><span style="color: rgb(253, 253, 253);">Password</span></b></label>
+                                    <input type="password" id="typePasswordX" class=" form-control-lg" name="password" style="border-radius: 100px; background:transparent; color: white; width: 350px;" >
+                                </div>
+
+
+
+                                <button class="btn btn-outline-light btn-lg px-5 mt-4 " style="width: 200px;" type="submit">Login</button>
+                                <p style="color: blanchedalmond;">or</p>
+
+                                <a href="/loginotp" class="btn btn-outline-light btn-lg px-5" type="submit">Login with OTP</a>
+                                <p class="mt-4" style="color: white;">Didn't have account, <a href="/signuppage">Signup</a></p>
+                                
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/javascripts/userlogin.js"></script>

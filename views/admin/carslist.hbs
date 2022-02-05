@@ -1,0 +1,65 @@
+
+
+  <div class="content-body">
+    <div class="container-fluid">
+      <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+          <div class="welcome-text pt-2">
+            <h4>ALL CARS</h4>
+          </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a class="btn btn-success" href="/admin/addcars"> <span style="color: white;"> add Cars</span></a></li>
+          </ol>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">All carslist</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="carstable" class="display" style="min-width: 845px">
+                  <thead>
+                    <tr>
+                      <th scope="col">SlNo</th>
+                      <th scope="col">name</th>
+                      <th scope="col">brand</th>
+                      <th scope="col">type</th>
+                      <th scope="col">Location</th>
+                      <th scope="col">Image</th>
+
+                    </tr>
+                  </thead>
+                  {{#each Cars}}
+                  <tr>
+                    <td><a href="/admin/cardetails/{{this._id}}">{{@index}}</a></td>
+                    <td><a href="/admin/cardetails/{{this._id}}">{{this.Name}}</a></td>
+                    <td><a href="/admin/cardetails/{{this._id}}">{{this.Brand}}</a></td>
+                    <td><a href="/admin/cardetails/{{this._id}}">{{this.Type}}</a></td>
+                    <td><a href="/admin/cardetails/{{this._id}}">{{this.location}}</a></td>
+                    <td><a href="/admin/cardetails/{{this._id}}"><img src="/carimages/{{this._id}}1.jpg" alt=""
+                          style="height: 70px; width: 100px;"></a></td>
+
+                  </tr>
+                  {{/each}}
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script>
+          $(document).ready(function () {
+            $('#carstable').DataTable();
+          });
+        </script>
+        

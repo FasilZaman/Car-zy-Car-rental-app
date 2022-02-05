@@ -1,0 +1,48 @@
+<section class="vh-100 gradient-custom" style="background-image: url(/images/wallpaper2.jpg); background-size: 225vh; background-repeat: no-repeat;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card " style="background-color: rgba(0, 0, 0, 0.356); border-radius: 30px;">
+                    <div class="card-body pl-5 pr-5 text-center">
+                        <form action="loginotp" method="post" id="userLogin">
+                            <div class="mb-md-3 mt-md-4 ">
+
+                                <h2 class="fw-bold mb-2 text-uppercase">LOGIN</h2>
+                                {{#if invalidloginotp}}
+                                    <p style="color: red;"> enter a valid otp</p>
+                                {{/if}}
+                                <div class="form-outline form-white mb-3 mt-5">
+                                    <label class="form-label mt-2" for="typeEmailX" style="color: white;"><b>enter OTP</b></label>
+                                    <input type="text" id="typeEmailX" class="form-control-lg"
+                                          style="border-radius: 100px; background:transparent; color: white; width: 350px;" name="otp">
+                                </div>
+                                <button class="btn btn-outline-light btn-lg px-5 mt-4" style="width: 200px;"type="submit">submit</button>
+                            </div>
+                            
+                            <a href="resendotp" id="resend">Resend otp</a>
+                            <P id="timer" style="color: white;"></P>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('resend').style.visibility='hidden';
+    var timeLeft = 20;
+    var elem = document.getElementById('timer')
+
+    var timerId = setInterval(countdown, 1000);
+
+    function countdown(){
+        if(timeLeft==-1){
+            clearInterval(timerId);
+            document.getElementById('resend').style.visibility='visible';
+        }else{
+            elem.innerHTML='you can resend OTP in ' +timeLeft+' seconds';
+            timeLeft--;
+        }
+    }
+</script>

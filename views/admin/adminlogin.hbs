@@ -1,0 +1,41 @@
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card " style="border-radius: 1rem;">
+                    <div class="card-body pl-5 pr-5 text-center">
+                        <form action="/admin/adminlogin" method="post" id="adminLogin">
+                            <div class="mb-md-3 mt-md-4 pb-3">
+
+                                <h2 class="fw-bold mb-2 text-uppercase">ADMIN LOGIN</h2>
+                            {{#if adminerr}}
+                            <p style="color: red;">
+                                enter a valid email and password
+                            </p>
+                            {{/if}}
+                                
+                                <div class="form-outline form-white mb-3 mt-5">
+                                    <label class="form-label mt-2" for="typeEmailX"><b>Email</b></label>
+                                    <input type="email" id="typeEmailX" class="form-control form-control-lg"
+                                        name="email">
+                                </div>
+
+                                <div class="form-outline form-white mb-3">
+                                    <label class="form-label mt-2" for="typePasswordX"><b>Password</b></label>
+                                    <input type="password" id="typePasswordX" class="form-control form-control-lg"
+                                        name="password">
+                                </div>
+
+
+
+                                <button class="btn btn-outline-dark btn-lg px-5 mt-4" type="submit">Login</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/javascripts/adminlogin.js"></script>

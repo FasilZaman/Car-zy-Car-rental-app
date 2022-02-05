@@ -1,0 +1,503 @@
+<div class="content-body">
+	<div class="container-fluid">
+		{{!-- <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-dark" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="index.html">Car<span style="color: skyblue;">-Zy</span></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+					aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="oi oi-menu"></span> Menu
+				</button>
+
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="/admin/login" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+						<li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+						<li class="nav-item active"><a href="/admin/carslist" class="nav-link">Back</a></li>
+						<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+						<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+						<li>
+							<div class="container mr-5">
+								<button type="button" class="btn btn-danger py-2 px-5" data-toggle="modal"
+									data-target="#exampleModalCenter">
+									Delete
+								</button>
+								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLongTitle">Delete Car</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												Are you sure to delete the car
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<a href="/admin/deletecar/{{Car._id}}" class="btn btn-danger">Delete</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<a href="/admin/editCarPage/{{Car._id}}" class="btn btn-success py-2 px-5">Edit</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</nav> --}}
+		<div class="container">
+			<div class="row page-titles mx-0">
+					<div class="col-sm-6 p-md-0">
+						<div class="welcome-text pt-2">
+							<h4>ALL CARS</h4>
+						</div>
+					</div>
+					<div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+						<ol class="breadcrumb">
+							<li class=""> <a href="/admin/editCarPage/{{Car._id}}" class="btn btn-success py-2 px-4" style="color: white;">Edit</a></li>
+							<li class="ml-2"><button type="button" class="btn btn-danger py-2 px-4" data-toggle="modal"
+									data-target="#exampleModalCenter">
+									Delete
+								</button>
+								<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLongTitle">Delete Car</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												Are you sure to delete the car
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<a href="/admin/deletecar/{{Car._id}}" class="btn btn-danger" style="color: white;">Delete</a>
+											</div>
+										</div>
+									</div>
+								</div></li>
+							
+						</ol>
+					</div>
+				</div>
+		</div>
+		<div>
+				
+
+				<section class=" ftco-car-details">
+
+					<div id="carousel-example-2" class="container carousel slide carousel-fade" data-ride="carousel">
+						<!--Indicators-->
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+							<li data-target="#carousel-example-2" data-slide-to="1"></li>
+							<li data-target="#carousel-example-2" data-slide-to="2"></li>
+						</ol>
+						<!--/.Indicators-->
+						<!--Slides-->
+						<div class="carousel-inner" role="listbox">
+							<div class="carousel-item active">
+								<div class="view">
+									<img class="d-block w-100" style="height: 35vw; width: 30vw;"
+										src="/carimages/{{Car._id}}1.jpg" alt="First slide">
+									<div class="mask rgba-black-light"></div>
+								</div>
+								{{!-- <div class="carousel-caption">
+									<h3 class="h3-responsive">Light mask</h3>
+									<p>First text</p>
+								</div> --}}
+							</div>
+							<div class="carousel-item">
+								<!--Mask color-->
+								<div class="view">
+									<img class="d-block w-100" style="height: 35vw; width: 30vw;"
+										src="/carimages/{{Car._id}}2.jpg" alt="Second slide">
+									<div class="mask rgba-black-strong"></div>
+								</div>
+								{{!-- <div class="carousel-caption">
+									<h3 class="h3-responsive">Strong mask</h3>
+									<p>Secondary text</p>
+								</div> --}}
+							</div>
+							<div class="carousel-item">
+								<!--Mask color-->
+								<div class="view">
+									<img class="d-block w-100" style="height: 35vw; width: 30vw;"
+										src="/carimages/{{Car._id}}3.jpg" alt="Third slide">
+									<div class="mask rgba-black-slight"></div>
+								</div>
+								{{!-- <div class="carousel-caption">
+									<h3 class="h3-responsive"><B></B>Slight mask</h3>
+									<p>Third text</p>
+								</div> --}}
+							</div>
+						</div>
+						<!--/.Slides-->
+						<!--Controls-->
+						<a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+						<!--/.Controls-->
+					</div>
+					<!--/.Carousel Wrapper-->
+					<div class="container">
+						<div class="row">
+							<div class="col-md d-flex align-self-stretch ftco-animate">
+								<div class="media block-6 services">
+									<div class="media-body py-md-4">
+										<div class="d-flex mb-3 align-items-center">
+											<div class="icon d-flex align-items-center justify-content-center"><span
+													class="flaticon-dashboard"></span></div>
+											<div class="text">
+												<h4 class="heading mb-0 pl-3">
+												<span style="font-size:x-large;"><b>  Car : </b></span>	
+													<span style="font-family: monospace;">{{Car.Name}}</span>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md d-flex align-self-stretch ftco-animate">
+								<div class="media block-6 services">
+									<div class="media-body py-md-4">
+										<div class="d-flex mb-3 align-items-center">
+											<div class="icon d-flex align-items-center justify-content-center"><span
+													class="flaticon-pistons"></span></div>
+											<div class="text">
+												<h3 class="heading mb-0 pl-3">
+													<span style="font-size:x-large;"><b>  Brand : </b></span>	
+													
+													<span style="font-family: monospace;">{{Car.Brand}}</span>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md d-flex align-self-stretch ftco-animate">
+								<div class="media block-6 services">
+									<div class="media-body py-md-4">
+										<div class="d-flex mb-3 align-items-center">
+											<div class="icon d-flex align-items-center justify-content-center"><span
+													class="flaticon-car-seat"></span></div>
+											<div class="text">
+												<h3 class="heading mb-0 pl-3">
+													<span style="font-size:x-large;"><b>  seats : </b></span>	
+													<span style="font-family: monospace;">{{Car.Seats}}</span>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{{!-- <div class="col-md d-flex align-self-stretch ftco-animate">
+								<div class="media block-6 services">
+									<div class="media-body py-md-4">
+										<div class="d-flex mb-3 align-items-center">
+											<div class="icon d-flex align-items-center justify-content-center"><span
+													class="flaticon-backpack"></span></div>
+											<div class="text">
+												<h3 class="heading mb-0 pl-3">
+													Type
+													<span>{{Car.Type}}</span>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> --}}
+							<div class="col-md d-flex align-self-stretch ftco-animate">
+								<div class="media block-6 services">
+									<div class="media-body py-md-4">
+										<div class="d-flex mb-3 align-items-center">
+											<div class="icon d-flex align-items-center justify-content-center"><span
+													class="flaticon-diesel"></span></div>
+											<div class="text">
+												<h3 class="heading mb-0 pl-3">
+													<span style="font-size:x-large;"><b>  Fuel : </b></span>	
+													<span style="font-family: monospace;">{{Car.Fuel}}</span>
+												</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row container">
+						<div class="col-md-12 pills">
+							<div class="bd-example bd-example-tabs">
+								<div class="d-flex justify-content-center">
+									<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+										<li class="nav-item">
+											<a class="nav-link active" id="pills-description-tab" data-toggle="pill"
+												href="#pills-description" role="tab" aria-controls="pills-description"
+												aria-expanded="true">Details</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill"
+												href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer"
+												aria-expanded="true">Description</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="pills-review-tab" data-toggle="pill"
+												href="#pills-review" role="tab" aria-controls="pills-review"
+												aria-expanded="true">Review</a>
+										</li>
+									</ul>
+								</div>
+
+								<div class="tab-content container mb-5" id="pills-tabContent">
+									<div class="tab-pane fade show active" id="pills-description" role="tabpanel"
+										aria-labelledby="pills-description-tab">
+										<div class="row container mb-5">
+											<div class="col-md-4 mb-5 ml-5">
+												<ul class="features">
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Car :
+														{{Car.Name}}
+													</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Fuel :
+														{{Car.Fuel}}
+													</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span
+															class="ion-ios-checkmark"></span>Transmission :
+														{{Car.Transmission}}</li>
+													{{!-- <li class="check"><span
+															class="ion-ios-checkmark"></span>Luggage</li>
+													<li class="check"><span class="ion-ios-checkmark"></span>Music</li>
+													--}}
+												</ul>
+											</div>
+											<div class="col-md-4">
+												<ul class="features">
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Brand :
+														{{Car.Brand}}</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-close"></span>Car number :
+														{{Car.Carnumber}}</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Price/hour :
+														{{Car.Price}}</li>
+													{{!-- <li class="check"><span
+															class="ion-ios-checkmark"></span>Bluetooth
+													</li>
+													<li class="remove"><span class="ion-ios-close"></span>Onboard
+														computer</li>
+													--}}
+												</ul>
+											</div>
+											<div class="col-md-3">
+												<ul class="features">
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Type :
+														{{Car.Type}}
+													</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Mileage :
+														{{Car.Mileage}}</li>
+													<li class="check mb-2" style="font-size: large; color: black;"><span class="ion-ios-checkmark"></span>Location :
+														{{Car.location}}</li>
+													{{!-- <li class="check"><span
+															class="ion-ios-checkmark"></span>Remote
+														central locking</li>
+													<li class="check"><span class="ion-ios-checkmark"></span>Climate
+														control
+													</li> --}}
+												</ul>
+											</div>
+										</div>
+									</div>
+
+									<div class="tab-pane fade" id="pills-manufacturer" role="tabpanel"
+										aria-labelledby="pills-manufacturer-tab">
+										<p>Even the all-powerful Pointing has no control about the blind texts it is an
+											almost
+											unorthographic life One day however a small line of blind text by the name
+											of Lorem
+											Ipsum
+											decided to leave for the far World of Grammar.</p>
+										<p>When she reached the first hills of the Italic Mountains, she had a last view
+											back on
+											the
+											skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and
+											the
+											subline of
+											her own road, the Line Lane. Pityful a rethoric question ran over her cheek,
+											then
+											she
+											continued her way.</p>
+									</div>
+
+									<div class="tab-pane fade" id="pills-review" role="tabpanel"
+										aria-labelledby="pills-review-tab">
+										<div class="row">
+											<div class="col-md-7">
+												<h3 class="head">23 Reviews</h3>
+												<div class="review d-flex">
+													<div class="user-img"
+														style="background-image: url(images/person_1.jpg)">
+													</div>
+													<div class="desc">
+														<h4>
+															<span class="text-left">Jacob Webb</span>
+															<span class="text-right">14 March 2018</span>
+														</h4>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+															</span>
+															<span class="text-right"><a href="#" class="reply"><i
+																		class="icon-reply"></i></a></span>
+														</p>
+														<p>When she reached the first hills of the Italic Mountains, she
+															had a
+															last view
+															back on the skyline of her hometown Bookmarksgrov</p>
+													</div>
+												</div>
+												<div class="review d-flex">
+													<div class="user-img"
+														style="background-image: url(images/person_2.jpg)">
+													</div>
+													<div class="desc">
+														<h4>
+															<span class="text-left">Jacob Webb</span>
+															<span class="text-right">14 March 2018</span>
+														</h4>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+															</span>
+															<span class="text-right"><a href="#" class="reply"><i
+																		class="icon-reply"></i></a></span>
+														</p>
+														<p>When she reached the first hills of the Italic Mountains, she
+															had a
+															last view
+															back on the skyline of her hometown Bookmarksgrov</p>
+													</div>
+												</div>
+												<div class="review d-flex">
+													<div class="user-img"
+														style="background-image: url(images/person_3.jpg)">
+													</div>
+													<div class="desc">
+														<h4>
+															<span class="text-left">Jacob Webb</span>
+															<span class="text-right">14 March 2018</span>
+														</h4>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+															</span>
+															<span class="text-right"><a href="#" class="reply"><i
+																		class="icon-reply"></i></a></span>
+														</p>
+														<p>When she reached the first hills of the Italic Mountains, she
+															had a
+															last view
+															back on the skyline of her hometown Bookmarksgrov</p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-5">
+												<div class="rating-wrap">
+													<h3 class="head">Give a Review</h3>
+													<div class="wrap">
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																(98%)
+															</span>
+															<span>20 Reviews</span>
+														</p>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																(85%)
+															</span>
+															<span>10 Reviews</span>
+														</p>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																(70%)
+															</span>
+															<span>5 Reviews</span>
+														</p>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																(10%)
+															</span>
+															<span>0 Reviews</span>
+														</p>
+														<p class="star">
+															<span>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																<i class="ion-ios-star"></i>
+																(0%)
+															</span>
+															<span>0 Reviews</span>
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			</section>
+		</div>
+	</div>

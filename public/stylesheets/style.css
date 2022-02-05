@@ -1,0 +1,36 @@
+/* <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Sl no</th>
+                <th scope="col">name</th>
+                <th scope="col">brand</th>
+                <th scope="col">type</th>
+                <th scope="col">Image</th>
+                <th scope="col">options</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each Cars}}
+              <tr>
+                <td>{{@index}}</td>
+                <td>{{this.Name}}</td>
+                <td>{{this.Brand}}</td>
+                <td>{{this.Type}}</td>
+                <td><img src="/carimages/{{this._id}}.jpg" alt="" style="height: 70px; width: 100px;"></td>
+                <td>
+                  <div>
+                    <a href="#" class="btn btn-primary py-2 mr-1">Edit Details</a>
+                  </div>
+                  <div class="mt-1">
+                    <a href="/admin/cardetails/{{this._id}}" class="btn btn-secondary py-2 ml-1">Car Details</a>
+                  </div>
+                  <div class="mt-1">
+                    <a href="/admin/deletecar/{{this._id}}"
+                      onclick="return confirm('Are you sure want to delete {{this.Name}},{{this.Brand}}')"
+                      class="btn btn-danger py-2 mr-1">Delete car</a>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table> */
