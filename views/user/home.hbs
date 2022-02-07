@@ -12,15 +12,27 @@
         <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
         <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
-        <li class="nav-item"><a href="/carslistpage" class="nav-link">Cars</a></li>
+        {{!-- <li class="nav-item"><a href="/carslistpage" class="nav-link">Cars</a></li> --}}
         {{!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> --}}
         <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
         <li class="nav-item">{{#if loggedIn}}
-          <a href="/logout" class="nav-link">Logout</a>
+          <div class="btn-group py-2">
+  <button type="button" class="btn " style="color: white;">{{userdetails.username}}</button>
+  <button type="button" class="btn  dropdown-toggle dropdown-toggle-split" style="color: white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">profile</a>
+    <a class="dropdown-item" href="/userrides">my rides</a>
+    {{!-- <a class="dropdown-item" href="#">logout</a> --}}
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="/logout">logout</a>
+  </div>
+</div>
           {{else}}
           <a href="/loginpage" class="nav-link">Login</a>
           {{/if}}
         </li>
+        
       </ul>
     </div>
     {{!-- <form class="dropdown flex-c-m  p-lr-25 form-inline">

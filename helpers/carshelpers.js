@@ -88,12 +88,62 @@ module.exports = {
     getusercars: (hourdiff,body)=>{
         return new Promise(async(resolve,reject)=>{
             let Cars = await db.get().collection(collection.CARSCOLLECTION).aggregate([{$match:{location:body.location}},{
+                $lookup:{
+                    from:collection.BOOKINGSCOLLECTION,
+                    localField:'_id',
+                    foreignField:'car',
+                    as:'bookings'
+                }
+            },{
                 $project: {
-                    _id: 1,Name: 1, Brand: 1, Fuel:1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1,location: 1,
+                    _id: 1,Name: 1, Brand: 1, Fuel:1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1,location: 1,bookings: 1,
                     Price: {$multiply: [hourdiff,'$Price']}
                 }
             },]).toArray()
-            resolve(Cars)
+        
+
+    //start checking the dates
+
+            const car = []
+            const carbooking = []
+            for(let i of Cars){
+                    car.push(i)
+            }
+            for(let i of car){
+                console.log(i);
+            }
+            console.log("qwertyuiop");
+
+            for(let i of Cars){
+                for(let j of i.bookings){
+                    carbooking.push(j)
+                }
+            }
+
+            // for(let i of carbooking){
+            //     console.log(i.pickupdate);
+            // }
+            
+
+            for(let i of carbooking){
+                var pickup = body.pickupDate
+                var dropoff = body.dropoffDate
+                var searchpickup = new Date(pickup)
+                var searchdropoff = new Date(dropoff)
+                var checkpickup = new Date(i.pickupdate)
+                var checkdropoff = new Date(i.dropoffdate)
+                if(checkpickup<=searchpickup && searchpickup<=checkdropoff){
+                    car.splice(i,1)
+                }else if(checkpickup<=searchdropoff && searchdropoff<=checkdropoff){
+                    car.splice(i,1)
+                }else if(searchpickup<=checkpickup && checkdropoff<=searchdropoff){
+                    car.splice(i,1)
+                }
+            }
+            console.log(car);
+
+            resolve(car)
+
     })
         
     },
@@ -102,6 +152,20 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
             let Cars = await db.get().collection(collection.CARSCOLLECTION).find({location:pickup}).toArray()
             resolve(Cars)
+        })
+    },
+    getallbookings:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let Bookings = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                {$lookup: {
+                    from : collection.CARSCOLLECTION,
+                    localField :  'car',
+                    foreignField : '_id',
+                    as : 'cars'
+                }}
+            ]).toArray()
+            // console.log(Bookings);
+            resolve(Bookings)
         })
     }
 }

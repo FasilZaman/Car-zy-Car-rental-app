@@ -63,7 +63,8 @@ module.exports={
                pickuptime:bookingdetails.pickuptime,
                dropoffdate:bookingdetails.dropoffDate,
                dropofftime:bookingdetails.dropofftime,
-               price:Price
+               price:Price,
+               status:'upcoming'
            }
            db.get().collection(collection.BOOKINGSCOLLECTION).insertOne(bookingobj)
            resolve(response) 

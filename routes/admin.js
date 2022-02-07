@@ -131,4 +131,13 @@ router.post('/editCars/:id', (req, res) => {
   }
   res.redirect('/admin/carslist')
 })
+
+router.get('/allbookings',(req,res) =>{
+  carsHelpers.getallbookings().then((Bookings)=>{
+    
+    console.log("All bookings :",Bookings);
+    res.render('admin/allbookings',{Bookings,admin:true})
+  })
+  
+})
 module.exports = router;

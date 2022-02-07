@@ -13,7 +13,7 @@
                                 {{/if}}
                                 <div class="form-outline form-white mb-3 mt-5">
                                     <label class="form-label mt-2" for="typeEmailX" style="color: white;"><b>enter OTP</b></label>
-                                    <input type="text" id="typeEmailX" class="form-control-lg"
+                                    <input type="text" id="typeEmailX" class="numbers form-control-lg" minlength="6" maxlength="6"
                                           style="border-radius: 100px; background:transparent; color: white; width: 350px;" name="otp">
                                 </div>
                                 <button class="btn btn-outline-light btn-lg px-5 mt-4" style="width: 200px;"type="submit">submit</button>
@@ -28,6 +28,12 @@
         </div>
     </div>
 </section>
+
+<script>
+    $('.numbers').keyup(function () {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
+    });
+</script>
 
 <script>
     document.getElementById('resend').style.visibility='hidden';

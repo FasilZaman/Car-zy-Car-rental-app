@@ -31,7 +31,7 @@ const verifyUser = async (req,res,next)=>{
 
 /* GET home page. */
 router.get('/',verifyUser, function (req, res, next) {
-  res.render('user/home', { 'loggedIn': req.session.user, user: true });
+  res.render('user/home', { 'loggedIn': req.session.user, user: true, userdetails:req.session.userdetails });
 });
 
 //loading user login page
@@ -48,6 +48,7 @@ router.post('/userlogin', (req, res) => {
   userhelpers.userlogin(req.body).then((response) => {
     if (response.status) {
       req.session.user = true
+      req.session.userdetails=response.user
       req.session.Mobilenum = response.user.mobileNumber
       req.session.loginerr = false
       res.redirect('/')
@@ -255,11 +256,16 @@ router.post('/carslist', (req, res) => {
   req.session.bookingdetail = req.body
   bookingdetails = req.session.bookingdetail
   carsHelpers.getusercars(diff,req.body).then((Cars) => {
+    // carsHelpers.getavailablecars(Cars).then((availableCars)=>{
+    //   console.log(availableCars);
+      res.render('user/carslist', { Cars, user: true, bookingdetails })
+    // })
     // for(const abc of Cars ){
     //   console.log(abc.location);
     // }
-    console.log(Cars);
-    res.render('user/carslist', { Cars, user: true, bookingdetails })
+
+    // console.log(Cars);
+    // res.render('user/carslist', { Cars, user: true, bookingdetails })
   })
 })
 router.get('/carslistpage', (req, res) => {
@@ -339,6 +345,14 @@ router.post('/Booknow',(req,res)=>{
       res.redirect('/loginpage')
     }
     
+  }
+})
+
+router.get('/userrides', (req, res) => {
+  if (req.session.user) {
+    res.render('user/bookinghistory',{user:true})
+  } else {
+    res.redirect('/')
   }
 })
 

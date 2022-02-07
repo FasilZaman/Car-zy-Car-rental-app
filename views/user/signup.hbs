@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-outline form-white mb-1">
                                     <label class="form-label mt-2" for="typePasswordX"><b style="color: white;">Mobile number</b></label>
-                                    <input type="text" id="mobileNumber" class="form-control-lg"
+                                    <input type="text" id="mobileNumber" class="numbers form-control-lg"  minlength="10" maxlength="10"
                                         name="mobileNumber" style="border-radius: 100px; background:transparent; color: white; width: 350px;">
                                 </div>  
 
@@ -49,4 +49,9 @@
         </div>
     </div>
 </section>
+<script>
+    $('.numbers').keyup(function () {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
+    });
+</script>
 <script src="/javascripts/usersignup.js"></script>
