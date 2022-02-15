@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Car<span>Book</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link"></a></li>
+                <li class="nav-item active"><a href="pricing.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="car.html" class="nav-link"></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card " style="border-radius: 1rem; background-color: rgba(255, 255, 255, 0.952);">
+                <div class="card-body pl-5 pr-5 text-center">
+                    <form action="/editlicense" method="post" id="userLogin" enctype="multipart/form-data">
+                        <div class="mb-md-3 mt-md-4 ">
+
+                            <h2 class="mb-2 text-uppercase">license</h2>
+                            <div class="form-outline form-white mb-3 mt-5">
+                                <label class="form-label mt-2" for="typeEmailX">License number</label>
+                                <input type="text" id="typeEmailX" class="numbers form-control-lg" name="licenseNumber"
+                                    style="border-radius: 100px; width: 350px;" value="{{userdetails.licensenumber}}">
+                            </div>
+
+                            <div class="form-outline form-white mb-3">
+                                <label for="exampleFormControlFile1">add License picture</label>
+                                <div class="ml-5">
+                                    <img src="/licenseimages/{{userdetails._id}}license1.jpg" style="display: block; width: 90px; height: auto;"  id="imageView1" style="display: none;">
+                                    <input type="file" class="form-control-file mt-3" id="licenseimage1"
+                                        name="licenseImage1" onchange="viewImage1(event)">
+                                        
+                                    <img src="/licenseimages/{{userdetails._id}}license2.jpg"  style="display: block;  width: 90px; height: auto;"  id="imageView2" style="display: none;">
+                                    <input type="file" class="form-control-file mt-3" id="licenseimage2"
+                                        name="licenseImage2" onchange="viewImage2(event)">
+
+
+                                </div>
+
+                            </div>
+
+                            <button class="btn btn-outline-dark btn-lg px-5 mt-4" style="width: 200px;"
+                                type="submit">edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewImage1(event) {
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if(extension == 'jpeg' || extension == 'png'  || extension == 'jpg'){
+            document.getElementById('imageView1').src = URL.createObjectURL(event.target.files[0])
+        document.getElementById('imageView1').style.display = 'block'
+        }else{
+          // document.getElementById('errmsg1').style.display='block'
+            $("#licenseimage1").val(null);
+        } 
+        
+    }
+    function viewImage2(event) {
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if(extension == 'jpeg' || extension == 'png'  || extension == 'jpg'){
+            document.getElementById('imageView2').src = URL.createObjectURL(event.target.files[0])
+        document.getElementById('imageView2').style.display = 'block'
+        }else{
+          //document.getElementById('errmsg2').style.display='block' 
+            $("#licenseimage2").val(null);
+        } 
+        
+    }
+</script>
+

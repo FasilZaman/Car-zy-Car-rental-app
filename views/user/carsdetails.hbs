@@ -13,6 +13,8 @@
 		</div>
 	</div>
 </nav>
+
+
 <!-- END nav -->
 
 {{!-- <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/images/bg_3.jpg');"
@@ -45,7 +47,7 @@
 		<div class="carousel-inner" role="listbox">
 			<div class="carousel-item active">
 				<div class="view">
-					<img class="d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}1.jpg"
+					<img class="imageZoom1 d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}1.jpg"
 						alt="First slide">
 					<div class="mask rgba-black-light"></div>
 				</div>
@@ -53,7 +55,7 @@
 			<div class="carousel-item">
 				<!--Mask color-->
 				<div class="view">
-					<img class="d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}2.jpg"
+					<img class="imageZoom2 d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}2.jpg"
 						alt="Second slide">
 					<div class="mask rgba-black-strong"></div>
 				</div>
@@ -61,7 +63,7 @@
 			<div class="carousel-item">
 				<!--Mask color-->
 				<div class="view">
-					<img class="d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}3.jpg"
+					<img class="imageZoom3 d-block w-100" style="height: 35vw;" src="/carimages/{{Car._id}}3.jpg"
 						alt="Third slide">
 					<div class="mask rgba-black-slight"></div>
 				</div>
@@ -517,3 +519,19 @@
 		</div>
 	</div>
 </footer>
+
+<script>
+	$(()=>{
+		$('.imageZoom1').imageZoom();
+	})
+</script>
+<script>
+	$(()=>{
+		$('.imageZoom2').imageZoom();
+	})
+</script>
+<script>
+	$(()=>{
+		$('.imageZoom3').imageZoom();
+	})
+</script>

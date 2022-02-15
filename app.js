@@ -7,7 +7,6 @@ var fileupload=require('express-fileupload');
 require('dotenv').config()
 const hbs = require('hbs')
 
-
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 

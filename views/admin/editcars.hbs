@@ -1,133 +1,293 @@
 <div class="content-body">
-	<div class="container-fluid">
-<form class="mt-3" action="/admin/editCars/{{Car._id}}" method="post" id="editcars" enctype="multipart/form-data">
-    <div class="container">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <h2 class="fw-bold mb-2 text-uppercase">EDIT CARS</h2>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Vehiclename</label>
-                    <input type="text" class="form-control" name="Name" value="{{Car.Name}}">
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Brand</label>
-                    <input type="text" class="form-control" name="Brand" value="{{Car.Brand}}">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Fuel</label>
-                    <select class="custom-select" id="inputGroupSelect01" name="Fuel">
-                        <option value="Petrol">Petrol</option>
-                        <option value="Diesel">Diesel</option>
-                    </select>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Type</label>
-                    <select class="custom-select" id="inputGroupSelect01" name="Type">
-                        <option value="SUV">SUV</option>
-                        <option value="HATCHBACK">HATCHBACK</option>
-                        <option value="SEDAN">SEDAN</option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Transmission</label>
-                    <select class="custom-select" id="inputGroupSelect01" name="Transmission">
-                        <option value="Automatic">Automatic</option>
-                        <option value="Manual">Manual</option>
-                    </select>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">seats</label>
-                    <select class="custom-select" id="inputGroupSelect01" name="Seats">
-                        <option value="5">5 seater</option>
-                        <option value="7">7 seater</option>
-                        <option value="8">8 seater</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Car number</label>
-                    <input type="text" class="form-control" name="Carnumber" value="{{Car.Carnumber}}">
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">mileage</label>
-                    <input type="number" class="form-control" name="Mileage" value="{{Car.Mileage}}">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Price/hour</label>
-                    <input type="text" class="form-control" name="Price" value="{{Car.Price}}">
-                </div>
-                <div class="col-12 col-lg-6">
-                    <label class="form-label mt-2">Location</label>
-                    <select class="custom-select" id="inputGroupSelect01" name="location">
-                        <option value="malappuram">malappuram</option>
-                        <option value="calicut">calicut</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col form-group mt-2">
-                    <div>
-                        <label for="exampleFormControlFile1">image1</label>
+    <div class="container-fluid">
+        <form class="mt-3" action="/admin/editCars/{{Car._id}}" method="post" id="editcars"
+            enctype="multipart/form-data">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <h2 class="fw-bold mb-2 text-uppercase">EDIT CARS</h2>
                     </div>
-                    <div>
-                        <img src="/carimages/{{Car._id}}1.jpg" alt="" style="width: 100px; height: 80px;" id="imageView1">
-                        <input type="file" class="form-control-file mt-3" id="exampleFormControlFile1" name="carImage1" onchange="viewImage1(event)">
-                    </div>
-                </div>
-                <div class="col form-group mt-2">
-                    <div>
-                        <label for="exampleFormControlFile1">image2</label>
-                    </div>
-                    <div>
-                        <img src="/carimages/{{Car._id}}2.jpg" alt="" style="width: 100px; height: 80px;" id="imageView2">
-                        <input type="file" class="form-control-file mt-3" id="exampleFormControlFile1" name="carImage2" onchange="viewImage2(event)">
-                    </div>
-                </div>
-                <div class="col form-group mt-2">
-                    <div>
-                        <label for="exampleFormControlFile1">image3</label>
-                    </div>
-                    <div>
-                        <img src="/carimages/{{Car._id}}3.jpg" alt="" style="width: 100px; height: 80px;" id="imageView3">
-                        <input type="file" class="form-control-file mt-3" id="exampleFormControlFile1" name="carImage3" onchange="viewImage3(event)">
-                    </div>
-                </div>
-            </div>
-            <div class="mt-2 ml-4">
-                <button class="btn btn-outline-dark btn-lg px-5 " type="submit">Edit</button>
-            </div>
 
-        </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Vehiclename</label>
+                            <input type="text" class="form-control" name="Name" value="{{Car.Name}}">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Brand</label>
+                            <input type="text" class="form-control" name="Brand" value="{{Car.Brand}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Fuel</label>
+                            <select class="custom-select" id="inputGroupSelect01" name="Fuel">
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Type</label>
+                            <select class="custom-select" id="inputGroupSelect01" name="Type">
+                                <option value="SUV">SUV</option>
+                                <option value="HATCHBACK">HATCHBACK</option>
+                                <option value="SEDAN">SEDAN</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Transmission</label>
+                            <select class="custom-select" id="inputGroupSelect01" name="Transmission">
+                                <option value="Automatic">Automatic</option>
+                                <option value="Manual">Manual</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">seats</label>
+                            <select class="custom-select" id="inputGroupSelect01" name="Seats">
+                                <option value="5">5 seater</option>
+                                <option value="7">7 seater</option>
+                                <option value="8">8 seater</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Car number</label>
+                            <input type="text" class="form-control" name="Carnumber" value="{{Car.Carnumber}}">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">mileage</label>
+                            <input type="number" class="form-control" name="Mileage" value="{{Car.Mileage}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Price/hour</label>
+                            <input type="text" class="form-control" name="Price" value="{{Car.Price}}">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label mt-2">Location</label>
+                            <select class="custom-select" id="inputGroupSelect01" name="location">
+                                <option value="malappuram">malappuram</option>
+                                <option value="calicut">calicut</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                            <div id="image-box" style="width: 500px; height: 500px; display: none;"></div>
+                            <button class="btn btn-primary mt-3" type="button" style="display: none;"
+                                id="crop-btn">Crop</button>
+                        </div>
+                    <div class="row">
+                        <div class="col form-group mt-2">
+                            <div>
+                                <label for="exampleFormControlFile1">image1</label>
+                            </div>
+                            <div>
+                                <img src="/carimages/{{Car._id}}1.jpg" alt="" style="width: 100px; height: auto;"
+                                    id="imageView1">
+                                <input type="file" class="form-control-file mt-3" id="image1" name="carImage1"
+                                    onchange="viewImage1(event)">
+                            </div>
+                        </div>
+                        <div class="col form-group mt-2">
+                            <div>
+                                <label for="exampleFormControlFile1">image2</label>
+                            </div>
+                            <div>
+                                <img src="/carimages/{{Car._id}}2.jpg" alt="" style="width: 100px; height: auto;"
+                                    id="imageView2">
+                                <input type="file" class="form-control-file mt-3" id="image2" name="carImage2"
+                                    onchange="viewImage2(event)">
+                            </div>
+                        </div>
+                        <div class="col form-group mt-2">
+                            <div>
+                                <label for="exampleFormControlFile1">image3</label>
+                            </div>
+                            <div>
+                                <img src="/carimages/{{Car._id}}3.jpg" alt="" style="width: 100px; height: auto;"
+                                    id="imageView3">
+                                <input type="file" class="form-control-file mt-3" id="image3" name="carImage3"
+                                    onchange="viewImage3(event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 ml-4">
+                        <button class="btn btn-outline-dark btn-lg px-5 " type="submit" id="confirm-btn">Edit</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
     </div>
-</form>
-</div>
 </div>
 
 
 <script>
-    function viewImage1(event){
-        document.getElementById('imageView1').src=URL.createObjectURL(event.target.files[0])
+    function viewImage1(event) {
+        alert("qwertr")
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('image1');
+
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            document.getElementById('imageView1').src = URL.createObjectURL(event.target.files[0])
+
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 9,
+                //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('image1');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+
+                    container.items.add(file);
+                    const img = container.files[0]
+                    var url = URL.createObjectURL(img)
+                    fileInputElement.files = container.files;
+                    document.getElementById('imageView1').src = url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
+            });
+        } else {
+            // document.getElementById('errmsg2').style.display='block'
+            $("#image1").val(null);
+        }
+
+
     }
-    function viewImage2(event){
-        document.getElementById('imageView2').src=URL.createObjectURL(event.target.files[0])
+    function viewImage2(event) {
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('image2');
+
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            document.getElementById('imageView2').src = URL.createObjectURL(event.target.files[0])
+
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 9,
+                //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('image2');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+
+                    container.items.add(file);
+                    const img = container.files[0]
+                    var url = URL.createObjectURL(img)
+                    fileInputElement.files = container.files;
+                    document.getElementById('imageView2').src = url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
+            });
+        } else {
+            //  document.getElementById('errmsg2').style.display='block'
+            $("#image2").val(null);
+        }
+
+
     }
-    function viewImage3(event){
-        document.getElementById('imageView3').src=URL.createObjectURL(event.target.files[0])
+    function viewImage3(event) {
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('image3');
+
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            document.getElementById('imageView3').src = URL.createObjectURL(event.target.files[0])
+
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 9,
+                //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('image3');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+
+                    container.items.add(file);
+                    const img = container.files[0]
+                    var url = URL.createObjectURL(img)
+                    fileInputElement.files = container.files;
+                    document.getElementById('imageView3').src = url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
+            });
+        } else {
+            //  document.getElementById('errmsg2').style.display='block'
+            $("#image3").val(null);
+        }
+
+
     }
 </script>
 <script src="/javascripts/editcars.js"></script>

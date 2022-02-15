@@ -1,36 +1,148 @@
-/* <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Sl no</th>
-                <th scope="col">name</th>
-                <th scope="col">brand</th>
-                <th scope="col">type</th>
-                <th scope="col">Image</th>
-                <th scope="col">options</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each Cars}}
-              <tr>
-                <td>{{@index}}</td>
-                <td>{{this.Name}}</td>
-                <td>{{this.Brand}}</td>
-                <td>{{this.Type}}</td>
-                <td><img src="/carimages/{{this._id}}.jpg" alt="" style="height: 70px; width: 100px;"></td>
-                <td>
-                  <div>
-                    <a href="#" class="btn btn-primary py-2 mr-1">Edit Details</a>
-                  </div>
-                  <div class="mt-1">
-                    <a href="/admin/cardetails/{{this._id}}" class="btn btn-secondary py-2 ml-1">Car Details</a>
-                  </div>
-                  <div class="mt-1">
-                    <a href="/admin/deletecar/{{this._id}}"
-                      onclick="return confirm('Are you sure want to delete {{this.Name}},{{this.Brand}}')"
-                      class="btn btn-danger py-2 mr-1">Delete car</a>
-                  </div>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table> */
+/* body{margin-top:20px;
+  background-color: #e4e6e9;
+  color: #41464d;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+.btn-a-brc-tp:not(.disabled):not(:disabled).active, .btn-brc-tp, .btn-brc-tp:focus:not(:hover):not(:active):not(.active):not(.dropdown-toggle), .btn-h-brc-tp:hover, .btn.btn-f-brc-tp:focus, .btn.btn-h-brc-tp:hover {
+  border-color: transparent;
+}
+.btn-outline-blue {
+  color: #0d6ce1;
+  border-color: #5a9beb;
+  background-color: transparent;
+}
+.btn {
+  cursor: pointer;
+  position: relative;
+  z-index: auto;
+  border-radius: .175rem;
+  transition: color .15s,background-color .15s,border-color .15s,box-shadow .15s,opacity .15s;
+}
+.border-2 {
+  border-width: 2px!important;
+  border-style: solid!important;
+  border-color: transparent;
+}
+.bgc-white {
+  background-color: #fff!important;
+}
+
+
+.text-green-d1 {
+  color: #277b5d!important;
+}
+.letter-spacing {
+  letter-spacing: .5px!important;
+}
+.font-bolder, .text-600 {
+  font-weight: 600!important;
+}
+.text-170 {
+  font-size: 1.7em!important;
+}
+
+.text-purple-d1 {
+  color: #6d62b5!important;
+}
+
+.text-primary-d1 {
+  color: #276ab4!important;
+}
+.text-secondary-d1 {
+  color: #5f718b!important;
+}
+.text-180 {
+  font-size: 1.8em!important;
+}
+.text-150 {
+  font-size: 1.5em!important;
+}
+.text-danger-m3 {
+  color: #e05858!important;
+}
+.rotate-45 {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.position-l {
+  left: 0;
+}
+.position-b, .position-bc, .position-bl, .position-br, .position-center, .position-l, .position-lc, .position-r, .position-rc, .position-t, .position-tc, .position-tl, .position-tr {
+  position: absolute!important;
+  display: block;
+}
+.mt-n475, .my-n475 {
+  margin-top: -2.5rem!important;
+}
+.ml-35, .mx-35 {
+  margin-left: 1.25rem!important;
+}
+
+.text-dark-l1 {
+  color: #56585e!important;
+}
+.text-90 {
+  font-size: .9em!important;
+}
+.text-left {
+  text-align: left!important;
+}
+
+.mt-25, .my-25 {
+  margin-top: .75rem!important;
+}
+
+.text-110 {
+  font-size: 1.1em!important;
+}
+
+.deleted-text{
+text-decoration:line-through;;    
+} */
+body {
+  background-color: #e4e6e9;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #BA68C8
+}
+
+.profile-button {
+  background: rgb(99, 39, 120);
+  box-shadow: none;
+  border: none
+}
+
+.profile-button:hover {
+  background: #682773
+}
+
+.profile-button:focus {
+  background: #682773;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #682773;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #682773;
+  cursor: pointer
+}
+
+.labels {
+  font-size: 11px
+}
+
+.add-experience:hover {
+  background: #BA68C8;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px #BA68C8
+}

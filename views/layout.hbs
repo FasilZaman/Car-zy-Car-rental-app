@@ -17,15 +17,21 @@
   <script type="text/javascript" charset="utf8"
     src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
 
-{{#if admin}}
-      <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-    <link rel="stylesheet" href="/vendor/owl-carousel/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/vendor/owl-carousel/css/owl.theme.default.min.css">
-    <link href="/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
-    <link href="/css/style1.css" rel="stylesheet">
-{{/if}}
+  {{#if admin}}
+  <link rel="stylesheet" href="/stylesheets/image-zoom.css" />
+  <script src="/javascripts/image-zoom.js" defer></script>
+  <script src="/javascripts/image-zoom.min.js" defer></script>
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="stylesheet" href="/vendor/owl-carousel/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/vendor/owl-carousel/css/owl.theme.default.min.css">
+  <link href="/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+  <link href="/css/style1.css" rel="stylesheet">
+  {{/if}}
 
-{{#if user}}
+  {{#if user}}
+  <link rel="stylesheet" href="/stylesheets/image-zoom.css" />
+  <script src="/javascripts/image-zoom.js" defer></script>
+  <script src="/javascripts/image-zoom.min.js" defer></script>
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
     rel="stylesheet">
@@ -49,8 +55,14 @@
   <link rel="stylesheet" href="/css/icomoon.css">
   <link rel="stylesheet" href="/css/style.css">
 
-{{/if}}
+  {{/if}}
 
+
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.css" integrity="sha512-5ZQRy5L3cl4XTtZvjaJRucHRPKaKebtkvCWR/gbYdKH67km1e18C1huhdAc0wSnyMwZLiO7nEa534naJrH6R/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha.2/cropper.js" integrity="sha512-witv14AEvG3RlvqCAtVxAqply8BjTpbWaWheEZqOohL5pxLq3AtIwrihgz7SsxihwAZkhUixj171yQCZsUG8kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
@@ -60,42 +72,42 @@
   {{/if}}
   {{{body}}}
 
-  
+
 
   {{#if admin}}
-      <!--**********************************
+  <!--**********************************
         Scripts
     ***********************************-->
-    <!-- Required vendors -->
-    <script src="/vendor/global/global.min.js"></script>
-    <script src="/js/quixnav-init.js"></script>
-    <script src="/js/custom.min.js"></script>
+  <!-- Required vendors -->
+  <script src="/vendor/global/global.min.js"></script>
+  <script src="/js/quixnav-init.js"></script>
+  <script src="/js/custom.min.js"></script>
 
 
-    <!-- Vectormap -->
-    <script src="/vendor/raphael/raphael.min.js"></script>
-    <script src="/vendor/morris/morris.min.js"></script>
+  <!-- Vectormap -->
+  <script src="/vendor/raphael/raphael.min.js"></script>
+  <script src="/vendor/morris/morris.min.js"></script>
 
 
-    <script src="/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="/vendor/chart.js/Chart.bundle.min.js"></script>
+  <script src="/vendor/circle-progress/circle-progress.min.js"></script>
+  <script src="/vendor/chart.js/Chart.bundle.min.js"></script>
 
-    <script src="/vendor/gaugeJS/dist/gauge.min.js"></script>
+  <script src="/vendor/gaugeJS/dist/gauge.min.js"></script>
 
-    <!--  flot-chart js -->
-    <script src="/vendor/flot/jquery.flot.js"></script>
-    <script src="/vendor/flot/jquery.flot.resize.js"></script>
+  <!--  flot-chart js -->
+  <script src="/vendor/flot/jquery.flot.js"></script>
+  <script src="/vendor/flot/jquery.flot.resize.js"></script>
 
-    <!-- Owl Carousel -->
-    <script src="/vendor/owl-carousel/js/owl.carousel.min.js"></script>
+  <!-- Owl Carousel -->
+  <script src="/vendor/owl-carousel/js/owl.carousel.min.js"></script>
 
-    <!-- Counter Up -->
-    <script src="/vendor/jqvmap/js/jquery.vmap.min.js"></script>
-    <script src="/vendor/jqvmap/js/jquery.vmap.usa.js"></script>
-    <script src="/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+  <!-- Counter Up -->
+  <script src="/vendor/jqvmap/js/jquery.vmap.min.js"></script>
+  <script src="/vendor/jqvmap/js/jquery.vmap.usa.js"></script>
+  <script src="/vendor/jquery.counterup/jquery.counterup.min.js"></script>
 
 
-    <script src="/js/dashboard/dashboard-1.js"></script>
+  <script src="/js/dashboard/dashboard-1.js"></script>
   {{/if}}
 
 
@@ -120,7 +132,7 @@
   <script src="/js/main.js"></script>
   {{/if}}
 
- 
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

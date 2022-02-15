@@ -1,0 +1,53 @@
+<div class="content-body">
+    <div class="container-fluid">
+      <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+          <div class="welcome-text pt-2">
+            <h4>USERS</h4>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">All Not approved Users</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="carstable" class="display" style="min-width: 845px">
+                  <thead>
+                    <tr>
+                      <th scope="col">SlNo</th>
+                      <th scope="col">username</th>
+                      <th scope="col">email</th>
+                      <th scope="col">mobileNumber</th>
+                      <th scope="col">Location</th>
+
+                    </tr>
+                  </thead>
+                  {{#each notapprovedusers}}
+                  <tr>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{@index}}</a></td>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{this.username}}</a></td>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{this.email}}</a></td>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{this.mobileNumber}}</a></td>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{this.location}}</a></td>
+                  </tr>
+                  {{/each}}
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script>
+          $(document).ready(function () {
+            $('#carstable').DataTable();
+          });
+        </script>

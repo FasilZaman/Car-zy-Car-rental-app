@@ -1,0 +1,140 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Car<span>Book</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link"></a></li>
+                <li class="nav-item active"><a href="pricing.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="car.html" class="nav-link"></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px" src="/profileimages/{{userprofile._id}}dp.jpg"><span
+                    class="font-weight-bold">{{userprofile.username}}</span><span
+                    class="text-black-50">{{userprofile.email}}</span><span> </span>
+                {{#if userprofile.approved}}
+                {{else}}
+                <p style="color: red;">waiting to be Approved</p>
+                {{/if}}
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Your profile</h4>
+                </div>
+                {{!-- <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control"
+                            placeholder="first name" value=""></div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control"
+                            value="" placeholder="surname"></div>
+                </div> --}}
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">user name</label><input type="text"
+                            class="form-control" placeholder="enter phone number" value="{{userprofile.username}}"
+                            readonly></div>
+                    <div class="col-md-12"><label class="labels">email</label><input type="text" class="form-control"
+                            placeholder="enter address line 1" value="{{userprofile.email}}" readonly></div>
+                    <div class="col-md-12"><label class="labels">mobile Number</label><input type="text"
+                            class="form-control" placeholder="enter address line 2"
+                            value="+91 {{userprofile.mobileNumber}}" readonly></div>
+                    {{!-- <div class="col-md-12"><label class="labels">Postcode</label><input type="text"
+                            class="form-control" placeholder="enter address line 2" value=""></div>
+                    <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control"
+                            placeholder="enter address line 2" value=""></div>
+                    <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control"
+                            placeholder="enter address line 2" value=""></div>
+                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control"
+                            placeholder="enter email id" value=""></div>
+                    <div class="col-md-12"><label class="labels">Education</label><input type="text"
+                            class="form-control" placeholder="education" value=""></div> --}}
+                </div>
+                {{!-- <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control"
+                            placeholder="country" value=""></div>
+                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text"
+                            class="form-control" value="" placeholder="state"></div>
+                </div> --}}
+                <div class="mt-5 text-center"><a href="/editprofile" class="btn btn-primary profile-button">Edit
+                        profile</a></div>
+                <div class="mt-5 text-center">
+                    <a href="/editpassword"> Change your password </a>
+                </div>
+
+            </div>
+
+            </form>
+
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>license
+                        details</span>
+
+                    <a href="/license"> <span class="border px-3 p-1 add-experience"><i
+                                class="fa fa-plus"></i>&nbsp;add/edit</span></a>
+                </div><br>
+
+
+
+                <div class="col-md-12"><label class="labels">your license number</label><input type="text"
+                        class="form-control" value="{{userprofile.licensenumber}}" readonly></div> <br>
+                <div class="col-md-12"><label class="labels">license photo</label><br>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                        <img src="/licenseimages/{{userprofile._id}}license1.jpg" style="height: auto; width: 130px;"
+                            alt="">
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="/licenseimages/{{userprofile._id}}license1.jpg"
+                                        style="height: auto; width: 450px;" alt="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><br>
+
+
+                    <button type="button" class="btn " data-toggle="modal" data-target="#exampleModal1">
+                        <img src="/licenseimages/{{userprofile._id}}license2.jpg" style="height: auto; width: 130px;"
+                            alt="">
+                    </button>
+
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="/licenseimages/{{userprofile._id}}license2.jpg"
+                                        style="height: auto; width: 450px;" alt="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

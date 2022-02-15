@@ -167,5 +167,38 @@ module.exports = {
             // console.log(Bookings);
             resolve(Bookings)
         })
+    },
+    getuserbookings:(userDetails)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log(userdetails._id);
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                {$match:{user:ObjectId(userDetails._id)}},{
+                    $lookup:{
+                        from:collection.CARSCOLLECTION,
+                        localField:'car',
+                        foreignField:'_id',
+                        as:'cars'
+                    }
+                }
+            ]).toArray() 
+        console.log(userdata);
+        resolve(userdata)
+        })
+    },
+    getbookingdetails:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                {$match:{_id:ObjectId(userId)}},{
+                    $lookup:{
+                        from:collection.CARSCOLLECTION,
+                        localField:'car',
+                        foreignField:'_id',
+                        as:'cars'
+                    }
+                }
+            ]).toArray()
+            console.log(userdata);
+            resolve(userdata)
+        })
     }
 }

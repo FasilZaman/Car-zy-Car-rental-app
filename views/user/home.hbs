@@ -21,7 +21,7 @@
   <button type="button" class="btn  dropdown-toggle dropdown-toggle-split" style="color: white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">profile</a>
+    <a class="dropdown-item" href="/userprofile">profile</a>
     <a class="dropdown-item" href="/userrides">my rides</a>
     {{!-- <a class="dropdown-item" href="#">logout</a> --}}
     <div class="dropdown-divider"></div>
@@ -91,7 +91,7 @@
 			              </div>
                     <div class="form-group">
 		                <label for="" class="label">Pick-up time</label>
-		                <input type="time" class="form-control timepicker" id="pickuptime" placeholder="Time" name="pickuptime" onclick="pickuptime()" disabled>
+		                <input type="time" class="form-control timepicker" id="pickuptime" placeholder="Time" name="pickuptime" onclick="picktime()" disabled>
 		              </div>
                   </div>
                   <div class="d-flex">
@@ -590,7 +590,7 @@ function date_pick(){
     var maxDate = year + '-' + month + '-' + day;
      {{!-- alert(maxDate);  --}}
     $('#pick_date').attr('min', maxDate);
-    document.getElementById('drop_date').removeAttribute("disabled")
+   
     document.getElementById('pickuptime').removeAttribute("disabled")
   
 };
@@ -600,6 +600,19 @@ function dropdate_pick(){
   {{!-- alert(dtToday);  --}}
     $('#drop_date').attr('min', dtToday);
   document.getElementById('dropofftime').removeAttribute("disabled")
+};
+
+
+function picktime(){
+    var dtToday = new Date()
+    
+ // var time = dtToday.getTime()
+   // var time = (dtToday.getTime()) / ( 1000); 
+  //  alert(dtToday); 
+ // $('#pickuptime').attr('min', time);
+ document.getElementById('drop_date').removeAttribute("disabled")
+
+ 
 };
 </script>
 

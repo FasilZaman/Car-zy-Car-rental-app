@@ -8953,7 +8953,7 @@ h1, h2, h3, h4, h5,
       height: 100px;
       margin: 0 auto; }
     .table tbody tr td.product-name h3 {
-      font-size: 18px; }
+      font-size: 20px; }
     .table tbody tr td.product-name .rated span {
       color: #01d28e; }
       .table tbody tr td.product-name .rated span:nth-child(1) {
@@ -9486,7 +9486,7 @@ textarea.form-control {
 .mfp-with-zoom .mfp-container,
 .mfp-with-zoom.mfp-bg {
   opacity: 0;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
@@ -10015,4 +10015,4 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
-    
+  

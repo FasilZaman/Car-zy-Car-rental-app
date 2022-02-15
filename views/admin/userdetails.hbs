@@ -1,0 +1,167 @@
+<div class="content-body">
+        <div class="container-fluid">
+                <div class="container-fluid rounded bg-white mb-5">
+                        <div class="row">
+                                <div class="col-md-3 border-right">
+                                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                                        class="rounded-circle mt-5" width="150px"
+                                                        src="/profileimages/{{users._id}}dp.jpg"><span
+                                                        class="font-weight-bold">{{users.username}}</span><span
+                                                        class="text-black-50">{{users.email}}</span><span> </span>
+                                        </div>
+                                </div>
+                                <div class="col-md-5 border-right">
+                                        <div class="p-3 py-5">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h4 class="text-right">User profile</h4>
+                                                </div>
+                                                {{!-- <div class="row mt-2">
+                                                        <div class="col-md-6"><label class="labels">Name</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="first name" value=""></div>
+                                                        <div class="col-md-6"><label
+                                                                        class="labels">Surname</label><input type="text"
+                                                                        class="form-control" value=""
+                                                                        placeholder="surname"></div>
+                                                </div> --}}
+                                                <div class="row mt-3">
+                                                        <div class="col-md-12"><label class="labels">user
+                                                                        name</label><input type="text"
+                                                                        class="form-control"
+                                                                        placeholder="enter phone number"
+                                                                        value="{{users.username}}" readonly></div>
+                                                        <div class="col-md-12"><label class="labels">email</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="enter address line 1"
+                                                                        value="{{users.email}}" readonly></div>
+                                                        <div class="col-md-12"><label class="labels">mobile
+                                                                        Number</label><input type="text"
+                                                                        class="form-control"
+                                                                        placeholder="enter address line 2"
+                                                                        value="+91 {{users.mobileNumber}}" readonly>
+                                                        </div>
+                                                        {{!-- <div class="col-md-12"><label
+                                                                        class="labels">Postcode</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="enter address line 2" value="">
+                                                        </div>
+                                                        <div class="col-md-12"><label class="labels">State</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="enter address line 2" value="">
+                                                        </div>
+                                                        <div class="col-md-12"><label class="labels">Area</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="enter address line 2" value="">
+                                                        </div>
+                                                        <div class="col-md-12"><label class="labels">Email
+                                                                        ID</label><input type="text"
+                                                                        class="form-control"
+                                                                        placeholder="enter email id" value=""></div>
+                                                        <div class="col-md-12"><label
+                                                                        class="labels">Education</label><input
+                                                                        type="text" class="form-control"
+                                                                        placeholder="education" value=""></div> --}}
+                                                </div>
+                                                {{!-- <div class="row mt-3">
+                                                        <div class="col-md-6"><label
+                                                                        class="labels">Country</label><input type="text"
+                                                                        class="form-control" placeholder="country"
+                                                                        value=""></div>
+                                                        <div class="col-md-6"><label
+                                                                        class="labels">State/Region</label><input
+                                                                        type="text" class="form-control" value=""
+                                                                        placeholder="state"></div>
+                                                </div> --}}
+                                                {{#if users.approved}}
+                                                <div class="mt-5 text-center"><a class="btn btn-success profile-button"
+                                                                style="color: white;">Approved</a></div>
+                                                {{else}}
+                                                <div class="mt-5 text-center"><a href="/admin/approveuser/{{users._id}}"
+                                                                class="btn btn-success profile-button"
+                                                                style="color: white;">Approve</a></div>
+                                                {{/if}}
+
+
+
+
+
+                                        </div>
+
+                                        </form>
+
+                                </div>
+                                <div class="col-md-4">
+                                        <div class="p-3 py-5">
+                                                <div
+                                                        class="d-flex justify-content-between align-items-center experience">
+                                                        <span>license
+                                                                details</span>
+                                                </div><br>
+
+
+
+                                                <div class="col-md-12"><label class="labels">your license
+                                                                number</label><input type="text" class="form-control"
+                                                                value="{{users.licensenumber}}" readonly></div> <br>
+                                                <div class="col-md-12"><label class="labels">photo</label><br>
+                                                        <button type="button" class="btn" data-toggle="modal"
+                                                                data-target="#exampleModal">
+                                                                <img src="/licenseimages/{{users._id}}license1.jpg"
+                                                                        style="height: auto; width: 130px;" alt="">
+                                                        </button>
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                                role="dialog" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                                <div class="modal-body">
+                                                                                        <img src="/licenseimages/{{users._id}}license1.jpg"
+                                                                                                style="height: auto; width: 450px;"
+                                                                                                alt="">
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-secondary"
+                                                                                                data-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+
+                                                        </div><br>
+
+
+
+                                                        <button type="button" class="btn " data-toggle="modal"
+                                                                data-target="#exampleModal1">
+                                                                <img src="/licenseimages/{{users._id}}license2.jpg"
+                                                                        style="height: auto; width: 130px;" alt="">
+                                                        </button>
+
+                                                        <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                                                role="dialog" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                                <div class="modal-body">
+                                                                                        <img src="/licenseimages/{{users._id}}license2.jpg"
+                                                                                                style="height: auto; width: 450px;"
+                                                                                                alt="">
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-secondary"
+                                                                                                data-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+
+
+        </div>
+</div>

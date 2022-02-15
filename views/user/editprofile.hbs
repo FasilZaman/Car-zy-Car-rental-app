@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Car<span>Book</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link"></a></li>
+                <li class="nav-item active"><a href="pricing.html" class="nav-link"></a></li>
+                <li class="nav-item"><a href="car.html" class="nav-link"></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row container ml-5">
+    <form action="/change" method="post" class="ml-5" enctype="multipart/form-data">
+        {{#if emailnumberrerror}}
+        <p style="color: red;"> email and number already exist</p>
+        {{/if}}
+        {{#if emailerror}}
+        <p style="color: red;"> email  already exist</p>
+        {{/if}}
+        {{#if numberrerror}}
+        <p style="color: red;">  number already exist</p>
+        {{/if}}
+        {{!-- <input type="file" name="file" id="file" class="inputfile" hidden/>
+<label for="file">Choose a file</label> --}}
+
+
+
+        {{!-- <div class="col-md-4 align-items-center"> --}}
+            <div class=" col-md-6 align-items-center  ml-5">
+                <img class="rounded-circle  ml-5" width="150px" id="imageView1"
+                    src="/profileimages/{{userdetails._id}}dp.jpg">
+                <input type="file" class="inputfile mt-4 px-5" id="profilepicture" name="profilepic"
+                    onchange="viewImage1(event)" hidden> <br>
+                    <label for="profilepicture" class="ml-5"><span class="ml-4" style="color: skyblue;"> Choose a file </span></label>
+            </div>
+
+            <div class="col-md-6 col-12 ml-5"><label class="labels">user name</label><input type="text" class="form-control"
+                    value="{{userdetails.username}}" name="username"></div>
+
+            <div class="col-md-6 col-12 ml-5"><label class="labels">email</label><input type="text" class="form-control"
+                    value="{{userdetails.email}}" name="email"></div> <br>
+            <div class="col-md-6 col-12 ml-5"><label class="labels">mobile Number</label><input type="text"
+                    class="form-control" value="{{userdetails.mobileNumber}}" name="mobileNumber"></div>
+
+            <div class="col-md-4 col-12 ml-5">
+                <button class="btn btn-success btn-lg mt-4" style="width: 150px;" type="submit">Edit</button>
+            </div>
+
+
+
+
+
+    </form>
+</div>
+<script>
+    function viewImage1(event) {
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            document.getElementById('imageView1').src = URL.createObjectURL(event.target.files[0])
+            document.getElementById('imageView1').style.display = 'block'
+        } else {
+            //document.getElementById('errmsg2').style.display='block'
+            $("#profilepicture").val(null);
+        }
+
+    }
+</script>

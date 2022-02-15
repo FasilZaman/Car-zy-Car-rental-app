@@ -5,15 +5,17 @@
 </nav>
 <div class="container-fluid row">
     <div class="d-flex col-12 col-md-11 col-lg-7 col-10 mt-5 ml-5">
-        <img class="d-block w-100" style="height: 35vw; width: auto;" src="/carimages/{{Car._id}}1.jpg" alt="First slide">
+        <img class="d-block w-100" style="height: 33vw; width: auto;" src="/carimages/{{Car._id}}1.jpg"
+            alt="First slide">
     </div>
     <div class=" col-12 col-md-11 col-lg-4 mt-4 ml-3 col-9 ">
         <div class="hp-call hp-right-com">
-            <form action="/Booknow" method="post">
+            <form action="/delivery" method="post">
                 <div class="sidebar-box ftco-animate">
                     <div class="categories">
                         <h2>BOOK YOUR CAR</h2>
-                        <li><a href="#">Vehicle <span>{{Car.Brand}}  {{Car.Name}}</span></a></li></li>
+                        <li><a href="#">Vehicle <span>{{Car.Brand}} {{Car.Name}}</span></a></li>
+                        </li>
                         <li><a href="#">pickuplocation<span>{{bookingdetails.location}}</span></a></li>
                         <li><a href="#">pickupDate<span>{{bookingdetails.pickupDate}}</span></a></li>
                         <li><a href="#">pickupTime<span>{{bookingdetails.pickuptime}}</span></a></li>
@@ -21,11 +23,32 @@
                         <li><a href="#">DropoffTime<span>{{bookingdetails.dropofftime}}</span></a></li>
                         <li><a href="#">Price<span style="color: red;"> ₹ {{Car.Price}}</span></a></li>
                         <li><label>select pickup / delivery</label><span class="ml-5" style="float: right;"><select
-                                    name="bookingtype">
+                                    name="bookingtype" id="type">
                                     <option value="pickup">Pickup</option>
                                     <option value="delivery">delivery</option>
                                 </select></span></li>
-                        <li><input type="submit" class="btn btn-success" style="float: right;" value="Book car"></li>
+                        {{#if approved}}
+                        <li id="payment" style="display: block;">
+                            <h6>Select paymentgateway </h6>
+                            <input type="radio" class="btn-check" name="paymentoptions" id="success-outlined"
+                                autocomplete="off" value="paypal">
+                            <label class="btn btn-outline-primary mt-2" for="success-outlined"><a href="/paypal"
+                                    onclick=""><img src="/images/paypal.png"
+                                        style="height: 40px; width: 150px;"></a></label>
+                            <input type="radio" class="btn-check" name="paymentoptions" id="danger-outlined"
+                                autocomplete="off" value="razorpay">
+                            <label class="btn btn-outline-primary ml-2" for="danger-outlined"> <a
+                                    onclick="getrazorpay()"><img src="/images/Razorpay.jpg"
+                                        style="height: 40px; width: 150px; cursor: pointer;"></a></label>
+                        </li>
+                        {{/if}}
+                        {{#if approved}}
+                        <li id="selectlocation" style="display:none"><input type="submit" class="btn btn-success"
+                                style="float: right;" value="select location"></li>
+                        {{else}}
+                        <p style="color: red;">upload your license / wait for approval to book a car</p>
+                        {{/if}}
+
                     </div>
 
                 </div>
@@ -33,3 +56,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    let i = 0
+    $("#type").change(function () {
+        if (i == 0) {
+            $('#selectlocation').css('display', 'block')
+            $('#payment').css('display', 'none')
+            i = 1
+        } else {
+            $('#selectlocation').css('display', 'none')
+            $('#payment').css('display', 'block')
+            i = 0
+        }
+    });
+
+</script>
+
+<script src="/javascripts/getrazorpay.js"></script>
