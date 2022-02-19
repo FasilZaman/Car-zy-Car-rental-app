@@ -1,0 +1,72 @@
+<div class="content-body">
+    <div class="container-fluid">
+      <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+          <div class="welcome-text pt-2">
+            <h4>ALL ENDED BOOKINGS</h4>
+          </div>
+        </div>
+        {{!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a class="btn btn-success" href="/admin/addcars"> <span style="color: white;"> add Cars</span></a></li>
+          </ol>
+        </div> --}}
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">All carslist</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="carstable" class="display" style="min-width: 845px">
+                  <thead>
+                    <tr>
+                      <th scope="col">username</th>
+                      <th scope="col">contact</th>
+                      <th scope="col">carname</th>
+                      <th scope="col">carnumber</th>
+                      <th scope="col">location</th>
+                      <th scope="col">pickupdate and time</th>
+                      <th scope="col">dropoffdate and time</th>
+                      <th scope="col">price</th>
+                      {{!-- <th scope="col">actions</th> --}}
+
+                    </tr>
+                  </thead>
+                  {{#each bookings}}
+                  <tr>
+                    {{#each bookeduser}}
+                    <td>{{this.username}}</td>           
+                    <td>{{this.mobileNumber}}</td>
+                    {{/each}}
+                    {{#each cars}}
+                    <td>{{this.Brand}} {{this.Name}}</td>
+                    <td>{{this.Carnumber}}</td>                  
+                    <td>{{this.location}}</td>
+                    {{/each}}               
+                    <td>{{this.pickupdate}} -  {{this.pickuptime}}</td>           
+                    <td>{{this.dropoffdate}} -  {{this.dropofftime}}</td>
+                    <td style="color: red;">{{this.price}}</td>
+                    {{!-- <td>
+                      <a href="#" class="btn btn-success py-1">cancel</a>
+                    </td>                   --}}
+                  </tr>
+                  {{/each}}
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script>
+          $(document).ready(function () {
+            $('#carstable').DataTable();
+          });
+        </script>

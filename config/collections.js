@@ -2,5 +2,6 @@ module.exports={
     USERCOLLECTION:'user',
     ADMINCOLLECTION:'admin',
     CARSCOLLECTION:'cars',
-    BOOKINGSCOLLECTION:'bookings'
+    BOOKINGSCOLLECTION:'bookings',
+    COUPONCOLLECTION:'coupons'
 }

@@ -1,0 +1,221 @@
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+{{!-- <div id='map' style='width: 100%; height: 400px;'></div> --}}
+
+
+{{#if pickup}}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text pt-2">
+                    <h4>BOOKINGS TODAY</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="mr-2"><a class="btn btn-success" href="/admin/fordelivery"> <span
+                                style="color: white;">delivery</span></a></li>
+                    <li class="ml-2"><a class="btn btn-success" href="/admin/bookingstodaypickup"> <span
+                                style="color: white;">pickup</span></a></li>
+                </ol>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Pickup</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="carstable" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">username</th>
+                                        <th scope="col">contact</th>
+                                        <th scope="col">carname</th>
+                                        <th scope="col">carnumber</th>
+                                        <th scope="col">location</th>
+                                        <th scope="col">pickuptime</th>
+                                        <th scope="col">dropoffdate and time</th>
+                                        <th scope="col">price</th>
+                                        <th scope="col">actions</th>
+
+                                    </tr>
+                                </thead>
+                                {{#each bookingstoday}}
+                                <tr>
+                                    {{#each bookeduser}}
+                                    <td>{{this.username}}</td>
+                                    <td>{{this.mobileNumber}}</td>
+                                    {{/each}}
+                                    {{#each cars}}
+                                    <td>{{this.Brand}} {{this.Name}}</td>
+                                    <td>{{this.Carnumber}}</td>
+                                    <td>{{this.location}}</td>
+                                    {{/each}}
+                                    <td>{{this.pickuptime}}</td>
+                                    <td>{{this.dropoffdate}} - {{this.dropofftime}}</td>
+                                    <td>{{this.price}}</td>
+                                    <td>
+                                        <a href="/admin/starttrip?id={{this._id}}" class="btn btn-success py-1" style="color: white;">Start trip</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{else}}
+
+            <div class="content-body">
+                <div class="container-fluid">
+                    <div class="row page-titles mx-0">
+                        <div class="col-sm-6 p-md-0">
+                            <div class="welcome-text pt-2">
+                                <h4>BOOKINGS TODAY </h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                            <ol class="breadcrumb">
+                                <li class="mr-2"><a class="btn btn-success" href="/admin/fordelivery"> <span
+                                            style="color: white;">delivery</span></a></li>
+                                <li class="ml-2"><a class="btn btn-success" href="/admin/bookingstodaypickup"> <span
+                                            style="color: white;">pickup</span></a></li>
+                            </ol>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Delivery</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="carstable" class="display" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">username</th>
+                                                    <th scope="col">contact</th>
+                                                    <th scope="col">carname</th>
+                                                    <th scope="col">carnumber</th>
+                                                    <th scope="col">location</th>
+                                                    <th scope="col">deliverytime</th>
+                                                    <th scope="col">dropoffdate and time</th>
+                                                    <th scope="col">price</th>
+                                                    <th scope="col">delivery location</th>
+                                                    <th scope="col">actions</th>
+
+                                                </tr>
+                                            </thead>
+                                            {{#each bookingstodaydelivery}}
+                                            <tr>
+                                                {{#each bookeduser}}
+                                                <td>{{this.username}}</td>
+                                                <td>{{this.mobileNumber}}</td>
+                                                {{/each}}
+                                                {{#each cars}}
+                                                <td>{{this.Brand}} {{this.Name}}</td>
+                                                <td>{{this.Carnumber}}</td>
+                                                <td>{{this.location}}</td>
+                                                {{/each}}
+                                                <td>{{this.pickuptime}}</td>
+                                                <td>{{this.dropoffdate}} - {{this.dropofftime}}</td>
+                                                <td>{{this.price}}</td>
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="lonlat btn btn-primary"
+                                                        data-toggle="modal" data-target="#exampleModalLong"
+                                                        data-longitude="{{this.longitude}}"
+                                                        data-lattitude="{{this.lattitude}}" id="lonlat">
+                                                        show location
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModalLong" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalLongTitle"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        delivery location</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div id='map' style='width: 100%; height: 400px;'>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/starttrip?id={{this._id}}" class="btn btn-success py-1" style="color: white;">Start trip</a>
+                                                </td>
+                                                <input type="text" value="{{this.longitude}}" id="longitude" hidden>
+                                                <input type="text" value="{{this.lattitude}}" id="lattitude" hidden>
+                                            </tr>
+
+                                            {{/each}}
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{/if}}
+
+                        <script>
+
+
+                            $(document).on("click", ".lonlat", function (e) {
+                                longitude = $(e.target).data('longitude')
+                                lattitude = $(e.target).data('lattitude')
+                                mapboxgl.accessToken = 'pk.eyJ1IjoiZmFzaWx6YW1hbiIsImEiOiJja3pmZ2E4c3gwMXQwMnVwZDMydGc1ZzZxIn0.J93zOOPT74SY7s9L-0hZ5g';
+                                const map = new mapboxgl.Map({
+                                    container: 'map',
+                                    style: 'mapbox://styles/mapbox/streets-v11',
+                                    center: [longitude, lattitude],
+                                    zoom: 15
+                                });
+
+                                const marker1 = new mapboxgl.Marker({ color: 'red', rotation: 0 })
+                                    .setLngLat([longitude, lattitude])
+                                    .addTo(map);
+
+                            })
+
+
+
+
+
+
+                        </script>
+
+
+                        <script>
+                            $(document).ready(function () {
+                                $('#carstable').DataTable();
+                            });
+                        </script>

@@ -1,0 +1,175 @@
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text pt-2">
+                    <h4>ALL COUPONS</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            ADD COUPON
+                        </button>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">add coupon</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/admin/addCoupons" method="post">
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label"
+                                                    style="color: black;">Add coupon
+                                                    code:</label>
+                                                <input type="text" class="form-control" id="recipient-name"
+                                                    style="text-transform: uppercase;" name="couponCode" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label"
+                                                    style="color: black;">Add
+                                                    discount percentage:</label>
+                                                <input type="number" class="form-control" id="recipient-name"
+                                                    name="couponPercentage" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label"
+                                                    style="color: black;">Expiry
+                                                    Date:</label>
+                                                <input type="date" class="form-control" id="dtpick" min=""
+                                                    name="couponExpiry" required>
+                                            </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">All carslist</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="carstable" class="display" style="min-width: 845px">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">couponCode</th>
+                                        <th scope="col">Expiry Date</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">options</th>
+
+                                    </tr>
+                                </thead>
+                                {{#each coupons}}
+                                <tr><b>
+
+
+                                        <td>{{this.couponCode}}</td>
+                                        <td>{{this.couponExpiry}}</td>
+                                        <td>{{this.couponPercentage}}%</td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <a class="delete btn btn-outline-primary" data-toggle="modal"
+                                                data-target="#example" data-id="{{this._id}}">
+                                                delete
+                                            </a>
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="example" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure to delete
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <a href="" id="cancel" type="button"
+                                                                class="btn btn-primary">Save
+                                                                changes</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </b> </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                $(document).ready(function () {
+                    $('#carstable').DataTable();
+                });
+            </script>
+
+
+            <script>
+                $(document).ready(function () {
+                    var today = new Date();
+                    var year = today.getFullYear()
+                    var month = today.getMonth() + 1
+                    var date = today.getDate() + 1
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
+
+                    if (month < 10) {
+                        month = '0' + month;
+                    }
+                    today = year + '-' + month + '-' + date;
+
+                    document.getElementById("dtpick").setAttribute("min", today);
+                })
+            </script>
+
+            <script>
+                $(document).on("click", ".delete", function (e) {
+                    href = "/admin/deletecoupon?id:{{this._id}}"
+                    const id = $(e.target).data('id');
+                    alert(id)
+
+                    $('.modal-footer #cancel').attr('href', "/admin/deletecoupon?id=" + id)
+                })
+
+            </script>

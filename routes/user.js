@@ -15,6 +15,7 @@ const req = require('express/lib/request');
 const async = require('hbs/lib/async');
 const client = require('twilio')(accountSID, authTockon);
 const paypal = require('paypal-rest-sdk');
+const { ObjectId } = require('mongodb');
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'Af9zpw5WTBmWLed-SFeHXO7fj-Jkga5zVQoe7CTZEFP8ynZE8X-XYxS2Yb3i3xMnbQOP2E66oD4F75U-',
@@ -298,20 +299,96 @@ router.get('/carsdetails/:id', (req, res) => {
   })
 })
 
-router.get('/Bookcar/', verifyUser, (req, res) => {
+router.get('/Bookcar/', verifyUser, async (req, res) => {
   let carId = req.query.id
+  if (req.query.id) {
+    req.session.coupon = false
+    req.session.carid = carId
+    console.log("11111111111111111111111111111111111111111111111", carId);
+  }
+  carId = req.session.carid
+  couponid = req.session.couponid
   if (req.session.user) {
     approved = req.session.userDetails.approved
+    user = req.session.userDetails
+
+    let coupon = await userhelpers.getcoupon()
+    
+    if(user.coupon){
+      for (let i in coupon){
+        for (let j of user.coupon){
+          console.log(coupon[i]._id,"=======",ObjectId(j));
+          var usercoupon = coupon[i]._id.toString()
+          var couponid =  ObjectId(j).toString()
+          console.log(usercoupon,":::",couponid);
+          if(usercoupon == couponid){
+            console.log("yes");
+            coupon.splice(i,1)
+          }
+        }
+      }
+    }
+
+    console.log("after splice : ",coupon);
+
+    console.log("12345678900909090900909090", coupon);
+
+
+
+
     carsHelpers.carDetails(carId).then((Car) => {
+      console.log("sssssssssssssssssssssssssssssssssssssssssssssssssssssss", Car);
       Car.Price = parseInt(Car.Price * req.session.totalhours)
+      console.log(Car.Price);
+      let discount = 0
+      if (req.session.coupon) {
+        off = req.session.couponoff
+        console.log(off);
+        discount = Car.Price * (parseInt(off) / 100)
+        Car.Price = Car.Price * ((100 - parseInt(off)) / 100)
+        console.log(Car.Price);
+        Car.Price = parseInt(Car.Price)
+      }
+      userdetails = req.session.userDetails
+      console.log(userdetails);
+      if (userdetails.wallet) {
+        walletmoney = parseInt(userdetails.wallet)
+        Price1 = Car.Price
+        // console.log("wallet: ",walletmoney,"JKKJHJHJHJHJHJH: ",Price1);
+        if (walletmoney > Price1) {
+          req.session.wallet = true
+          // console.log("und");
+        } else {
+          req.session.wallet = false
+          // console.log("sadhanam illa");
+        }
+      }
       req.session.car = Car
       console.log(Car);
-      res.render('user/userbooking', { Car, user: true, bookingdetails, approved })
+      res.render('user/userbooking', { Car, user: true, bookingdetails, approved, wallet: req.session.wallet, coupon, couponoff: req.session.coupon, discount })
     })
   } else {
     res.redirect('/loginpage')
   }
 })
+
+router.get('/applycoupon/', (req, res) => {
+  if (req.query.couponoff) {
+    off = req.query.couponoff
+    id = req.query.couponid
+    req.session.couponid = id
+    req.session.couponoff = off
+    console.log(req.session.couponoff);
+    req.session.coupon = true
+    res.redirect('/Bookcar')
+  } else {
+    req.session.coupon = false
+    req.session.couponid = null
+    res.redirect('/Bookcar')
+  }
+
+})
+
 
 router.post('/searchCar', (req, res) => {
   let carname = req.body.search
@@ -345,33 +422,15 @@ router.post('/searchCar', (req, res) => {
   })
 })
 
-router.get('/userrides', verifyUser, (req, res) => {
-  if (req.session.user) {
-    carsHelpers.getuserbookings(userdetails).then((userBookings) => {
-      res.render('user/bookinghistory', { user: true, userBookings })
-    })
-  } else {
-    res.redirect('/')
-  }
-})
-router.get('/bookingdetails/:id', verifyUser, (req, res) => {
-  if (req.session.user) {
-    let userId = req.params.id
-    carsHelpers.getbookingdetails(userId).then((Bookingdetails) => {
-      console.log("single user :", Bookingdetails);
-      res.render('user/bookingdetails', { user: true, Bookingdetails })
-    })
-  } else {
-    res.redirect('/')
-  }
-})
-
 router.get('/userprofile', verifyUser, (req, res) => {
   if (req.session.user) {
     userdetails = req.session.userDetails
+    if (userdetails.wallet) {
+      req.session.wallet = true
+    }
     userhelpers.getdetails(userdetails).then((userprofile) => {
       // console.log(userprofile);
-      res.render('user/userprofile', { user: true, userprofile })
+      res.render('user/userprofile', { user: true, userprofile, wallet: req.session.wallet })
     })
   } else {
     res.redirect('/')
@@ -491,7 +550,7 @@ router.post('/booknow', (req, res) => {
       res.json(response)
     })
 
-  } else {
+  } else if (req.body.details == 'payment options=paypal') {
     Price = parseInt(Price) / 75
     Price = parseInt(Price)
     const create_payment_json = {
@@ -535,6 +594,18 @@ router.post('/booknow', (req, res) => {
       }
     });
 
+  } else if (req.body.details == 'paymentoptions=wallet') {
+    console.log("qwerty");
+    userdetails = req.session.userDetails
+    userId = req.session.userDetails._id
+    walletbal = userdetails.wallet - parseInt(Price)
+    walletbalance = parseInt(walletbal)
+    userhelpers.getfromwallet(userId, walletbalance).then(() => {
+      response.wallet = true
+      res.json(response)
+
+    })
+
   }
 })
 
@@ -544,8 +615,20 @@ router.post('/delivery', (req, res) => {
     car = req.session.car
     Price = parseInt(req.session.car.Price) + 50
     car.Price = Price
+    if (userdetails.wallet) {
+      walletmoney = parseInt(userdetails.wallet)
+      Price1 = car.Price
+      console.log("wallet: ", walletmoney, "JKKJHJHJHJHJHJH: ", Price1);
+      if (walletmoney > Price1) {
+        req.session.wallet = true
+        // console.log("und");
+      } else {
+        req.session.wallet = false
+        // console.log("sadhanam illa");
+      }
+    }
     //  bookingdetails = req.session.bookingdetail
-    res.render('user/delivery.hbs', { car, bookingdetails })
+    res.render('user/delivery.hbs', { car, bookingdetails, wallet: req.session.wallet })
   } else {
     res.redirect('/loginpage')
   }
@@ -582,6 +665,8 @@ router.get('/ordersuccess', (req, res) => {
   userId = req.session.userDetails._id
   carId = req.session.car._id
   Price = req.session.car.Price
+  couponid = req.session.couponid
+  userhelpers.addcoupontouser(userId, couponid)
   userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
     res.render('user/successpage', { user: true })
   })
@@ -598,6 +683,21 @@ router.get('/deliveryordersuccess', (req, res) => {
   })
 })
 
+router.get('/payfromwallet', (req, res) => {
+  userdetails = req.session.userDetails
+
+  userId = req.session.userDetails._id
+  carId = req.session.car._id
+  Price = req.session.car.Price
+
+  walletbal = userdetails.wallet - parseInt(Price)
+  walletbalance = parseInt(walletbal)
+  userhelpers.getfromwallet(userId, walletbalance).then(() => {
+    userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
+      res.render('user/successpage', { user: true })
+    })
+  })
+})
 
 router.get('/paypal', (req, res) => {
   Price = req.session.car.Price
@@ -644,6 +744,74 @@ router.get('/paypal', (req, res) => {
   });
 
 });
+
+router.get('/userrides', verifyUser, (req, res) => {
+  if (req.session.user) {
+    carsHelpers.getuserbookings(userdetails).then((userBookings) => {
+      allbooking = true
+      res.render('user/bookinghistory', { user: true, userBookings, allbooking })
+    })
+  } else {
+    res.redirect('/')
+  }
+})
+
+router.get('/upcomingrides', (req, res) => {
+  if (req.session.user) {
+    carsHelpers.getupcomingbookings(userdetails).then((userBookings) => {
+      upcoming = true
+      res.render('user/bookinghistory', { user: true, userBookings, upcoming })
+    })
+  } else {
+    res.redirect('/')
+  }
+
+})
+
+router.get('/ongoingrides', (req, res) => {
+  if (req.session.user) {
+    carsHelpers.getongoingbookings(userdetails).then((userBookings) => {
+      ongoing = true
+      res.render('user/bookinghistory', { user: true, userBookings, ongoing })
+    })
+  } else {
+    res.redirect('/')
+  }
+})
+
+router.get('/endedrides', (req, res) => {
+  if (req.session.user) {
+    carsHelpers.getendedbookings(userdetails).then((userBookings) => {
+      ended = true
+      res.render('user/bookinghistory', { user: true, userBookings, ended })
+    })
+  } else {
+    res.redirect('/')
+  }
+
+})
+
+router.get('/cancelride/', (req, res) => {
+  console.log("qertyuyuy:");
+  id = req.query.id
+  userid = req.query.user
+  console.log("userfor:::....................................", userid);
+  carsHelpers.getbookingdata(id).then((booking) => {
+    let Price = booking.price
+    console.log(Price);
+    wallet = parseInt(Price) * (80 / 100)
+    console.log(wallet);
+    carsHelpers.deletebooking(id).then((response) => {
+      console.log("ride cancelled");
+    })
+    carsHelpers.updateuserwallet(userid, wallet).then((response) => {
+      res.redirect('/upcomingrides')
+    })
+  })
+})
+
+
+
 
 
 

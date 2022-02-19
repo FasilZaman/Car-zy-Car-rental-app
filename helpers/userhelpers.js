@@ -258,6 +258,41 @@ module.exports = {
             }
         })
 
+    },
+    getfromwallet: (userId,walletbalance) => {
+        return new Promise(async(resolve,reject)=>[
+            await db.get().collection(collection.USERCOLLECTION).updateOne({_id:ObjectId(userId)},{$set:{wallet:walletbalance}}).then((response)=>{
+                resolve(response)
+            })
+        ])
+    },
+    getcoupon:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let coupon = await db.get().collection(collection.COUPONCOLLECTION).find().toArray()
+            console.log("1111111111111111111111111111111111111111111",coupon);
+            let date = new Date()
+            date.setHours(5)
+            date.setMinutes(30)
+            date.setMilliseconds(0)
+            date.setSeconds(0)
+            console.log(date);
+            for(let i of coupon){
+                console.log(i);
+                if (date >= new Date(i.couponExpiry)){
+                    console.log("Expired");
+                    db.get().collection(collection.COUPONCOLLECTION).deleteOne({_id:i._id})
+                }
+            }
+            resolve(coupon)
+        })
+    },
+    addcoupontouser:(userid,couponid)=>{
+        return new Promise(async(resolve,reject)=>{
+            await db.get().collection(collection.USERCOLLECTION).updateOne({_id:ObjectId(userid)},{$push:{coupon : couponid}}).then((response)=>{
+                resolve(response)
+            })
+            
+        })
     }
 
 }

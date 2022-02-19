@@ -22,7 +22,7 @@
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item" href="/userprofile">profile</a>
-    <a class="dropdown-item" href="/userrides">my rides</a>
+    <a class="dropdown-item" href="/upcomingrides">my rides</a>
     {{!-- <a class="dropdown-item" href="#">logout</a> --}}
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="/logout">logout</a>
@@ -91,7 +91,7 @@
 			              </div>
                     <div class="form-group">
 		                <label for="" class="label">Pick-up time</label>
-		                <input type="time" class="form-control timepicker" id="pickuptime" placeholder="Time" name="pickuptime" onclick="picktime()" disabled>
+		                <input type="time" class="form-control timepicker" id="pickuptime" placeholder="Time" name="pickuptime" onchange="picktime()" disabled>
 		              </div>
                   </div>
                   <div class="d-flex">
@@ -250,7 +250,6 @@
             Little Blind Text should turn around and return to its own, safe country. A small river named Duden flows by
             their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted
             parts of sentences fly into your mouth.</p>
-          <p><a href="#" class="btn btn-primary py-3 px-4">Search Vehicle</a></p>
         </div>
       </div>
     </div>
@@ -597,6 +596,8 @@ function date_pick(){
 
 function dropdate_pick(){
     var dtToday = document.getElementById("pick_date").value
+    let pickedtime = document.getElementById("pickuptime").value
+    console.log(pickedtime)
   {{!-- alert(dtToday);  --}}
     $('#drop_date').attr('min', dtToday);
   document.getElementById('dropofftime').removeAttribute("disabled")
@@ -604,12 +605,46 @@ function dropdate_pick(){
 
 
 function picktime(){
-    var dtToday = new Date()
+
+  let dtToday = new Date()
+  let day = dtToday.getDate()
+  let month = dtToday.getMonth() + 1
+  let year = dtToday.getFullYear()
+
+  let hour = dtToday.getHours()
+  let minute = dtToday.getMinutes()
+
+  if(month < 10) month = '0' + month.toString();
+  if(minute < 10) minute = '0' + minute.toString();
+  if(hour < 10) hour = '0' + hour.toString();
+
+    var timenow = hour + ':' + minute
+    let today = year + '-' + month + '-' + day;    
+
+    let pickeddate = document.getElementById("pick_date").value
     
- // var time = dtToday.getTime()
-   // var time = (dtToday.getTime()) / ( 1000); 
-  //  alert(dtToday); 
- // $('#pickuptime').attr('min', time);
+    
+    {{!-- alert(timenow)
+    alert(pickeddate)
+    console.log(pickeddate)
+    alert(today)
+    console.log(today) --}}
+    
+    let pickedtime = document.getElementById("pickuptime").value
+   
+    if(pickeddate == today){
+
+       if(pickedtime<timenow){
+         document.getElementById("pickuptime").value=null
+
+       } 
+
+      {{!-- var time = dtToday.getHours()
+      $('#pickuptime').attr('min', time); --}}
+
+    }
+    
+  
  document.getElementById('drop_date').removeAttribute("disabled")
 
  

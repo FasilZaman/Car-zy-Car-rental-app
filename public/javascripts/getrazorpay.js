@@ -17,9 +17,9 @@ function getrazorpay() {
                 "image": "https://example.com/your_logo",
                 "order_id": response.id, //This is a sample Order ID. Pass the `id` obtained in the previous step
                 "handler": function (response) {
-                    alert(response.razorpay_payment_id);
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
+                    // alert(response.razorpay_payment_id);
+                    // alert(response.razorpay_order_id);
+                    // alert(response.razorpay_signature)
 
                     verifypayment(response)
                 },

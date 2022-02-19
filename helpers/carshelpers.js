@@ -16,7 +16,7 @@ module.exports = {
                 response.carfound = true
                 resolve(response)
             } else {
-                carDetails.Price=parseInt(carDetails.Price)
+                carDetails.Price = parseInt(carDetails.Price)
                 db.get().collection(collection.CARSCOLLECTION).insertOne(carDetails).then((details) => {
                     console.log(details);
                     response.carfound = false
@@ -28,7 +28,7 @@ module.exports = {
     },
     getcardetails: () => {
         return new Promise(async (resolve, reject) => {
-            let Cars=await db.get().collection(collection.CARSCOLLECTION).find().toArray()
+            let Cars = await db.get().collection(collection.CARSCOLLECTION).find().toArray()
             resolve(Cars)
         })
     },
@@ -51,7 +51,7 @@ module.exports = {
             let car = await db.get().collection(collection.CARSCOLLECTION).findOne({ Carnumber: carDetails.Carnumber })
             let response = {}
             if (car) {
-                carDetails.Price=parseInt(carDetails.Price)
+                carDetails.Price = parseInt(carDetails.Price)
                 db.get().collection(collection.CARSCOLLECTION).updateOne({ _id: ObjectId(carId) }, {
                     $set: {
                         Name: carDetails.Name,
@@ -69,7 +69,7 @@ module.exports = {
                     resolve(response)
                 })
             } else {
-                carDetails.Price=parseInt(carDetails.Price)
+                carDetails.Price = parseInt(carDetails.Price)
                 db.get().collection(collection.CARSCOLLECTION).updateOne({ _id: ObjectId(carId) }, { carDetails }).then((details) => {
                     response.id = details.insertedId
                     resolve(response)
@@ -77,45 +77,45 @@ module.exports = {
             }
         })
     },
-    getCars: (carname,pickup) => {
+    getCars: (carname, pickup) => {
         return new Promise(async (resolve, reject) => {
             console.log(pickup.location);
-            let Cars = await db.get().collection(collection.CARSCOLLECTION).find({$and:[{location:pickup}, {$text: { $search: carname } }]}).toArray()
+            let Cars = await db.get().collection(collection.CARSCOLLECTION).find({ $and: [{ location: pickup }, { $text: { $search: carname } }] }).toArray()
             console.log(Cars);
             resolve(Cars)
         })
     },
-    getusercars: (hourdiff,body)=>{
-        return new Promise(async(resolve,reject)=>{
-            let Cars = await db.get().collection(collection.CARSCOLLECTION).aggregate([{$match:{location:body.location}},{
-                $lookup:{
-                    from:collection.BOOKINGSCOLLECTION,
-                    localField:'_id',
-                    foreignField:'car',
-                    as:'bookings'
+    getusercars: (hourdiff, body) => {
+        return new Promise(async (resolve, reject) => {
+            let Cars = await db.get().collection(collection.CARSCOLLECTION).aggregate([{ $match: { location: body.location } }, {
+                $lookup: {
+                    from: collection.BOOKINGSCOLLECTION,
+                    localField: '_id',
+                    foreignField: 'car',
+                    as: 'bookings'
                 }
-            },{
+            }, {
                 $project: {
-                    _id: 1,Name: 1, Brand: 1, Fuel:1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1,location: 1,bookings: 1,
-                    Price: {$multiply: [hourdiff,'$Price']}
+                    _id: 1, Name: 1, Brand: 1, Fuel: 1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1, location: 1, bookings: 1,
+                    Price: { $multiply: [hourdiff, '$Price'] }
                 }
             },]).toArray()
-        
 
-    //start checking the dates
+
+            //start checking the dates
 
             const car = []
             const carbooking = []
-            for(let i of Cars){
-                    car.push(i)
+            for (let i of Cars) {
+                car.push(i)
             }
-            for(let i of car){
+            for (let i of car) {
                 console.log(i);
             }
             console.log("qwertyuiop");
 
-            for(let i of Cars){
-                for(let j of i.bookings){
+            for (let i of Cars) {
+                for (let j of i.bookings) {
                     carbooking.push(j)
                 }
             }
@@ -123,82 +123,156 @@ module.exports = {
             // for(let i of carbooking){
             //     console.log(i.pickupdate);
             // }
-            
 
-            for(let i of carbooking){
+
+            for (let i of carbooking) {
                 var pickup = body.pickupDate
                 var dropoff = body.dropoffDate
                 var searchpickup = new Date(pickup)
                 var searchdropoff = new Date(dropoff)
                 var checkpickup = new Date(i.pickupdate)
                 var checkdropoff = new Date(i.dropoffdate)
-                if(checkpickup<=searchpickup && searchpickup<=checkdropoff){
-                    car.splice(i,1)
-                }else if(checkpickup<=searchdropoff && searchdropoff<=checkdropoff){
-                    car.splice(i,1)
-                }else if(searchpickup<=checkpickup && checkdropoff<=searchdropoff){
-                    car.splice(i,1)
+                if (checkpickup <= searchpickup && searchpickup <= checkdropoff) {
+                    car.splice(i, 1)
+                } else if (checkpickup <= searchdropoff && searchdropoff <= checkdropoff) {
+                    car.splice(i, 1)
+                } else if (searchpickup <= checkpickup && checkdropoff <= searchdropoff) {
+                    car.splice(i, 1)
                 }
             }
             console.log(car);
 
             resolve(car)
 
-    })
-        
+        })
+
     },
-    getcarinlocation:(pickup)=>{
+    getcarinlocation: (pickup) => {
         console.log(pickup);
-        return new Promise(async(resolve,reject)=>{
-            let Cars = await db.get().collection(collection.CARSCOLLECTION).find({location:pickup}).toArray()
+        return new Promise(async (resolve, reject) => {
+            let Cars = await db.get().collection(collection.CARSCOLLECTION).find({ location: pickup }).toArray()
             resolve(Cars)
         })
     },
-    getallbookings:()=>{
-        return new Promise(async(resolve,reject)=>{
-            let Bookings = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
-                {$lookup: {
-                    from : collection.CARSCOLLECTION,
-                    localField :  'car',
-                    foreignField : '_id',
-                    as : 'cars'
-                }}
-            ]).toArray()
-            // console.log(Bookings);
-            resolve(Bookings)
-        })
-    },
-    getuserbookings:(userDetails)=>{
-        return new Promise(async(resolve,reject)=>{
-            console.log(userdetails._id);
+
+    getuserbookings: (userDetails) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(userDetails._id);
             let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
-                {$match:{user:ObjectId(userDetails._id)}},{
-                    $lookup:{
-                        from:collection.CARSCOLLECTION,
-                        localField:'car',
-                        foreignField:'_id',
-                        as:'cars'
-                    }
-                }
-            ]).toArray() 
-        console.log(userdata);
-        resolve(userdata)
-        })
-    },
-    getbookingdetails:(userId)=>{
-        return new Promise(async(resolve,reject)=>{
-            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
-                {$match:{_id:ObjectId(userId)}},{
-                    $lookup:{
-                        from:collection.CARSCOLLECTION,
-                        localField:'car',
-                        foreignField:'_id',
-                        as:'cars'
+                { $match: { user: ObjectId(userDetails._id) } }, {
+                    $lookup: {
+                        from: collection.CARSCOLLECTION,
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'cars'
                     }
                 }
             ]).toArray()
             console.log(userdata);
             resolve(userdata)
+        })
+    },
+    getupcomingbookings: (userdetails) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(userdetails._id);
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                { $match: { $and: [{ user: ObjectId(userdetails._id) }, { status: 'upcoming' }] } }, {
+                    $lookup: {
+                        from: collection.CARSCOLLECTION,
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'cars'
+                    }
+                }
+            ]).toArray()
+            console.log(userdata);
+            resolve(userdata)
+        })
+
+    },
+    getongoingbookings: (userdetails) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(userdetails._id);
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                { $match: { $and: [{ user: ObjectId(userdetails._id) }, { status: 'ongoing' }] } }, {
+                    $lookup: {
+                        from: collection.CARSCOLLECTION,
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'cars'
+                    }
+                }
+            ]).toArray()
+            console.log(userdata);
+            resolve(userdata)
+        })
+
+    },
+    getendedbookings: (userdetails) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(userdetails._id);
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                { $match: { $and: [{ user: ObjectId(userdetails._id) }, { status: 'ended' }] } }, {
+                    $lookup: {
+                        from: collection.CARSCOLLECTION,
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'cars'
+                    }
+                }
+            ]).toArray()
+            console.log(userdata);
+            resolve(userdata)
+        })
+
+    },
+    getbookingdetails: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+                { $match: { _id: ObjectId(userId) } }, {
+                    $lookup: {
+                        from: collection.CARSCOLLECTION,
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'cars'
+                    }
+                }
+            ]).toArray()
+            console.log(userdata);
+            resolve(userdata)
+        })
+    },
+    getbookingdata: (bookingId) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(bookingId);
+            let booking = await db.get().collection(collection.BOOKINGSCOLLECTION).findOne({ _id: ObjectId(bookingId) })
+            console.log("your Booking is", booking);
+            resolve(booking)
+        })
+    },
+    deletebooking: (bookingId) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.BOOKINGSCOLLECTION).deleteOne({ _id: ObjectId(bookingId) }).then((response) => {
+                resolve(response)
+            })
+        })
+    },
+    updateuserwallet: (userid, walletprice) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USERCOLLECTION).findOne({ _id: ObjectId(userid)  })
+            console.log("user:", user);
+
+            if (user.wallet) {
+                let wallet = parseInt(user.wallet) + parseInt(walletprice)
+                db.get().collection(collection.USERCOLLECTION).updateOne({ _id: ObjectId(userid) }, { $set: { wallet: wallet } }).then((response) => {
+                    resolve(response)
+                })
+            } else {
+                db.get().collection(collection.USERCOLLECTION).updateOne({ _id: ObjectId(userid) }, { $set: { wallet: walletprice } }).then((response) => {
+                    console.log(response);
+                    resolve(response)
+                })
+            }
         })
     }
 }

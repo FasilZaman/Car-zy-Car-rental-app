@@ -17,197 +17,234 @@
         </div>
     </div>
 </nav>
+<div class="row mr-1 mt-1 ml-1" style="background-color: rgb(37, 37, 37);;margin-bottom: 0px;">
+    {{!-- <a href="/userrides" class="btn col s3"
+        style="background-color: rgb(37, 37, 37); color: white;border: none;">ALL
+        BOOKINGS</a> --}}
+    <a href="/upcomingrides" class="btn col s3"
+        style="background-color: rgb(37, 37, 37); color: white;border: none;">UPCOMING</a>
+
+    <a href="/ongoingrides" class="btn col s3"
+        style="background-color: rgb(37, 37, 37); color: white;border: none;">ONGOING</a>
+
+    <a href="/endedrides" class="btn col s3"
+        style="background-color: rgb(37, 37, 37); color: white;border: none;">ENDED</a>
+
+
+</div>
 <!-- END nav -->
 <div class="card text-center mt-3">
-    <div class="card-header">
+    <div class="card-header ">
+        {{#if allbooking}}
         ALL BOOKINGS
+        {{/if}}
+        {{#if upcoming}}
+        UPCOMING RIDES
+        {{/if}}
+        {{#if ongoing}}
+        ONGOING RIDES
+        {{/if}}
+        {{#if ended}}
+        ENDED RIDES
+        {{/if}}
     </div>
+
+    {{#if upcoming}}
+
     <div class="card-body">
         <div class="card w-90">
-            <div class="card-body align-items-center">
+            <div class="card-body align-items-center ">
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 ftco-animate">
-                            <div class="car-list">
+                {{#if userBookings}}
 
-                                <table class="table col-lg-12 col-md-12 col-12">
-                                    <tbody>
-                                        {{#each userBookings}}
-                                        <tr class=" mt-3 col-lg-12 col-md-12 col-12">
-                                            <td class="car-image">
-                                                {{#each cars}}
-                                                <div class="img"
-                                                    style="background-image:url(carimages/{{this._id}}1.jpg);"></div>
-                                                {{/each}}
-                                            </td>
-                                            <td class="product-name">
-                                                {{#each cars}}
-                                                <h3>{{this.Name}}</h3>
-                                                {{/each}}
-                                                <p class="mb-0 rated">
-                                                    <span style="color: red;">Price :{{this.price}} </span>
-                                                </p>
-                                                <p>
-                                                    <span class="subheading">Location : {{this.pickuplocation}}</span>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <span class="subheading">From : {{this.pickupdate}}
-                                                    {{this.pickuptime}}</span>
-                                                <span>- to - </span>
-                                                <span class="subheading">{{this.dropoffdate}}
-                                                    {{this.dropofftime}}</span>
-                                            </td>
-                                            {{!-- <td class="price">
-                                                <p class="btn-custom"><a href="/bookingdetails">view Details</a></p>
-                                                <div class="price-rate">
-                                                    <h3>
-                                                        <span class="num"> Pickup location</span>
-                                                    </h3>
-                                                    <span class="subheading">{{this.pickuplocation}}</span>
-                                                </div>
-                                            </td> --}}
+                {{#each userBookings}}
 
-                                            {{!-- <td class="price">
-                                                <p class="btn-custom"><a href="#">Rent a car</a></p>
-                                                <div class="price-rate">
-                                                    <h3>
+                <div class="">
+                    <div class="mt-5">
 
-                                                    </h3>
+                        <div class="row align-items-center">
 
-                                                </div>
-                                            </td> --}}
+                            {{#each cars}}
 
-                                            {{!-- <td class="price">
-                                                <p class="btn-custom"><a href="#">Rent a car</a></p>
-                                                <div class="price-rate">
-                                                    <h3>
-                                                        <span class="num">DropoffDate and Time</span>
+                            <div class="col-12 col-lg-2 col-md-12">
+                                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
 
-                                                    </h3>
 
-                                                </div>
-                                            </td> --}}
-                                            <td>
-                                                <h3>
-                                                    <span class="btn btn-danger num" style="color: white"><span
-                                                            style="font-size: small;">{{this.status}}</span></span>
-                                                    <a href="#"> <span class="btn btn-danger num"
-                                                            style="color: white"><span style="font-size: small;">start
-                                                                Ride</span></a>
+                                    <div><img src="carimages/{{this._id}}1.jpg" style="height: 170px; width: auto;">
+                                    </div>
 
-                                                </h3>
-                                            </td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
+
+                                    </h6>
+
+                                    {{/each}}
 
                             </div>
+                            <div class="col-lg-3 col-12 col-md-12">
+                                <div class="text-secondary-d1 text-100">
+
+                                    {{#each cars}}
+
+                                    <h6 class="pt-3 text-170 text-600 text-purple-d1 letter-spacing">
+                                        {{this.Brand}} {{this.Name}}
+                                    </h6>
+
+                                    {{/each}}
+
+                                    <p class="mb-0 rated">
+                                        <span style="color: red;">Price
+                                            :{{this.price}} </span>
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Start Date and time : {{this.pickupdate}}
+                                        {{this.pickuptime}}</li>
+                                    <li class="list-group-item">End Date and time : {{this.dropoffdate}}
+                                        {{this.dropofftime}}</li>
+                                </ul>
+
+                            </div>
+                            <div class="col-12 col-lg-3 col-md-12 ">
+                                {{!-- <a href="" class="btn btn-outline-danger px-5">Cancel</a> --}}
+                                <!-- Button trigger modal -->
+                                <button type="button" data-id="{{this._id}}" data-user="{{this.user}}"
+                                    class="cancel btn btn-outline-danger px-5" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                    Cancel
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure to cancel the ride
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <a href="" id="cancel" class="btn btn-outline-primary">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+                        {{/each}}
+
+                        {{else}}
+
+                        <p style="text-align: center; margin-top: 40px;">no bookings</p>
+
+                        {{/if}}
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{!-- <div class="card text-center mt-3">
-        <div class="card-header">
-            ALL BOOKINGS
-        </div>
-        <div class="card-body">
-            <div class="card w-90">
-                <div class="card-body align-items-center">
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12 ftco-animate">
-                                <div class="car-list">
+    {{else }}
 
-                                    <table class="table col-lg-12 col-md-12 col-12">
-                                        <tbody>
-                                            {{#each userBookings}}
-                                            <div class="">
-                                                <div class="mt-5">
-                                                    <div
-                                                        class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
-                                                        <!-- Basic Plan -->
-                                                        <div class="row align-items-center">
-                                                            {{#each cars}}
-                                                            <div class="col-12 col-md-5">
-                                                                <h4
-                                                                    class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
+    <div class="card-body">
+        <div class="card w-90">
+            <div class="card-body align-items-center ">
+
+                {{#if userBookings}}
+
+                {{#each userBookings}}
+
+                <div class="">
+                    <div class="mt-5">
+
+                        <div class="row align-items-center">
+
+                            {{#each cars}}
+
+                            <div class="col-12 col-lg-2 col-md-12">
+                                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
 
 
-                                                                    <div><img src="carimages/{{this._id}}1.jpg"
-                                                                            style="height: 100px; width: auto;"></div>
+                                    <div><img src="carimages/{{this._id}}1.jpg" style="height: 170px; width: auto;">
+                                    </div>
 
 
-                                                                    </h6>
+                                    </h6>
 
-                                                                    <div class="text-secondary-d1 text-100">
-                                                                        <h4
-                                                                            class="pt-3 text-170 text-600 text-purple-d1 letter-spacing">
-                                                                            {{this.Brand}} {{this.Name}}
-                                                                            </h6>
-                                                                            {{/each}}
-                                                                            <p class="mb-0 rated">
-                                                    <span style="color: red;">Price :{{this.price}} </span>
-                                                </p>
-                                                                    </div>
-                                                            </div>
-                                                            
-                                                            <ul
-                                                                class="list-unstyled mb-0 col-12 col-md-5 text-dark-l1 text-90 text-left my-4 my-md-0">
-                                                                <li>
-                                                                    <i
-                                                                        class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
-                                                                    <span>
-                                                                        <span class="text-110">Donec id elit.</span>
-                                                                        Fusce dapibus...
-                                                                    </span>
-                                                                </li>
+                                    {{/each}}
 
-                                                                <li class="mt-25">
-                                                                    <i
-                                                                        class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
-                                                                    <span class="text-110">
-                                                                        Placerat duis
-                                                                    </span>
-                                                                </li>
+                            </div>
+                            <div class="col-lg-3 col-12 col-md-12">
+                                <div class="text-secondary-d1 text-100">
 
-                                                                <li class="mt-25">
-                                                                    <i
-                                                                        class="fa fa-times text-danger-m3 text-110 mr-25 mt-1"></i>
-                                                                    <span class="text-110">
-                                                                        Tortor mauris
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
+                                    {{#each cars}}
 
-                                                            <div class="col-12 col-md-2 text-center">
-                                                                <a href="#"
-                                                                    class="f-n-hover btn btn-info btn-raised px-4 py-25 w-75 text-600">Get
-                                                                    Started</a>
-                                                            </div>
-                                                        </div>
+                                    <h6 class="pt-3 text-170 text-600 text-purple-d1 letter-spacing">
+                                        {{this.Brand}} {{this.Name}}
+                                    </h6>
 
-                                                    </div>
-                                                    {{/each}}
-                                        </tbody>
-                                    </table>
+                                    {{/each}}
 
+                                    <p class="mb-0 rated">
+                                        <span style="color: red;">Price
+                                            :{{this.price}} </span>
+                                    </p>
                                 </div>
+
+                            </div>
+                            <div class="col-lg-4 col-12 col-md-12">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Start Date and time : {{this.pickupdate}}
+                                        {{this.pickuptime}}</li>
+                                    <li class="list-group-item">End Date and time : {{this.dropoffdate}}
+                                        {{this.dropofftime}}</li>
+                                </ul>
                             </div>
                         </div>
+
+                        {{/each}}
+
+                        {{else}}
+
+                        <p style="text-align: center; margin-top: 40px;">no bookings</p>
+
+                        {{/if}}
+
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
+    </div>
 
-        {{!-- hgdhgagdhaghadhad --}}
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    {{/if}}
 
-        <link rel="stylesheet" href="/stylesheets/style.css">
+</div>
 
-        {{!-- skfjkjdf --}}
+{{!--
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+--}}
+
+{{!--
+<link rel="stylesheet" href="/stylesheets/style.css">
+--}}
+
+
+<script>
+    $(document).on("click", ".cancel", function (e) {
+        const bookingid = $(e.target).data('id');
+        const userid = $(e.target).data('user')
+ 
+        $('.modal-footer #cancel').attr('href', "/cancelride?id=" + bookingid + "&user=" + userid)
+    })
+
+</script>

@@ -8,6 +8,7 @@ var carsHelpers = require('../helpers/carshelpers')
 var fs = require('fs');
 const { request } = require('http');
 const userhelpers = require('../helpers/userhelpers');
+const adminhelpers = require('../helpers/adminhelpers');
 
 
 /* GET users listing. */
@@ -138,15 +139,6 @@ router.post('/editCars/:id', (req, res) => {
 
 })
 
-router.get('/allbookings', (req, res) => {
-  carsHelpers.getallbookings().then((Bookings) => {
-
-    console.log("All bookings :", Bookings);
-    res.render('admin/allbookings', { Bookings, admin: true })
-  })
-
-})
-
 router.get('/approvedusers', (req, res) => {
   userhelpers.approveduser().then((approvedusers) => {
     res.render('admin/approvedusers', { admin: true, approvedusers })
@@ -173,4 +165,89 @@ router.get('/approveuser/:id', (req, res) => {
   })
 })
 
+//get bookings details
+
+router.get('/upcomingbookings', (req, res) => {
+  adminHelpers.getallupcomingbookings().then((Bookings) => {
+
+    console.log("All bookings :", Bookings);
+    res.render('admin/allbookings', { Bookings, admin: true })
+  })
+
+})
+
+router.get('/bookingstodaypickup',(req,res)=>{
+  adminHelpers.getbookingstoday().then((bookingstoday)=>{
+    pickup=true
+    res.render('admin/bookingstoday',{admin:true,bookingstoday,pickup})
+
+  })
+})
+
+router.get('/fordelivery',(req,res)=>{
+  adminHelpers.getbookingstodaydelivery().then((bookingstodaydelivery)=>{
+      console.log("ererererer:",  bookingstodaydelivery);
+    res.render('admin/bookingstoday',{admin:true,bookingstodaydelivery})
+
+  })
+})
+
+router.get('/ongoingbookings',(req,res)=>{
+  adminHelpers.getongoingbookings().then((bookings)=>{
+    console.log("*********************1234",bookings);
+    res.render('admin/ongoingbookings',{admin:true,bookings})
+
+  })
+
+})
+
+router.get('/endedbookings',(req,res)=>{
+  adminHelpers.getendedbookings().then((bookings)=>{
+
+    res.render('admin/endedbookings',{admin:true,bookings})
+
+  })
+
+})
+
+router.get('/starttrip/',(req,res)=>{
+  bookingid = req.query.id
+  console.log("***********************************************************",bookingid);
+  adminHelpers.startatrip(bookingid).then((response)=>{
+    res.redirect('/admin/ongoingbookings')
+  })
+})
+
+router.get('/endtrip/',(req,res)=>{
+  bookingid = req.query.id
+  console.log("***********************************************************",bookingid);
+  adminHelpers.endatrip(bookingid).then((response)=>{
+    res.redirect('/admin/endedbookings')
+  })
+})
+
+router.get('/coupons',(req,res)=>{
+  adminHelpers.getcoupons().then((coupons)=>{
+    console.log("..........................................................................................",coupons);
+    res.render("admin/coupons",{admin:true , coupons})
+  })
+})
+
+router.post('/addCoupons',(req,res)=>{
+  adminHelpers.addcoupon(req.body).then((response)=>{
+    res.redirect('/admin/coupons')
+  })
+})
+
+router.get('/deletecoupon',(req,res)=>{
+  id = req.query.id
+  console.log("abcd",id);
+  adminHelpers.deletecoupon(id).then((response)=>{
+    res.redirect('/admin/coupons')
+  })
+})
+
+
+
 module.exports = router;
+ 
