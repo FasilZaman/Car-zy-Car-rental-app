@@ -3,16 +3,18 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text pt-2">
-                    <h4>ALL COUPONS</h4>
+                    <h4>ALL OFFERS</h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active">
-
+                        {{#if alreadyexists}}
+                        <p style="color: red;">offer already exist</p>
+                        {{/if}}
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            ADD COUPON
+                            ADD OFFER
                         </button>
 
 
@@ -22,33 +24,53 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">add coupon</h5>
+
+                                        <h5 class="modal-title" id="exampleModalLabel">Add offer</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/admin/addCoupons" method="post">
+                                        <form action="/admin/addoffers" method="post">
+
                                             <div class="mb-3">
                                                 <label for="recipient-name" class="col-form-label"
-                                                    style="color: black;">Add coupon
-                                                    code:</label>
-                                                <input type="text" class="form-control" id="recipient-name"
-                                                    style="text-transform: uppercase;" name="couponCode" required>
+                                                    style="color: black;">Select Brand
+                                                </label>
+                                                <select class="form-control" id="recipient-name"
+                                                    style="text-transform: uppercase; color: black;" name="Brand"
+                                                    required>
+                                                    {{#each Brands}}
+                                                    <option value="{{this._id}}" style="color: black;">{{this._id}}
+                                                    </option>
+                                                    {{/each}}
+                                                </select>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label"
+                                                    style="color: black;">Select Type
+                                                </label>
+                                                <select class="form-control" id="recipient-name"
+                                                    style="text-transform: uppercase;" name="Type" required>
+                                                    {{#each Type}}
+                                                    <option value="{{this._id}}">{{this._id}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="recipient-name" class="col-form-label"
                                                     style="color: black;">Add
                                                     discount percentage:</label>
                                                 <input type="number" class="form-control" id="recipient-name"
-                                                    name="couponPercentage" minlength="2" maxlength="2" required>
+                                                    name="offerPercentage" minlength="2" maxlength="2" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="recipient-name" class="col-form-label"
                                                     style="color: black;">Expiry
                                                     Date:</label>
                                                 <input type="date" class="form-control" id="dtpick" min=""
-                                                    name="couponExpiry" required>
+                                                    name="offerExpiry" required>
                                             </div>
 
                                     </div>
@@ -78,24 +100,26 @@
                             <table id="carstable" class="display" style="min-width: 845px">
                                 <thead>
                                     <tr>
-                                        <th scope="col">couponCode</th>
-                                        <th scope="col">Expiry Date</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Type</th>
                                         <th scope="col">Discount</th>
+                                        <th scope="col">Expiry</th>
                                         <th scope="col">options</th>
 
                                     </tr>
                                 </thead>
-                                {{#each coupons}}
+                                {{#each offers}}
                                 <tr><b>
 
 
-                                        <td>{{this.couponCode}}</td>
-                                        <td>{{this.couponExpiry}}</td>
-                                        <td>{{this.couponPercentage}}%</td>
+                                        <td>{{this.Brand}}</td>
+                                        <td>{{this.Type}}</td>
+                                        <td>{{this.offerPercentage}}%</td>
+                                        <td>{{this.offerExpiry}}</td>
                                         <td>
                                             <!-- Button trigger modal -->
-                                            <a class="delete btn btn-outline-primary" data-toggle="modal"
-                                                data-target="#example" data-id="{{this._id}}">
+                                            <a class="delete btn btn-outline-danger" data-toggle="modal"
+                                                data-target="#example" data-id="{{this._id}}" style="color: red;">
                                                 delete
                                             </a>
 
@@ -165,11 +189,11 @@
 
             <script>
                 $(document).on("click", ".delete", function (e) {
-                    href = "/admin/deletecoupon?id:{{this._id}}"
+                    href = "/admin/deleteoffer?id:{{this._id}}"
                     const id = $(e.target).data('id');
                     alert(id)
 
-                    $('.modal-footer #cancel').attr('href', "/admin/deletecoupon?id=" + id)
+                    $('.modal-footer #cancel').attr('href', "/admin/deleteoffer?id=" + id)
                 })
 
             </script>

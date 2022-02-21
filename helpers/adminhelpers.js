@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const { promise } = require('bcrypt/promises')
 const async = require('hbs/lib/async')
 const { ObjectId } = require('mongodb')
-const { resolve } = require('promise')
+const { resolve, reject } = require('promise')
 const { response } = require('../app')
 
 module.exports = {
@@ -243,6 +243,85 @@ module.exports = {
     deletecoupon: (id) => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.COUPONCOLLECTION).deleteOne({ _id: ObjectId(id) }).then((response) => {
+                resolve(response)
+            })
+        })
+    },
+
+    getbrand: () => {
+        return new Promise(async (resolve, reject) => {
+            let Brands = await db.get().collection(collection.CARSCOLLECTION).aggregate([{ $group: { _id: "$Brand" } }]).toArray()
+
+
+
+            console.log(Brands);
+            resolve(Brands)
+
+        })
+    },
+
+    getType: () => {
+        return new Promise(async (resolve, reject) => {
+            let Brands = await db.get().collection(collection.CARSCOLLECTION).aggregate([{ $group: { _id: "$Type" } }]).toArray()
+
+
+
+            console.log(Brands);
+            resolve(Brands)
+
+        })
+    },
+    addoffer: (offer) => {
+        return new Promise(async (resolve, reject) => {
+            let response = {}
+            carBrand = offer.Brand
+            carType = offer.Type
+            caroffer = offer.offerPercentage
+            let alloffers = await db.get().collection(collection.OFFERCOLLECTION).findOne({ Brand: "carBrand", Type: "carType" })
+            console.log(alloffers);
+            if (alloffers) {
+                console.log("asdfghjkl");
+                response.alreadyexist = true
+                resolve(response)
+
+            } else {
+                await db.get().collection(collection.OFFERCOLLECTION).insertOne(offer).then(async (response) => {
+                    console.log("zamanzaman");
+                    await db.get().collection(collection.CARSCOLLECTION).update({ Brand: carBrand, Type: carType }, { $set: { discount: caroffer } })
+                    response.alreadyexist = false
+                    resolve(response)
+                })
+            }
+        })
+    },
+    getoffers: () => {
+        return new Promise(async (resolve, reject) => {
+            let offers = await db.get().collection(collection.OFFERCOLLECTION).find().toArray()
+
+            let date = new Date()
+            date.setHours(5)
+            date.setMinutes(30)
+            date.setMilliseconds(0)
+            date.setSeconds(0)
+            console.log(date);
+            for (let i of offers) {
+                console.log(i);
+                if (date >= new Date(i.offerExpiry)) {
+                    console.log("Expired");
+                    db.get().collection(collection.OFFERCOLLECTION).deleteOne({ _id: i._id })
+                }
+            }
+
+            resolve(offers)
+        })
+    },
+    deleteoffer: (id) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(id);
+            let offers = await db.get().collection(collection.OFFERCOLLECTION).findOne({ _id: ObjectId(id) })
+            console.log("qwerty", offers);
+            await db.get().collection(collection.OFFERCOLLECTION).deleteOne({ _id: ObjectId(id) }).then((response) => {
+                db.get().collection(collection.CARSCOLLECTION).update({ Brand: offers.Brand, Type: offers.Type }, { $unset: { discount: "" } })
                 resolve(response)
             })
         })

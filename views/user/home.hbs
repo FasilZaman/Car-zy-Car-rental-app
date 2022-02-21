@@ -595,11 +595,24 @@ function date_pick(){
 };
 
 function dropdate_pick(){
-    var dtToday = document.getElementById("pick_date").value
+    var dtToday = document.getElementById("pick_date").value  
+    var dropdate = new Date(dtToday)
+    {{!-- alert(dropdate) --}}
+
+    var month = dropdate.getMonth() + 1;
+    var day = dropdate.getDate() + 1;
+    var year = dropdate.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+
     let pickedtime = document.getElementById("pickuptime").value
     console.log(pickedtime)
   {{!-- alert(dtToday);  --}}
-    $('#drop_date').attr('min', dtToday);
+    $('#drop_date').attr('min', maxDate);
   document.getElementById('dropofftime').removeAttribute("disabled")
 };
 

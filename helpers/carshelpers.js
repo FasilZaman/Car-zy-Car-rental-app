@@ -90,13 +90,13 @@ module.exports = {
             let Cars = await db.get().collection(collection.CARSCOLLECTION).aggregate([{ $match: { location: body.location } }, {
                 $lookup: {
                     from: collection.BOOKINGSCOLLECTION,
-                    localField: '_id',
-                    foreignField: 'car',
+                    foreignField: "car",
+                    localField: "_id",
                     as: 'bookings'
                 }
             }, {
                 $project: {
-                    _id: 1, Name: 1, Brand: 1, Fuel: 1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1, location: 1, bookings: 1,
+                    _id: 1, Name: 1, Brand: 1, Fuel: 1, Type: 1, Transmission: 1, Seats: 1, Carnumber: 1, Mileage: 1, Status: 1, location: 1, bookings: 1, discount: 1,
                     Price: { $multiply: [hourdiff, '$Price'] }
                 }
             },]).toArray()
@@ -108,39 +108,81 @@ module.exports = {
             const carbooking = []
             for (let i of Cars) {
                 car.push(i)
+                // console.log(i);
             }
-            for (let i of car) {
-                console.log(i);
-            }
-            console.log("qwertyuiop");
+            
+            // for (let i of car) {
+            //     console.log("qqqqqqq : ",i.bookings);
+            // }
+            // console.log("qwertyuiop");
 
             for (let i of Cars) {
                 for (let j of i.bookings) {
                     carbooking.push(j)
+                    console.log("all :", j);
                 }
             }
+
+            // console.log("thebookings : ", carbooking);
+
+            // console.log("qwerrtrrerqerqewrqewrqewrqerqewrqe");
 
             // for(let i of carbooking){
             //     console.log(i.pickupdate);
             // }
 
+            for (let i in car) {               
+                for (let j in carbooking) {
+                    console.log("one :", car[i]._id, "+++++", carbooking[j].car);
+                    if (car[i]._id.toString() === carbooking[j].car.toString()) {
+                        console.log("qwertyytyty");
+                        var pickup = body.pickupDate
+                        var dropoff = body.dropoffDate
+                        var searchpickup = new Date(pickup)
+                        var searchdropoff = new Date(dropoff)
+                        var checkpickup = new Date(carbooking[j].pickupdate)
+                        var checkdropoff = new Date(carbooking[j].dropoffdate)
+                        console.log(pickup);
+                        console.log(dropoff);
 
-            for (let i of carbooking) {
-                var pickup = body.pickupDate
-                var dropoff = body.dropoffDate
-                var searchpickup = new Date(pickup)
-                var searchdropoff = new Date(dropoff)
-                var checkpickup = new Date(i.pickupdate)
-                var checkdropoff = new Date(i.dropoffdate)
-                if (checkpickup <= searchpickup && searchpickup <= checkdropoff) {
-                    car.splice(i, 1)
-                } else if (checkpickup <= searchdropoff && searchdropoff <= checkdropoff) {
-                    car.splice(i, 1)
-                } else if (searchpickup <= checkpickup && checkdropoff <= searchdropoff) {
-                    car.splice(i, 1)
+                        if (checkpickup <= searchpickup && searchpickup <= checkdropoff) {
+                            console.log("qwerty1");
+                            car.splice(i, 1)
+                        } else if (checkpickup <= searchdropoff && searchdropoff <= checkdropoff) {
+                            console.log("qwerty2");
+                            car.splice(i, 1)
+                        } else if (searchpickup <= checkpickup && checkdropoff <= searchdropoff) {
+                            console.log("qwerty3");
+                            car.splice(i, 1)
+                        }
+                    }
                 }
             }
-            console.log(car);
+
+
+            // for (let i of carbooking) {
+            //     console.log("qwererer",i.car);
+            //     console.log(car._id);
+                
+            //         var pickup = body.pickupDate
+            //         var dropoff = body.dropoffDate
+            //         var searchpickup = new Date(pickup)
+            //         var searchdropoff = new Date(dropoff)
+            //         var checkpickup = new Date(i.pickupdate)
+            //         var checkdropoff = new Date(i.dropoffdate)
+            //         if (checkpickup <= searchpickup && searchpickup <= checkdropoff) {
+            //             car.splice(i, 1)
+            //         } else if (checkpickup <= searchdropoff && searchdropoff <= checkdropoff) {
+            //             car.splice(i, 1)
+            //         } else if (searchpickup <= checkpickup && checkdropoff <= searchdropoff) {
+            //             car.splice(i, 1)
+            //         }
+
+          
+            // }
+
+            // console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqq", car);
+            // console.log("qwqwqwqwqwqwqwqwq");
 
             resolve(car)
 
@@ -259,7 +301,7 @@ module.exports = {
     },
     updateuserwallet: (userid, walletprice) => {
         return new Promise(async (resolve, reject) => {
-            let user = await db.get().collection(collection.USERCOLLECTION).findOne({ _id: ObjectId(userid)  })
+            let user = await db.get().collection(collection.USERCOLLECTION).findOne({ _id: ObjectId(userid) })
             console.log("user:", user);
 
             if (user.wallet) {

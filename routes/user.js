@@ -270,16 +270,24 @@ router.post('/carslist', (req, res) => {
   req.session.bookingdetail = req.body
   bookingdetails = req.session.bookingdetail
   carsHelpers.getusercars(diff, req.body).then((Cars) => {
-    // carsHelpers.getavailablecars(Cars).then((availableCars)=>{
-    //   console.log(availableCars);
-    res.render('user/carslist', { Cars, user: true, bookingdetails })
-    // })
-    // for(const abc of Cars ){
-    //   console.log(abc.location);
-    // }
+    
+    for (let i of Cars){
+      if(i.discount){        
+        // req.session.discount = true
+        discountamount = (i.Price*i.discount)/100
+        discountedPrice = (i.Price - discountamount )
+        i.realPrice = i.Price
+        i.Price = parseInt(discountedPrice)
+        i.discountamount = parseInt(discountamount)
+      }
+    }
+    console.log(Cars);
+   
+  
+      res.render('user/carslist', { Cars, user: true, bookingdetails  })
+   
+    
 
-    // console.log(Cars);
-    // res.render('user/carslist', { Cars, user: true, bookingdetails })
   })
 })
 router.get('/carslistpage', (req, res) => {
@@ -293,6 +301,15 @@ router.get('/carsdetails/:id', (req, res) => {
   let carId = req.params.id
   carsHelpers.carDetails(carId).then((Car) => {
     Car.Price = parseInt(Car.Price * req.session.totalhours)
+    console.log("miniminimini",Car);
+    if(Car.discount){
+      console.log("wertyq");
+      discountamount = (Car.Price*Car.discount)/100
+      discountedPrice = (Car.Price - discountamount )
+      Car.realPrice = Car.Price
+      Car.Price = parseInt(discountedPrice)
+      Car.discountamount = parseInt(discountamount)
+    }
     req.session.car = Car
     console.log(Car);
     res.render('user/carsdetails', { Car, user: true })
@@ -341,14 +358,29 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       Car.Price = parseInt(Car.Price * req.session.totalhours)
       console.log(Car.Price);
       let discount = 0
+
+
+      if(Car.discount){
+        console.log("wertyq");
+        discountamount = (Car.Price*Car.discount)/100
+        discountedPrice = (Car.Price - discountamount )
+        // Car.realPrice = Car.Price
+        Car.Price = parseInt(discountedPrice)
+        // Car.discountamount = parseInt(discountamount)
+      }
+
+
+      
       if (req.session.coupon) {
         off = req.session.couponoff
         console.log(off);
         discount = Car.Price * (parseInt(off) / 100)
+        discount = parseInt(discount)
         Car.Price = Car.Price * ((100 - parseInt(off)) / 100)
         console.log(Car.Price);
         Car.Price = parseInt(Car.Price)
       }
+
       userdetails = req.session.userDetails
       console.log(userdetails);
       if (userdetails.wallet) {
@@ -550,7 +582,8 @@ router.post('/booknow', (req, res) => {
       res.json(response)
     })
 
-  } else if (req.body.details == 'payment options=paypal') {
+  } else if (req.body.details == 'paymentoptions=paypal') {
+    console.log("qwerty1234567890");
     Price = parseInt(Price) / 75
     Price = parseInt(Price)
     const create_payment_json = {
