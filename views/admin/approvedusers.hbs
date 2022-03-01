@@ -31,7 +31,7 @@
                   </thead>
                   {{#each approvedusers}}
                   <tr>
-                    <td><a href="/admin/userdetails/{{this._id}}">{{@index}}</a></td>
+                    <td><a href="/admin/userdetails/{{this._id}}">{{inc @index}}</a></td>
                     <td><a href="/admin/userdetails/{{this._id}}">{{this.username}}</a></td>
                     <td><a href="/admin/userdetails/{{this._id}}">{{this.email}}</a></td>
                     <td><a href="/admin/userdetails/{{this._id}}">{{this.mobileNumber}}</a></td>

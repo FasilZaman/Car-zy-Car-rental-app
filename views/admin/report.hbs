@@ -1,0 +1,149 @@
+<div class="content-body">
+  <div class="container-fluid">
+    <div class="row page-titles mx-0">
+      <div class="col-sm-6 p-md-0">
+        <div class="welcome-text pt-2">
+          <h4>BOOKINGS REPORT</h4>
+        </div>
+      </div>
+      {{!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active"><a class="btn btn-success" href="/admin/addcars"> <span
+                style="color: white;"> add Cars</span></a></li>
+        </ol>
+      </div> --}}
+    </div>
+
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mr-2"> <b> Select Dates </b> </h4>
+          </div>
+          <div class="card-body">
+            <form action="/admin/searchbookingsreport" method="post">
+              <div class="row">
+                <div class="col-md-5">
+                  <input type="date" class="form-control" id="pick_date1" placeholder="Date" name="startDate" value="{{startdate}}" onclick="startdatepick()" required>
+                </div>
+                <div class="col-md-5">
+                  <input type="date" class="form-control" id="pick_date2" placeholder="Date" name="endDate" value="{{enddate}}" onclick="enddatepick()" required disabled>
+                </div>
+                <div class="col-md-2 ">
+                  <input class="btn btn-success px-4" type="submit" value="Submit"
+                    style="color: white; font-weight: bolder; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                </div>
+
+              </div>
+            </form>
+         </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">REPORT</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="carstable" class="display" style="min-width: 845px">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Bookings</th>
+                    <th scope="col">SUV</th>
+                    <th scope="col">HATCHBACK</th>
+                    <th scope="col">SEDAN</th>
+                    <th scope="col">revenue</th>
+
+
+                  </tr>
+                </thead>
+                {{#each bookingsreport}}
+                <tr>
+
+                  <td data-sort="YYYYMMDD">{{this.date}}</td>
+                  <td>{{this.count}}</td>
+                  <td>{{this.SUV}}</td>
+                  <td>{{this.HATCHBACK}}</td>
+                  <td>{{this.SEDAN}}</td>
+                  <td>{{this.revenue}}</td>
+
+                </tr>
+                {{/each}}
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script>
+
+      function startdatepick(){
+        {{!-- alert("qwerty") --}}
+        var date = new Date()
+
+        var month = date.getMonth() + 1;
+        var day = date.getDate()
+        var year = date.getFullYear();
+        if(month < 10)
+        month = '0' + month.toString();
+        if(day < 10)
+        day = '0' + day.toString()
+        var minDate = year + '-' + month + '-' + day;
+        $('#pick_date1').attr('max', minDate);
+
+        document.getElementById('pick_date2').removeAttribute("disabled")
+      }
+
+
+    function enddatepick(){
+    var dtToday = document.getElementById("pick_date1").value  
+    var dropdate = new Date(dtToday)
+    {{!-- alert(dropdate) --}}
+
+    var month = dropdate.getMonth() + 1;
+    var day = dropdate.getDate()
+    var year = dropdate.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+  {{!-- alert(dtToday);  --}}
+    var date = new Date()
+
+        var month = date.getMonth() + 1;
+        var day = date.getDate()
+        var year = date.getFullYear();
+        if(month < 10)
+        month = '0' + month.toString();
+        if(day < 10)
+        day = '0' + day.toString()
+        var minDate = year + '-' + month + '-' + day;
+
+        $('#pick_date2').attr('max', minDate);
+
+    $('#pick_date2').attr('min', maxDate);
+};
+    </script>
+
+
+      <script>
+        $(document).ready(function () {
+          $('#carstable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+          });
+        });
+      </script>

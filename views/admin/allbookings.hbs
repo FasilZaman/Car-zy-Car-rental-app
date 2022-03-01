@@ -1,72 +1,111 @@
- <div class="content-body">
-    <div class="container-fluid">
-      <div class="row page-titles mx-0">
-        <div class="col-sm-6 p-md-0">
-          <div class="welcome-text pt-2">
-            <h4>ALL UPCOMING BOOKINGS</h4>
+<div class="content-body">
+  <div class="container-fluid">
+    <div class="row page-titles mx-0">
+      <div class="col-sm-6 p-md-0">
+        <div class="welcome-text pt-2">
+          <h4>ALL UPCOMING BOOKINGS</h4>
+        </div>
+      </div>
+      {{!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active"><a class="btn btn-success" href="/admin/addcars"> <span
+                style="color: white;"> add Cars</span></a></li>
+        </ol>
+      </div> --}}
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">All carslist</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="carstable" class="display" style="min-width: 845px">
+                <thead>
+                  <tr>
+                    <th scope="col">username</th>
+                    <th scope="col">contact</th>
+                    <th scope="col">carname</th>
+                    <th scope="col">carnumber</th>
+                    <th scope="col">location</th>
+                    <th scope="col">pickupdate and time</th>
+                    <th scope="col">dropoffdate and time</th>
+                    <th scope="col">price</th>
+                    <th scope="col">actions</th>
+
+                  </tr>
+                </thead>
+                {{#each Bookings}}
+                <tr>
+                  {{#each bookeduser}}
+                  <td>{{this.username}}</td>
+                  <td>{{this.mobileNumber}}</td>
+                  {{/each}}
+                  {{#each cars}}
+                  <td>{{this.Brand}} {{this.Name}}</td>
+                  <td>{{this.Carnumber}}</td>
+                  <td>{{this.location}}</td>
+                  {{/each}}
+                  <td>{{this.pickupdate}} - {{this.pickuptime}}</td>
+                  <td>{{this.dropoffdate}} - {{this.dropofftime}}</td>
+                  <td>{{this.price}}</td>
+                  <td>
+                    <div class="col-12 col-lg-3 col-md-12 ">
+                      {{!-- <a href="" class="btn btn-outline-danger px-5">Cancel</a> --}}
+                      <!-- Button trigger modal -->
+                      <button type="button" data-id="{{this._id}}" data-user="{{this.user}}"
+                        class="cancel btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                        Cancel
+                      </button>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              Are you sure to cancel the ride
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-secondary"
+                                data-dismiss="modal">Close</button>
+                              <a href="" id="cancel" class="btn btn-outline-primary">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+
+              </table>
+            </div>
           </div>
         </div>
-        {{!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a class="btn btn-success" href="/admin/addcars"> <span style="color: white;"> add Cars</span></a></li>
-          </ol>
-        </div> --}}
       </div>
 
+      <script>
+        $(document).on("click", ".cancel", function (e) {
+          const bookingid = $(e.target).data('id');
+          const userid = $(e.target).data('user')
+
+          $('.modal-footer #cancel').attr('href', "/admin/cancelrideadmin?id=" + bookingid + "&user=" + userid)
+        })
+      </script>
 
 
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">All carslist</h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table id="carstable" class="display" style="min-width: 845px">
-                  <thead>
-                    <tr>
-                      <th scope="col">username</th>
-                      <th scope="col">contact</th>
-                      <th scope="col">carname</th>
-                      <th scope="col">carnumber</th>
-                      <th scope="col">location</th>
-                      <th scope="col">pickupdate and time</th>
-                      <th scope="col">dropoffdate and time</th>
-                      <th scope="col">price</th>
-                      <th scope="col">actions</th>
-
-                    </tr>
-                  </thead>
-                  {{#each Bookings}}
-                  <tr>
-                    {{#each bookeduser}}
-                    <td>{{this.username}}</td>           
-                    <td>{{this.mobileNumber}}</td>
-                    {{/each}}
-                    {{#each cars}}
-                    <td>{{this.Brand}} {{this.Name}}</td>
-                    <td>{{this.Carnumber}}</td>                  
-                    <td>{{this.location}}</td>
-                    {{/each}}               
-                    <td>{{this.pickupdate}} -  {{this.pickuptime}}</td>           
-                    <td>{{this.dropoffdate}} -  {{this.dropofftime}}</td>
-                    <td>{{this.price}}</td>
-                    <td>
-                      <a href="#" class="btn btn-danger py-1">cancel</a>
-                    </td>                  
-                  </tr>
-                  {{/each}}
-
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <script>
-          $(document).ready(function () {
-            $('#carstable').DataTable();
-          });
-        </script>
+      <script>
+        $(document).ready(function () {
+          $('#carstable').DataTable();
+        });
+      </script>

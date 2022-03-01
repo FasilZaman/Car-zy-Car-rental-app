@@ -3,7 +3,7 @@
       <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0">
           <div class="welcome-text pt-2">
-            <h4>ALL ONGOING BOOKINGS</h4>
+            <h4>ALL CANCELLED BOOKINGS</h4>
           </div>
         </div>
         {{!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -26,6 +26,7 @@
                 <table id="carstable" class="display" style="min-width: 845px">
                   <thead>
                     <tr>
+                      <th scope="col">Sl no</th>
                       <th scope="col">username</th>
                       <th scope="col">contact</th>
                       <th scope="col">carname</th>
@@ -34,12 +35,13 @@
                       <th scope="col">pickupdate and time</th>
                       <th scope="col">dropoffdate and time</th>
                       <th scope="col">price</th>
-                      <th scope="col">actions</th>
+                      
 
                     </tr>
                   </thead>
                   {{#each bookings}}
                   <tr>
+                    <td>{{inc @index}}</td>
                     {{#each bookeduser}}
                     <td>{{this.username}}</td>           
                     <td>{{this.mobileNumber}}</td>
@@ -52,9 +54,7 @@
                     <td>{{this.pickupdate}} -  {{this.pickuptime}}</td>           
                     <td>{{this.dropoffdate}} -  {{this.dropofftime}}</td>
                     <td>{{this.price}}</td>
-                    <td>
-                      <a href="/admin/endtrip?id={{this._id}}&user={{this.user}}" class="btn btn-success py-1" style="color: white;">End</a>
-                    </td>                  
+                                     
                   </tr>
                   {{/each}}
 

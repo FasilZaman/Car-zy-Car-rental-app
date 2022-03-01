@@ -25,7 +25,7 @@
 
 <div class="container">
 	<div class="row mt-4">
-		<div class="col-12 col-md-11 col-lg-5 col-10 \ ">
+		<div class="col-12 col-md-11 col-lg-5 col-10">
 			<div>
 				<div class="card">
 					<img class="card-img-top" src="/carimages/{{car._id}}1.jpg" alt="Card image cap">
@@ -63,12 +63,13 @@
 			<div class="card">
 				<div class="card-header">
 					<b> Select location on map and select payment gateway </b>
-					
-					{{!-- <b> Select location on map and select payment gateway / <a href="/payfromwalletdelivery"> pay from
+
+					{{!-- <b> Select location on map and select payment gateway / <a href="/payfromwalletdelivery"> pay
+							from
 							your wallet </a> </b> --}}
-				
-					
-					
+
+
+
 				</div>
 				<ul class="list-group list-group-flush">
 					{{#if wallet}}
@@ -83,10 +84,13 @@
 								autocomplete="off" value="razorpay" required>
 							<label class="btn btn-outline-primary mt-2" for="danger-outlined"><img
 									src="/images/Razorpay.jpg" style="height: 45px; width: 150px;"></label>
-							<input type="radio" class="btn-check" name="paymentoptions" id="btn-check-outlined" autocomplete="off" value="wallet" required>
-							<label class="btn btn-outline-primary mt-2 py-3" for="btn-check-outlined"><b> pay with your wallet </b></label>
+							<input type="radio" class="btn-check" name="paymentoptions" id="btn-check-outlined"
+								autocomplete="off" value="wallet" required>
+							<label class="btn btn-outline-primary mt-2 py-3" for="btn-check-outlined"><b> pay with your
+									wallet </b></label>
 
-							<input class="btn btn-success mt-3 px-3" style="float: right; margin-right: 10px;" type="submit"></input>
+							<input class="btn btn-success mt-3 px-3" style="float: right; margin-right: 10px;"
+								type="submit"></input>
 						</form>
 
 					</li>
@@ -102,10 +106,17 @@
 								autocomplete="off" value="razorpay" required>
 							<label class="btn btn-outline-primary mt-2" for="danger-outlined"><img
 									src="/images/Razorpay.jpg" style="height: 45px; width: 150px;"></label>
-							{{!-- <input type="radio" class="btn-check" name="paymentoptions" id="btn-check-outlined" autocomplete="off">
-							<label class="btn btn-outline-primary mt-2 py-3" for="btn-check-outlined"><b> pay with your wallet </b></label> --}}
+							<input type="radio" class="btn-check" name="paymentoptions" id="btn-check-outlined"
+								autocomplete="off" value="wallet" disabled>
+							<label class="btn btn-outline-primary mt-2 py-3" for="btn-check-outlined"><b> pay with your
+									wallet </b></label>
+							{{!-- <input type="radio" class="btn-check" name="paymentoptions" id="btn-check-outlined"
+								autocomplete="off">
+							<label class="btn btn-outline-primary mt-2 py-3" for="btn-check-outlined"><b> pay with your
+									wallet </b></label> --}}
 
-							<input class="btn btn-success mt-3 px-3" style="float: right; margin-right: 10px;" type="submit"></input>
+							<input class="btn btn-success mt-3 px-3" style="float: right; margin-right: 10px;"
+								type="submit"></input>
 						</form>
 
 					</li>
@@ -199,14 +210,13 @@
 			success: (response) => {
 				if (response.razorpay) {
 					razorpayment(response)
-				} else if(response.paypal) {
+				} else if (response.paypal) {
 					window.location.href = response.payment
-				} else if(response.wallet){
+				} else if (response.wallet) {
 					window.location.href = '/deliveryordersuccess'
 				}
 			}
 		})
-
 	})
 
 	function razorpayment(order) {

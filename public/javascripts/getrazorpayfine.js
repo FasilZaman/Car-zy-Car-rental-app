@@ -2,8 +2,11 @@ const { response } = require("../../app");
 const { post } = require("../../routes/admin");
 
 function getrazorpay() {
+    alert("qwerty")
+   let bookingid = document.getElementById('bookingid').value
+   alert(bookingid)
     $.ajax({
-        url: '/razorpay',
+        url: '/razorpay?id='+bookingid,
         method: "get",
         success: (response) => {
             alert(response)
@@ -14,6 +17,7 @@ function getrazorpay() {
                 "currency": "INR",
                 "name": "car-Zy",
                 "description": "Booking Transaction",
+                "image": "https://example.com/your_logo",
                 "order_id": response.id, //This is a sample Order ID. Pass the `id` obtained in the previous step
                 "handler": function (response) {
                     // alert(response.razorpay_payment_id);
@@ -58,7 +62,8 @@ function verifypayment(payment) {
         method: 'post',
         success:(response)=>{
             if(response.status){
-                window.location.href ='/ordersuccess'
+                alert('qwe')
+                window.location.href ='/finepayment'
             }else{
                 alert("paymentfailed")
             }

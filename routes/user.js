@@ -16,6 +16,7 @@ const async = require('hbs/lib/async');
 const client = require('twilio')(accountSID, authTockon);
 const paypal = require('paypal-rest-sdk');
 const { ObjectId } = require('mongodb');
+const adminhelpers = require('../helpers/adminhelpers');
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'Af9zpw5WTBmWLed-SFeHXO7fj-Jkga5zVQoe7CTZEFP8ynZE8X-XYxS2Yb3i3xMnbQOP2E66oD4F75U-',
@@ -43,6 +44,13 @@ router.get('/', verifyUser, function (req, res, next) {
   userdetails = req.session.userdetails
   res.render('user/home', { 'loggedIn': req.session.user, user: true, userdetails });
 });
+
+router.get('/allcars', verifyUser, async(req,res) => {
+  userdetails = req.session.userdetails
+  let allcars = await userhelpers.getallcars()
+  console.log("all: ",allcars);
+  res.render('user/allcars',{user:true, 'loggedIn': req.session.user, userdetails ,allcars})
+})
 
 //loading user login page
 router.get('/loginpage', verifyUser, (req, res) => {
@@ -270,23 +278,23 @@ router.post('/carslist', (req, res) => {
   req.session.bookingdetail = req.body
   bookingdetails = req.session.bookingdetail
   carsHelpers.getusercars(diff, req.body).then((Cars) => {
-    
-    for (let i of Cars){
-      if(i.discount){        
+
+    for (let i of Cars) {
+      if (i.discount) {
         // req.session.discount = true
-        discountamount = (i.Price*i.discount)/100
-        discountedPrice = (i.Price - discountamount )
+        discountamount = (i.Price * i.discount) / 100
+        discountedPrice = (i.Price - discountamount)
         i.realPrice = i.Price
         i.Price = parseInt(discountedPrice)
         i.discountamount = parseInt(discountamount)
       }
     }
     console.log(Cars);
-   
-  
-      res.render('user/carslist', { Cars, user: true, bookingdetails  })
-   
-    
+
+
+    res.render('user/carslist', { Cars, user: true, bookingdetails })
+
+
 
   })
 })
@@ -300,12 +308,13 @@ router.get('/carslistpage', (req, res) => {
 router.get('/carsdetails/:id', (req, res) => {
   let carId = req.params.id
   carsHelpers.carDetails(carId).then((Car) => {
+    Car.realPrice = Car.Price
     Car.Price = parseInt(Car.Price * req.session.totalhours)
-    console.log("miniminimini",Car);
-    if(Car.discount){
+    console.log("miniminimini", Car);
+    if (Car.discount) {
       console.log("wertyq");
-      discountamount = (Car.Price*Car.discount)/100
-      discountedPrice = (Car.Price - discountamount )
+      discountamount = (Car.Price * Car.discount) / 100
+      discountedPrice = (Car.Price - discountamount)
       Car.realPrice = Car.Price
       Car.Price = parseInt(discountedPrice)
       Car.discountamount = parseInt(discountamount)
@@ -330,23 +339,23 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
     user = req.session.userDetails
 
     let coupon = await userhelpers.getcoupon()
-    
-    if(user.coupon){
-      for (let i in coupon){
-        for (let j of user.coupon){
-          console.log(coupon[i]._id,"=======",ObjectId(j));
+
+    if (user.coupon) {
+      for (let i in coupon) {
+        for (let j of user.coupon) {
+          console.log(coupon[i]._id, "=======", ObjectId(j));
           var usercoupon = coupon[i]._id.toString()
-          var couponid =  ObjectId(j).toString()
-          console.log(usercoupon,":::",couponid);
-          if(usercoupon == couponid){
+          var couponid = ObjectId(j).toString()
+          console.log(usercoupon, ":::", couponid);
+          if (usercoupon == couponid) {
             console.log("yes");
-            coupon.splice(i,1)
+            coupon.splice(i, 1)
           }
         }
       }
     }
 
-    console.log("after splice : ",coupon);
+    console.log("after splice : ", coupon);
 
     console.log("12345678900909090900909090", coupon);
 
@@ -360,17 +369,17 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       let discount = 0
 
 
-      if(Car.discount){
+      if (Car.discount) {
         console.log("wertyq");
-        discountamount = (Car.Price*Car.discount)/100
-        discountedPrice = (Car.Price - discountamount )
+        discountamount = (Car.Price * Car.discount) / 100
+        discountedPrice = (Car.Price - discountamount)
         // Car.realPrice = Car.Price
         Car.Price = parseInt(discountedPrice)
         // Car.discountamount = parseInt(discountamount)
       }
 
 
-      
+
       if (req.session.coupon) {
         off = req.session.couponoff
         console.log(off);
@@ -382,7 +391,12 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       }
 
       userdetails = req.session.userDetails
-      console.log(userdetails);
+      if(userdetails.fine){
+        fine = true
+      }else{
+        fine = false
+      }
+      console.log("qwerty",userdetails);
       if (userdetails.wallet) {
         walletmoney = parseInt(userdetails.wallet)
         Price1 = Car.Price
@@ -397,7 +411,7 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       }
       req.session.car = Car
       console.log(Car);
-      res.render('user/userbooking', { Car, user: true, bookingdetails, approved, wallet: req.session.wallet, coupon, couponoff: req.session.coupon, discount })
+      res.render('user/userbooking', { Car, user: true, bookingdetails, approved,fine, wallet: req.session.wallet, coupon, couponoff: req.session.coupon, discount })
     })
   } else {
     res.redirect('/loginpage')
@@ -576,7 +590,7 @@ router.post('/booknow', (req, res) => {
   req.session.longitude = longitude
   req.session.lattitude = lattitude
   if (req.body.details == 'paymentoptions=razorpay') {
-    console.log(Price);
+    console.log("11111111111111111111111111111111asasasasasaasasasasas", Price);
     userhelpers.generateRazorpay(Price).then((response) => {
       response.razorpay = true
       res.json(response)
@@ -593,7 +607,7 @@ router.post('/booknow', (req, res) => {
       },
       "redirect_urls": {
         "return_url": "http://localhost:3000/deliveryordersuccess",
-        "cancel_url": "http://localhost:3000/"
+        "cancel_url": "http://localhost:3000/Bookcar?id=620e78befd753d42c13dd828"
       },
       "transactions": [{
         "item_list": {
@@ -661,20 +675,35 @@ router.post('/delivery', (req, res) => {
       }
     }
     //  bookingdetails = req.session.bookingdetail
-    res.render('user/delivery.hbs', { car, bookingdetails, wallet: req.session.wallet })
+    res.render('user/delivery', { car, bookingdetails, wallet: req.session.wallet })
   } else {
     res.redirect('/loginpage')
   }
 })
 
-router.get('/razorpay', (req, res) => {
+router.get('/razorpay/', (req, res) => {
   console.log("qwerty---------------------------------------------------");
   if (req.session.user) {
-    Price = req.session.car.Price
-    userhelpers.generateRazorpay(Price).then((response) => {
+    if(req.query.id){
+      id = req.query.id
+      req.session.fineid = id
+      adminhelpers.getbookings(id).then((bookings)=>{
+        Price = parseInt(bookings.fineamount)
+        userhelpers.generateRazorpay(Price).then((response) => {
+          console.log("qweqweqwe");
+          res.json(response)
+        })
+      })
+      
 
-      res.json(response)
-    })
+    }else{
+      Price = req.session.car.Price
+      userhelpers.generateRazorpay(Price).then((response) => {
+  
+        res.json(response)
+      })
+
+    }
   } else {
     res.redirect('/loginpage')
   }
@@ -694,15 +723,26 @@ router.post('/verifypayment', (req, res) => {
   })
 })
 
-router.get('/ordersuccess', (req, res) => {
-  userId = req.session.userDetails._id
-  carId = req.session.car._id
-  Price = req.session.car.Price
-  couponid = req.session.couponid
-  userhelpers.addcoupontouser(userId, couponid)
-  userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
-    res.render('user/successpage', { user: true })
+router.get('/finepayment',(req,res) => {
+  let userid = req.session.userDetails._id
+  console.log(userid);
+  let id = req.session.fineid
+  console.log("anyanyanayanaynaynayanyanyayaanaynaynaanay");
+  userhelpers.updatefine(userid,id).then((response)=>{
+    res.render('user/successpage',{user:true})
   })
+})
+
+router.get('/ordersuccess', (req, res) => {
+    userId = req.session.userDetails._id
+    carId = req.session.car._id
+    Price = req.session.car.Price
+    couponid = req.session.couponid
+    userhelpers.addcoupontouser(userId, couponid)
+    userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
+      res.render('user/successpage', { user: true })
+    })
+
 })
 
 router.get('/deliveryordersuccess', (req, res) => {
@@ -744,6 +784,54 @@ router.get('/paypal', (req, res) => {
     },
     "redirect_urls": {
       "return_url": "http://localhost:3000/ordersuccess",
+      "cancel_url": "http://localhost:3000/Bookcar?id=620e78befd753d42c13dd828"
+    },
+    "transactions": [{
+      "item_list": {
+        "items": [{
+          "name": "Car-zy",
+          "sku": "001",
+          "price": Price,
+          "currency": "USD",
+          "quantity": 1
+        }]
+      },
+      "amount": {
+        "currency": "USD",
+        "total": Price
+      },
+      "description": "best rentals ever"
+    }]
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+      throw error;
+    } else {
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === 'approval_url') {
+          res.redirect(payment.links[i].href);
+        }
+      }
+    }
+  });
+
+});
+
+router.get('/paypalfine/', (req, res) => {
+  id = req.query.id
+  let bookings = userhelpers.getonebooking(id)  
+  Price = bookings.fineamount
+  Price = parseInt(Price) / 75
+  Price = parseInt(Price)
+  console.log(Price);
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+      "payment_method": "paypal"
+    },
+    "redirect_urls": {
+      "return_url": "http://localhost:3000/finepayment",
       "cancel_url": "http://localhost:3000/"
     },
     "transactions": [{
@@ -816,6 +904,7 @@ router.get('/endedrides', (req, res) => {
   if (req.session.user) {
     carsHelpers.getendedbookings(userdetails).then((userBookings) => {
       ended = true
+      userBookings = userBookings.reverse()
       res.render('user/bookinghistory', { user: true, userBookings, ended })
     })
   } else {
@@ -834,7 +923,7 @@ router.get('/cancelride/', (req, res) => {
     console.log(Price);
     wallet = parseInt(Price) * (80 / 100)
     console.log(wallet);
-    carsHelpers.deletebooking(id).then((response) => {
+    carsHelpers.cancelbooking(id).then((response) => {
       console.log("ride cancelled");
     })
     carsHelpers.updateuserwallet(userid, wallet).then((response) => {

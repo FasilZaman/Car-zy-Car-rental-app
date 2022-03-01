@@ -110,7 +110,7 @@ module.exports = {
                 car.push(i)
                 // console.log(i);
             }
-            
+
             // for (let i of car) {
             //     console.log("qqqqqqq : ",i.bookings);
             // }
@@ -131,7 +131,7 @@ module.exports = {
             //     console.log(i.pickupdate);
             // }
 
-            for (let i in car) {               
+            for (let i in car) {
                 for (let j in carbooking) {
                     console.log("one :", car[i]._id, "+++++", carbooking[j].car);
                     if (car[i]._id.toString() === carbooking[j].car.toString()) {
@@ -163,7 +163,7 @@ module.exports = {
             // for (let i of carbooking) {
             //     console.log("qwererer",i.car);
             //     console.log(car._id);
-                
+
             //         var pickup = body.pickupDate
             //         var dropoff = body.dropoffDate
             //         var searchpickup = new Date(pickup)
@@ -178,7 +178,7 @@ module.exports = {
             //             car.splice(i, 1)
             //         }
 
-          
+
             // }
 
             // console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqq", car);
@@ -292,9 +292,22 @@ module.exports = {
             resolve(booking)
         })
     },
-    deletebooking: (bookingId) => {
+    cancelbooking: (bookingId) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection(collection.BOOKINGSCOLLECTION).deleteOne({ _id: ObjectId(bookingId) }).then((response) => {
+            let date = new Date()
+            console.log(date);
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            let day = date.getDate()
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10)
+                day = '0' + day.toString();
+            console.log(day);
+            let today = year + '-' + month + '-' + day;
+
+            console.log("today : ", today);
+            await db.get().collection(collection.BOOKINGSCOLLECTION).updateOne({ _id: ObjectId(bookingId) }, { $set: { status: 'cancelled', dropoffdate: today } }).then((response) => {
                 resolve(response)
             })
         })

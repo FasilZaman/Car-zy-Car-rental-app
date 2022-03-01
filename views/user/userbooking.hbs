@@ -41,11 +41,15 @@
                                     <option value="pickup">Pickup</option>
                                     <option value="delivery">delivery</option>
                                 </select></span></li>
+                                
                         {{#if approved}}
-                        {{#if wallet}}
-                        <h6>Select paymentgateway / <a href="/payfromwallet"> pay from your wallet </a></h6>
+                        {{#if fine}}
+                            <p style="color: red;"> Pay your outstanding amount First</p>
                         {{else}}
-                        <h6>Select paymentgateway </h6>
+                        {{#if wallet}}
+                        <p>Select paymentgateway / <a href="/payfromwallet"> pay from your wallet </a></p>
+                        {{else}}
+                        <label>Select paymentgateway / <span  style="color: blue;" > pay from you wallet  </span> </label>
                         {{/if}}
                         <li id="payment" style="display: block;">
                             <input type="radio" class="btn-check" name="paymentoptions" id="success-outlined"
@@ -65,6 +69,7 @@
                                 style="float: right;" value="select location"></li>
                         {{else}}
                         <p style="color: red;">upload your license / wait for approval to book a car</p>
+                        {{/if}}
                         {{/if}}
 
                     </div>

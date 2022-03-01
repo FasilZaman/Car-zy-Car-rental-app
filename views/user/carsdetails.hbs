@@ -94,37 +94,8 @@
 									class="flaticon-dashboard"></span></div>
 							<div class="text">
 								<p style="color: black;">
-									Car :
-									<span>{{Car.Name}}</span>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services">
-					<div class="media-body py-md-4">
-						<div class="d-flex mb-3 align-items-center">
-							<div class="icon d-flex align-items-center justify-content-center"><span
-									class="flaticon-pistons"></span></div>
-							<div class="text">
-								<p style="color: black;">Brand : <span>{{Car.Brand}}</span></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md d-flex align-self-stretch ftco-animate">
-				<div class="media block-6 services">
-					<div class="media-body py-md-4">
-						<div class="d-flex mb-3 align-items-center">
-							<div class="icon d-flex align-items-center justify-content-center"><span
-									class="flaticon-car-seat"></span></div>
-							<div class="text">
-								<p style="color: black;">
-									Seats :
-									<span>{{Car.Seats}}</span>
+									Car : <br>
+									<span>{{Car.Brand}} {{Car.Name}}</span>
 								</p>
 							</div>
 						</div>
@@ -136,12 +107,9 @@
 					<div class="media-body py-md-4">
 						<div class="d-flex mb-3 align-items-center">
 							<div class="icon d-flex align-items-center justify-content-center"><span
-									class="flaticon-backpack"></span></div>
+									class="flaticon-pistons"></span></div>
 							<div class="text">
-								<p style="color: black;">
-									number
-									<span>{{Car.Carnumber}}</span>
-								</p>
+								<p style="color: black;">Brand : <br> <span></span></p>
 							</div>
 						</div>
 					</div>
@@ -152,10 +120,42 @@
 					<div class="media-body py-md-4">
 						<div class="d-flex mb-3 align-items-center">
 							<div class="icon d-flex align-items-center justify-content-center"><span
+									class="flaticon-car-seat"></span></div>
+							<div class="text">
+								<p style="color: black;">
+									Seats : <br>
+									<span>{{Car.Seats}}</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md d-flex align-self-stretch ftco-animate">
+				<div class="media block-6 services">
+					<div class="media-body py-md-4">
+						<div class="d-flex mb-3 align-items-center">
+							<div class="icon d-flex align-items-center justify-content-center"><span
+									class="flaticon-backpack"></span></div>
+							<div class="text">
+								<p style="color: black;">
+									Price <br>
+									<span style="color: red;">  ₹ {{Car.Price}}</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md d-flex align-self-stretch ftco-animate">
+				<div class="media block-6 services">
+					<div class="media-body py-md-4">
+						<div class="d-flex mb-3 align-items-center">
+							<div class="icon d-flex align-items-center justify-content-center"><span
 									class="flaticon-diesel"></span></div>
 							<div class="text">
 								<p style="color: black;">
-									Fuel :
+									Fuel : <br>
 									<span>{{Car.Fuel}}</span>
 								</p>
 							</div>
@@ -176,11 +176,11 @@
 					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
 						<li class="nav-item">
-							<a class="nav-link active" id="pills-description-tab" data-toggle="pill"
+							<p style="font-size: x-large; font-family: Georgia, 'Times New Roman', Times, serif"><b><a class="nav-link active" id="pills-description-tab" data-toggle="pill"
 								href="#pills-description" role="tab" aria-controls="pills-description"
-								aria-expanded="true">Features</a>
+								aria-expanded="true">Details</a></b></p>
 						</li>
-						<li class="nav-item">
+						{{!-- <li class="nav-item">
 							<a class="nav-link" id="pills-manufacturer-tab" data-toggle="pill"
 								href="#pills-manufacturer" role="tab" aria-controls="pills-manufacturer"
 								aria-expanded="true">Description</a>
@@ -188,15 +188,11 @@
 						<li class="nav-item">
 							<a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab"
 								aria-controls="pills-review" aria-expanded="true">Review</a>
-						</li>
+						</li> --}}
 					</ul>
 				</div>
 
 				<div class="container">
-
-				</div>
-
-				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="pills-description" role="tabpanel"
 						aria-labelledby="pills-description-tab">
 						<div class="row">
@@ -215,7 +211,7 @@
 									<li class="check"><span class="ion-ios-checkmark"></span>Brand : {{Car.Brand}}</li>
 									<li class="check"><span class="ion-ios-close"></span>Car number : {{Car.Carnumber}}
 									</li>
-									<li class="check"><span class="ion-ios-checkmark"></span>Price/hour : ₹ {{Car.Price}}
+									<li class="check"><span class="ion-ios-checkmark"></span>Price/hour : <span style="color: red; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">  ₹ {{Car.realPrice}} </span>
 									</li>
 									{{!-- <li class="check"><span class="ion-ios-checkmark"></span>Bluetooth</li>
 									<li class="remove"><span class="ion-ios-close"></span>Onboard computer</li> --}}
@@ -235,9 +231,14 @@
 							</div>
 						</div>
 					</div>
+
+				</div>
+
+				{{!-- <div class="tab-content" id="pills-tabContent"> --}}
+					
 					
 
-					<div class="tab-pane fade" id="pills-manufacturer" role="tabpanel"
+					{{!-- <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel"
 						aria-labelledby="pills-manufacturer-tab">
 						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
 							unorthographic life One day however a small line of blind text by the name of Lorem Ipsum
@@ -246,9 +247,9 @@
 							skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of
 							her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she
 							continued her way.</p>
-					</div>
+					</div> --}}
 
-					<div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+					{{!-- <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 						<div class="row">
 							<div class="col-md-7">
 								<h3 class="head">23 Reviews</h3>
@@ -382,8 +383,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</div> --}}
+				{{!-- </div> --}}
 			</div>
 		</div>
 	</div>
@@ -454,7 +455,7 @@
 		<div class="row mb-5">
 			<div class="col-md">
 				<div class="ftco-footer-widget mb-4">
-					<h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>book</span></a></h2>
+					<h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>-Zy</span></a></h2>
 					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
 						live the blind texts.</p>
 					<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
@@ -502,19 +503,6 @@
 						</ul>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-
-				<p>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
-					made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
-						href="https://colorlib.com" target="_blank">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
 			</div>
 		</div>
 	</div>

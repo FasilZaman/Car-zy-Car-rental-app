@@ -1,0 +1,61 @@
+<div class="content-body">
+  <div class="container-fluid">
+    <div class="row page-titles mx-0">
+      <div class="col-sm-6 p-md-0">
+        <div class="welcome-text pt-2">
+          <h4>USER REPORT</h4>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">REPORT</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="carstable" class="display" style="min-width: 845px">
+                <thead>
+                  <tr>
+                    <th scope="col">username</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">email</th>
+                    <th scope="col">total bookings</th>
+                    <th scope="col">amount spent</th>
+
+
+                  </tr>
+                </thead>
+                {{#each userreport}}
+                <tr>
+
+                  <td>{{this.userName}}</td>
+                  <td>{{this.userMobile}}</td>
+                  <td>{{this.userEmail}}</td>
+                  <td>{{this.count}}</td>
+                  <td>{{this.amount}}</td>
+
+                </tr>
+                {{/each}}
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <script>
+        $(document).ready(function () {
+          $('#carstable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+          });
+        });
+      </script>

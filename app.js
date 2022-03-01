@@ -17,6 +17,13 @@ var session=require('express-session')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerHelper('ifEquals',function(arg1, arg2, options){
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+hbs.registerHelper("inc", function(value, options)
+{
+    return parseInt(value) + 1;
+});
 hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 app.use(logger('dev'));
@@ -34,7 +41,7 @@ db.connect((err)=>{
   }
   
 })
-app.use(session({secret:"key",cookie:{maxAge:600000,sameSite:'lax'}})) 
+app.use(session({secret:"key",cookie:{maxAge:6000000,sameSite:'lax'}})) 
 app.use(function(req, res, next) { res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0'); next(); });
 
 app.use('/', userRouter);

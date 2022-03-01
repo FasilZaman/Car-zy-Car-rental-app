@@ -293,6 +293,27 @@ module.exports = {
             })
             
         })
+    },
+    updatefine:(userid,id)=>{
+        return new Promise(async(resolve,reject) => {
+            await db.get().collection(collection.USERCOLLECTION).updateOne({_id:ObjectId(userid)},{$set:{fine:false}}) 
+            await db.get().collection(collection.BOOKINGSCOLLECTION).updateOne({_id:ObjectId(id)},{$set:{fineamountstatus:'paid'}})
+            resolve(response)
+        })
+    },
+    getonebooking: (id)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log(id);
+            let bookings = await db.get().collection(collection.BOOKINGSCOLLECTION).findOne({_id:ObjectId(id)})
+            resolve(bookings)
+        })
+
+    },
+    getallcars: ()=>{
+        return new Promise(async(resolve,reject) => {
+            let allcars = await db.get().collection(collection.CARSCOLLECTION).find().toArray()
+            resolve(allcars)
+        })
     }
 
 }

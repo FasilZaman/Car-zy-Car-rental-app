@@ -4,6 +4,9 @@
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text pt-2">
                     <h4>ALL COUPONS</h4>
+                    {{#if couponfound}}
+                    <p style="color: red;">Coupon already exist</p>
+                    {{/if}}
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -40,8 +43,8 @@
                                                 <label for="recipient-name" class="col-form-label"
                                                     style="color: black;">Add
                                                     discount percentage:</label>
-                                                <input type="number" class="form-control" id="recipient-name"
-                                                    name="couponPercentage" minlength="2" maxlength="2" required>
+                                                <input type="text" class="numbers form-control" id="recipient-name"
+                                                    name="couponPercentage" maxlength="2" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="recipient-name" class="col-form-label"
@@ -140,6 +143,11 @@
             <script>
                 $(document).ready(function () {
                     $('#carstable').DataTable();
+                });
+            </script>
+            <script>
+                $('.numbers').keyup(function () {
+                    this.value = this.value.replace(/[^0-9\.]/g, '');
                 });
             </script>
 

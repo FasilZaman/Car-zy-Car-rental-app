@@ -34,6 +34,7 @@
                             <table id="carstable" class="display" style="min-width: 845px">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Sl no</th>
                                         <th scope="col">username</th>
                                         <th scope="col">contact</th>
                                         <th scope="col">carname</th>
@@ -48,6 +49,7 @@
                                 </thead>
                                 {{#each bookingstoday}}
                                 <tr>
+                                    <td>{{inc @index}}</td>
                                     {{#each bookeduser}}
                                     <td>{{this.username}}</td>
                                     <td>{{this.mobileNumber}}</td>
@@ -61,7 +63,8 @@
                                     <td>{{this.dropoffdate}} - {{this.dropofftime}}</td>
                                     <td>{{this.price}}</td>
                                     <td>
-                                        <a href="/admin/starttrip?id={{this._id}}" class="btn btn-success py-1" style="color: white;">Start trip</a>
+                                        <a href="/admin/starttrip?id={{this._id}}" class="btn btn-success py-1"
+                                            style="color: white;">Start trip</a>
                                     </td>
                                 </tr>
                                 {{/each}}
@@ -106,6 +109,7 @@
                                         <table id="carstable" class="display" style="min-width: 845px">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col">Sl no</th>
                                                     <th scope="col">username</th>
                                                     <th scope="col">contact</th>
                                                     <th scope="col">carname</th>
@@ -121,6 +125,7 @@
                                             </thead>
                                             {{#each bookingstodaydelivery}}
                                             <tr>
+                                                <td>{{inc @index}}</td>
                                                 {{#each bookeduser}}
                                                 <td>{{this.username}}</td>
                                                 <td>{{this.mobileNumber}}</td>
@@ -169,7 +174,9 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="/admin/starttrip?id={{this._id}}" class="btn btn-success py-1" style="color: white;">Start trip</a>
+                                                    <a href="/admin/starttrip?id={{this._id}}"
+                                                        class="btn btn-success py-1" style="color: white;">Start
+                                                        trip</a>
                                                 </td>
                                                 <input type="text" value="{{this.longitude}}" id="longitude" hidden>
                                                 <input type="text" value="{{this.lattitude}}" id="lattitude" hidden>
@@ -185,7 +192,6 @@
 
 
                         {{/if}}
-
                         <script>
 
 
@@ -203,7 +209,14 @@
                                 const marker1 = new mapboxgl.Marker({ color: 'red', rotation: 0 })
                                     .setLngLat([longitude, lattitude])
                                     .addTo(map);
+                                console.log("marker adress: ", marker1)
 
+
+
+
+                                const lngLat = marker1.getLngLat();
+                                console.log("longitude 1" + longitude)
+                                console.log("longitude 2 " + lngLat.lng)
                             })
 
 
@@ -212,6 +225,10 @@
 
 
                         </script>
+                        {{!--
+                        <script
+                            src="https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?types=address&access_token=pk.eyJ1IjoianNjYXN0cm8iLCJhIjoiY2s2YzB6Z25kMDVhejNrbXNpcmtjNGtpbiJ9.28ynPf1Y5Q8EyB_moOHylw"></script>
+                        --}}
 
 
                         <script>
