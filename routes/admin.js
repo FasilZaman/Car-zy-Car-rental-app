@@ -11,6 +11,8 @@ const userhelpers = require('../helpers/userhelpers');
 const adminhelpers = require('../helpers/adminhelpers');
 const async = require('hbs/lib/async');
 
+// check admin logged in or not
+
 const verifylogin = (req,res,next) =>{
   if(req.session.adminLogin){
       next()
@@ -22,7 +24,8 @@ const verifylogin = (req,res,next) =>{
 
 
 
-/* GET users listing. */
+// admin login and home page
+
 router.get('/login', async function (req, res, next) {
   if (req.session.adminLogin) {
     let response = await adminHelpers.getmostbookedcar()
@@ -63,6 +66,9 @@ router.get('/login', async function (req, res, next) {
   }
 
 });
+
+//admin login page
+
 router.post('/adminlogin', (req, res) => {
   adminHelpers.adminLogin(req.body).then((response) => {
     if (response.adminstatus) {
@@ -75,10 +81,16 @@ router.post('/adminlogin', (req, res) => {
     }
   })
 })
+
+//admin logout
+
 router.get('/logout', (req, res) => {
   req.session.adminLogin = false
   res.redirect('/admin/login')
 })
+
+// showing all cars in admin side
+
 router.get('/carslist', (req, res) => {
   if (req.session.adminLogin) {
     carsHelpers.getcardetails().then((Cars) => {
@@ -89,6 +101,9 @@ router.get('/carslist', (req, res) => {
   }
 
 })
+
+// admin add a car page
+
 router.get('/addcars', (req, res) => {
   if (req.session.adminLogin) {
     res.render('admin/addcars', { carfound: req.session.carfound, admin: true })
@@ -97,6 +112,9 @@ router.get('/addcars', (req, res) => {
   }
 
 })
+
+// admin car details page
+
 router.get('/cardetails/:id', (req, res) => {
   if (req.session.adminLogin) {
     let carId = req.params.id
@@ -109,6 +127,9 @@ router.get('/cardetails/:id', (req, res) => {
   }
 
 })
+
+// admin add a car
+
 router.post('/addone',verifylogin, (req, res) => {
   carsHelpers.addcardetails(req.body).then((response) => {
     if (response.carfound) {
@@ -126,6 +147,9 @@ router.post('/addone',verifylogin, (req, res) => {
     }
   })
 })
+
+// admin delete a car
+
 router.get('/deletecar/:id',verifylogin, (req, res) => {
   carId = req.params.id
   carsHelpers.deletecar(carId).then((response) => {
@@ -136,6 +160,9 @@ router.get('/deletecar/:id',verifylogin, (req, res) => {
     res.redirect('/admin/carslist')
   })
 })
+
+// admin edit a car details page
+
 router.get('/editCarPage/:id', (req, res) => {
   if (req.session.adminLogin) {
     let carId = req.params.id
@@ -148,6 +175,8 @@ router.get('/editCarPage/:id', (req, res) => {
   }
 
 })
+
+// admin edit a car
 
 router.post('/editCars/:id',verifylogin, (req, res) => {
   carId = req.params.id
@@ -182,17 +211,24 @@ router.post('/editCars/:id',verifylogin, (req, res) => {
 
 })
 
+//approved users list
+
 router.get('/approvedusers',verifylogin, (req, res) => {
   userhelpers.approveduser().then((approvedusers) => {
     res.render('admin/approvedusers', { admin: true, approvedusers })
   })
 })
 
+//not approved users list
+
 router.get('/notapprovedusers',verifylogin, (req, res) => {
   userhelpers.notapproveduser().then((notapprovedusers) => {
     res.render('admin/notapprovedusers', { admin: true, notapprovedusers })
   })
 })
+
+//user details
+
 router.get('/userdetails/:id',verifylogin, (req, res) => {
   let userId = req.params.id
   console.log(userId);
@@ -200,6 +236,8 @@ router.get('/userdetails/:id',verifylogin, (req, res) => {
     res.render('admin/userdetails', { admin: true, users })
   })
 })
+
+//approve a user
 
 router.get('/approveuser/:id',verifylogin, (req, res) => {
   let userId = req.params.id
@@ -218,6 +256,8 @@ router.get('/upcomingbookings',verifylogin, (req, res) => {
   })
 })
 
+//todays pickup bookings
+
 router.get('/bookingstodaypickup',verifylogin, (req, res) => {
   adminHelpers.getbookingstoday().then((bookingstoday) => {
     pickup = true
@@ -226,6 +266,8 @@ router.get('/bookingstodaypickup',verifylogin, (req, res) => {
   })
 })
 
+// todays booking for for delivery
+
 router.get('/fordelivery',verifylogin, (req, res) => {
   adminHelpers.getbookingstodaydelivery().then((bookingstodaydelivery) => {
     console.log("ererererer:", bookingstodaydelivery);
@@ -233,6 +275,8 @@ router.get('/fordelivery',verifylogin, (req, res) => {
 
   })
 })
+
+// all ongoing bookings
 
 router.get('/ongoingbookings',verifylogin, (req, res) => {
   adminHelpers.getongoingbookings().then((bookings) => {
@@ -243,6 +287,8 @@ router.get('/ongoingbookings',verifylogin, (req, res) => {
 
 })
 
+// all ended bookkings
+
 router.get('/endedbookings',verifylogin, (req, res) => {
   adminHelpers.getendedbookings().then((bookings) => {
 
@@ -252,12 +298,16 @@ router.get('/endedbookings',verifylogin, (req, res) => {
 
 })
 
+// all cancelled bookings
+
 router.get('/cancelledbookings',verifylogin, (req, res) => {
   adminHelpers.getcancelledbookings().then((bookings) => {
     res.render('admin/cancelledbookings', { admin: true, bookings })
   })
 })
 
+
+// admin can start a trip
 
 
 router.get('/starttrip/',verifylogin, (req, res) => {
@@ -268,6 +318,8 @@ router.get('/starttrip/',verifylogin, (req, res) => {
   })
 })
 
+// admin can end a trip
+
 router.get('/endtrip/',verifylogin, (req, res) => {
   bookingid = req.query.id
   userid = req.query.user
@@ -277,12 +329,16 @@ router.get('/endtrip/',verifylogin, (req, res) => {
   })
 })
 
+// all coupons page
+
 router.get('/coupons',verifylogin, (req, res) => {
   adminHelpers.getcoupons().then((coupons) => {
     console.log("..........................................................................................", coupons);
     res.render("admin/coupons", { admin: true, coupons , couponfound:req.session.couponfound })
   })
 })
+
+// add a coupon
 
 router.post('/addCoupons',verifylogin, (req, res) => {
   adminHelpers.addcoupon(req.body).then((response) => {
@@ -298,6 +354,8 @@ router.post('/addCoupons',verifylogin, (req, res) => {
   })
 })
 
+// delete a coupon
+
 router.get('/deletecoupon',verifylogin, (req, res) => {
   id = req.query.id
   console.log("abcd", id);
@@ -305,6 +363,8 @@ router.get('/deletecoupon',verifylogin, (req, res) => {
     res.redirect('/admin/coupons')
   })
 })
+
+// all offers
 
 router.get('/offers',verifylogin, (req, res) => {
   adminHelpers.getbrand().then((Brands) => {
@@ -317,6 +377,8 @@ router.get('/offers',verifylogin, (req, res) => {
 
 })
 
+// add a offer
+
 router.post('/addoffers',verifylogin, (req, res) => {
   adminHelpers.addoffer(req.body).then((response) => {
     req.session.offerexist = response.alreadyexist
@@ -324,6 +386,8 @@ router.post('/addoffers',verifylogin, (req, res) => {
     res.redirect('/admin/offers')
   })
 })
+
+// delete an offer
 
 router.get('/deleteoffer/',verifylogin, (req, res) => {
   console.log("qwerty");
@@ -334,6 +398,8 @@ router.get('/deleteoffer/',verifylogin, (req, res) => {
     res.redirect('/admin/offers')
   })
 })
+
+// get data into a chart
 
 router.get('/getChartdata',verifylogin, async (req, res) => {
   let response = {}
@@ -346,9 +412,14 @@ router.get('/getChartdata',verifylogin, async (req, res) => {
   res.json(response)
 })
 
+// search report
+
 router.get('/bookingsreport',verifylogin, (req, res) => {
   res.render('admin/bookingsreport', { admin: true })
 })
+
+
+// all bookings report
 
 router.post('/searchbookingsreport',verifylogin, (req, res) => {
   console.log("reportside1 : ", req.body);
@@ -359,11 +430,15 @@ router.post('/searchbookingsreport',verifylogin, (req, res) => {
   })
 })
 
+// user reports
+
 router.get('/userreport',verifylogin, (req, res) => {
   adminhelpers.getuserreport().then((userreport) => {
     res.render('admin/userreport', { admin: true, userreport })
   })
 })
+
+//cancel a ride
 
 router.get('/cancelrideadmin/',verifylogin, (req, res) => {
   console.log("qertyuyuy:");

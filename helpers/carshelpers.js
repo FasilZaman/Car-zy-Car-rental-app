@@ -197,23 +197,23 @@ module.exports = {
         })
     },
 
-    getuserbookings: (userDetails) => {
-        return new Promise(async (resolve, reject) => {
-            console.log(userDetails._id);
-            let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
-                { $match: { user: ObjectId(userDetails._id) } }, {
-                    $lookup: {
-                        from: collection.CARSCOLLECTION,
-                        localField: 'car',
-                        foreignField: '_id',
-                        as: 'cars'
-                    }
-                }
-            ]).toArray()
-            console.log(userdata);
-            resolve(userdata)
-        })
-    },
+    // getuserbookings: (userDetails) => {
+    //     return new Promise(async (resolve, reject) => {
+    //         console.log(userDetails._id);
+    //         let userdata = await db.get().collection(collection.BOOKINGSCOLLECTION).aggregate([
+    //             { $match: { user: ObjectId(userDetails._id) } }, {
+    //                 $lookup: {
+    //                     from: collection.CARSCOLLECTION,
+    //                     localField: 'car',
+    //                     foreignField: '_id',
+    //                     as: 'cars'
+    //                 }
+    //             }
+    //         ]).toArray()
+    //         console.log(userdata);
+    //         resolve(userdata)
+    //     })
+    // },
     getupcomingbookings: (userdetails) => {
         return new Promise(async (resolve, reject) => {
             console.log(userdetails._id);

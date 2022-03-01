@@ -45,11 +45,11 @@ router.get('/', verifyUser, function (req, res, next) {
   res.render('user/home', { 'loggedIn': req.session.user, user: true, userdetails });
 });
 
-router.get('/allcars', verifyUser, async(req,res) => {
+router.get('/allcars', verifyUser, async (req, res) => {
   userdetails = req.session.userdetails
   let allcars = await userhelpers.getallcars()
-  console.log("all: ",allcars);
-  res.render('user/allcars',{user:true, 'loggedIn': req.session.user, userdetails ,allcars})
+  console.log("all: ", allcars);
+  res.render('user/allcars', { user: true, 'loggedIn': req.session.user, userdetails, allcars })
 })
 
 //loading user login page
@@ -60,7 +60,6 @@ router.get('/loginpage', verifyUser, (req, res) => {
     res.render('user/login', { loginerr: req.session.loginerr, user: true })
   }
 })
-
 //user login
 router.post('/userlogin', (req, res) => {
   userhelpers.userlogin(req.body).then((response) => {
@@ -128,7 +127,7 @@ router.get('/resendotp', (req, res) => {
       console.log(err);
     })
 })
-
+//enter the otp page
 router.get('/otplogin', (req, res) => {
   res.render('user/userloginotp', { invalidloginotp: req.session.invalidloginotp, user: true })
 })
@@ -146,7 +145,6 @@ router.post('/loginotp', (req, res) => {
       if (resp.valid) {
         req.session.Mobilenum = number
         req.session.invalidloginotp = false
-        // let user = await userHelper.getuserdetails(number)
         req.session.user = true
         res.redirect('/')
       } else {
@@ -249,10 +247,14 @@ router.post('/otp', (req, res) => {
 
 //end otp signup
 
+// user logout
+
 router.get('/logout', (req, res) => {
   req.session.user = false
   res.redirect('/')
 })
+
+//show all cars in a date
 
 router.post('/carslist', (req, res) => {
   //date and time
@@ -263,9 +265,10 @@ router.post('/carslist', (req, res) => {
   console.log('IST :', dropoff.toString());
   console.log('dropoff date and time :', dropoff);
 
+  //getting the time difference
   var timediff = dropoff.getTime() - pickup.getTime()
   console.log('sec :', timediff);
-
+  //converting the time difference to hour
   hourdiff = timediff / (1000 * 60 * 60)
 
   req.session.totalhours = hourdiff
@@ -279,6 +282,7 @@ router.post('/carslist', (req, res) => {
   bookingdetails = req.session.bookingdetail
   carsHelpers.getusercars(diff, req.body).then((Cars) => {
 
+    //add discount to a car 
     for (let i of Cars) {
       if (i.discount) {
         // req.session.discount = true
@@ -289,8 +293,7 @@ router.post('/carslist', (req, res) => {
         i.discountamount = parseInt(discountamount)
       }
     }
-    console.log(Cars);
-
+    // console.log(Cars);  
 
     res.render('user/carslist', { Cars, user: true, bookingdetails })
 
@@ -298,12 +301,15 @@ router.post('/carslist', (req, res) => {
 
   })
 })
-router.get('/carslistpage', (req, res) => {
-  location = bookingdetails.location
-  carsHelpers.getcardetails().then((Cars) => {
-    res.render('user/carslist', { Cars, user: true, })
-  })
-})
+
+// router.get('/carslistpage', (req, res) => {
+//   location = bookingdetails.location
+//   carsHelpers.getcardetails().then((Cars) => {
+//     res.render('user/carslist', { Cars, user: true, })
+//   })
+// })
+
+//single cars details
 
 router.get('/carsdetails/:id', (req, res) => {
   let carId = req.params.id
@@ -325,6 +331,8 @@ router.get('/carsdetails/:id', (req, res) => {
   })
 })
 
+//book a car page
+
 router.get('/Bookcar/', verifyUser, async (req, res) => {
   let carId = req.query.id
   if (req.query.id) {
@@ -339,7 +347,7 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
     user = req.session.userDetails
 
     let coupon = await userhelpers.getcoupon()
-
+    // load coupons
     if (user.coupon) {
       for (let i in coupon) {
         for (let j of user.coupon) {
@@ -391,12 +399,12 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       }
 
       userdetails = req.session.userDetails
-      if(userdetails.fine){
+      if (userdetails.fine) {
         fine = true
-      }else{
+      } else {
         fine = false
       }
-      console.log("qwerty",userdetails);
+      console.log("qwerty", userdetails);
       if (userdetails.wallet) {
         walletmoney = parseInt(userdetails.wallet)
         Price1 = Car.Price
@@ -411,12 +419,14 @@ router.get('/Bookcar/', verifyUser, async (req, res) => {
       }
       req.session.car = Car
       console.log(Car);
-      res.render('user/userbooking', { Car, user: true, bookingdetails, approved,fine, wallet: req.session.wallet, coupon, couponoff: req.session.coupon, discount })
+      res.render('user/userbooking', { Car, user: true, bookingdetails, approved, fine, wallet: req.session.wallet, coupon, couponoff: req.session.coupon, discount })
     })
   } else {
     res.redirect('/loginpage')
   }
 })
+
+//apply a coupon before booking
 
 router.get('/applycoupon/', (req, res) => {
   if (req.query.couponoff) {
@@ -435,6 +445,7 @@ router.get('/applycoupon/', (req, res) => {
 
 })
 
+//search for a car in all cars list
 
 router.post('/searchCar', (req, res) => {
   let carname = req.body.search
@@ -456,17 +467,11 @@ router.post('/searchCar', (req, res) => {
         res.render('user/carslist', { Cars, user: true, bookingdetails })
       })
 
-      // if(carname=""){
-      //   req.session.nocarfound=false
-      //   res.redirect('/carslistpage')
-      // }else{
-      //   req.session.nocarfound=true
-      //   res.redirect('/carslistpage')
-      // }
-
     }
   })
 })
+
+// see user profile
 
 router.get('/userprofile', verifyUser, (req, res) => {
   if (req.session.user) {
@@ -483,6 +488,8 @@ router.get('/userprofile', verifyUser, (req, res) => {
   }
 })
 
+// user add license
+
 router.get('/license', verifyUser, (req, res) => {
   if (req.session.user) {
     res.render('user/licenseedit', { user: true, userdetails })
@@ -490,6 +497,9 @@ router.get('/license', verifyUser, (req, res) => {
     res.redirect('/')
   }
 })
+
+//user edit license
+
 router.post('/editlicense', (req, res) => {
   if (req.session.user) {
     console.log(req.body.licenseNumber);
@@ -517,6 +527,8 @@ router.post('/editlicense', (req, res) => {
   }
 })
 
+//user edit profile page
+
 router.get('/editprofile', verifyUser, (req, res) => {
   if (req.session.user) {
     res.render('user/editprofile', { user: true, userdetails, emailnumbererror: req.session.emailnumbererror, emailerror: req.session.emailerror, numbererror: req.session.numbererror })
@@ -524,6 +536,8 @@ router.get('/editprofile', verifyUser, (req, res) => {
     res.redirect('/')
   }
 })
+
+//user edit the profile
 
 router.post('/change', (req, res) => {
   console.log("qwerty : ", req.body);
@@ -558,6 +572,8 @@ router.post('/change', (req, res) => {
   }
 })
 
+//edit the user password page
+
 router.get('/editpassword', (req, res) => {
   if (req.session.user) {
     res.render('user/editpassword', { user: true, userdetails, wrongpassword: req.session.wrongpassword })
@@ -565,6 +581,8 @@ router.get('/editpassword', (req, res) => {
     res.redirect('/')
   }
 })
+
+// add a new password
 
 router.post('/newpassword', (req, res) => {
   if (req.session.user) {
@@ -589,13 +607,14 @@ router.post('/booknow', (req, res) => {
   lattitude = req.body.lattitude
   req.session.longitude = longitude
   req.session.lattitude = lattitude
+  //razorpay
   if (req.body.details == 'paymentoptions=razorpay') {
     console.log("11111111111111111111111111111111asasasasasaasasasasas", Price);
     userhelpers.generateRazorpay(Price).then((response) => {
       response.razorpay = true
       res.json(response)
     })
-
+//paypal
   } else if (req.body.details == 'paymentoptions=paypal') {
     console.log("qwerty1234567890");
     Price = parseInt(Price) / 75
@@ -656,6 +675,8 @@ router.post('/booknow', (req, res) => {
   }
 })
 
+//load the user delivery page
+
 router.post('/delivery', (req, res) => {
   console.log(req.body);
   if (req.session.user) {
@@ -681,25 +702,27 @@ router.post('/delivery', (req, res) => {
   }
 })
 
+// razorpay link
+
 router.get('/razorpay/', (req, res) => {
   console.log("qwerty---------------------------------------------------");
   if (req.session.user) {
-    if(req.query.id){
+    if (req.query.id) {
       id = req.query.id
       req.session.fineid = id
-      adminhelpers.getbookings(id).then((bookings)=>{
+      adminhelpers.getbookings(id).then((bookings) => {
         Price = parseInt(bookings.fineamount)
         userhelpers.generateRazorpay(Price).then((response) => {
           console.log("qweqweqwe");
           res.json(response)
         })
       })
-      
 
-    }else{
+
+    } else {
       Price = req.session.car.Price
       userhelpers.generateRazorpay(Price).then((response) => {
-  
+
         res.json(response)
       })
 
@@ -709,6 +732,8 @@ router.get('/razorpay/', (req, res) => {
   }
 
 })
+
+//verify payment 
 
 router.post('/verifypayment', (req, res) => {
   console.log(req.body);
@@ -723,27 +748,33 @@ router.post('/verifypayment', (req, res) => {
   })
 })
 
-router.get('/finepayment',(req,res) => {
+// paying the late fine
+
+router.get('/finepayment', (req, res) => {
   let userid = req.session.userDetails._id
   console.log(userid);
   let id = req.session.fineid
   console.log("anyanyanayanaynaynayanyanyayaanaynaynaanay");
-  userhelpers.updatefine(userid,id).then((response)=>{
-    res.render('user/successpage',{user:true})
+  userhelpers.updatefine(userid, id).then((response) => {
+    res.render('user/successpage', { user: true })
   })
 })
 
+// order success page
+
 router.get('/ordersuccess', (req, res) => {
-    userId = req.session.userDetails._id
-    carId = req.session.car._id
-    Price = req.session.car.Price
-    couponid = req.session.couponid
-    userhelpers.addcoupontouser(userId, couponid)
-    userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
-      res.render('user/successpage', { user: true })
-    })
+  userId = req.session.userDetails._id
+  carId = req.session.car._id
+  Price = req.session.car.Price
+  couponid = req.session.couponid
+  userhelpers.addcoupontouser(userId, couponid)
+  userhelpers.bookacar(userId, carId, bookingdetails, Price).then(() => {
+    res.render('user/successpage', { user: true })
+  })
 
 })
+
+// delivery order success page
 
 router.get('/deliveryordersuccess', (req, res) => {
   userId = req.session.userDetails._id
@@ -755,6 +786,8 @@ router.get('/deliveryordersuccess', (req, res) => {
     res.render('user/successpage', { user: true })
   })
 })
+
+// payment from wallet money
 
 router.get('/payfromwallet', (req, res) => {
   userdetails = req.session.userDetails
@@ -771,6 +804,8 @@ router.get('/payfromwallet', (req, res) => {
     })
   })
 })
+
+//paypal link
 
 router.get('/paypal', (req, res) => {
   Price = req.session.car.Price
@@ -818,9 +853,11 @@ router.get('/paypal', (req, res) => {
 
 });
 
+// fine payment using paypal
+
 router.get('/paypalfine/', (req, res) => {
   id = req.query.id
-  let bookings = userhelpers.getonebooking(id)  
+  let bookings = userhelpers.getonebooking(id)
   Price = bookings.fineamount
   Price = parseInt(Price) / 75
   Price = parseInt(Price)
@@ -866,16 +903,20 @@ router.get('/paypalfine/', (req, res) => {
 
 });
 
-router.get('/userrides', verifyUser, (req, res) => {
-  if (req.session.user) {
-    carsHelpers.getuserbookings(userdetails).then((userBookings) => {
-      allbooking = true
-      res.render('user/bookinghistory', { user: true, userBookings, allbooking })
-    })
-  } else {
-    res.redirect('/')
-  }
-})
+// all user rides
+
+// router.get('/userrides', verifyUser, (req, res) => {
+//   if (req.session.user) {
+//     carsHelpers.getuserbookings(userdetails).then((userBookings) => {
+//       allbooking = true
+//       res.render('user/bookinghistory', { user: true, userBookings, allbooking })
+//     })
+//   } else {
+//     res.redirect('/')
+//   }
+// })
+
+// all upcoming rides
 
 router.get('/upcomingrides', (req, res) => {
   if (req.session.user) {
@@ -889,6 +930,8 @@ router.get('/upcomingrides', (req, res) => {
 
 })
 
+// all ongoing rides
+
 router.get('/ongoingrides', (req, res) => {
   if (req.session.user) {
     carsHelpers.getongoingbookings(userdetails).then((userBookings) => {
@@ -899,6 +942,8 @@ router.get('/ongoingrides', (req, res) => {
     res.redirect('/')
   }
 })
+
+//all ended rides
 
 router.get('/endedrides', (req, res) => {
   if (req.session.user) {
@@ -912,6 +957,8 @@ router.get('/endedrides', (req, res) => {
   }
 
 })
+
+// cancel a ride
 
 router.get('/cancelride/', (req, res) => {
   console.log("qertyuyuy:");
