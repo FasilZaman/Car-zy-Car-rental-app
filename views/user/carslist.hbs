@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
   <div class="container">
-    <a class="navbar-brand" href="index.html">Car<span>-Zy</span></a>
+    <a class="navbar-brand" href="/">Car<span>-Zy</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="oi oi-menu"></span> Menu
@@ -8,13 +8,13 @@
 
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        {{!-- <li class="nav-item"><a href="/" class="nav-link">Home</a></li> --}}
+        {{!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li> --}}
         {{!-- <li class="nav-item active"><a href="/carslistpage" class="nav-link">Cars</a></li> --}}
-        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        {{!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> --}}
       </ul>
     </div>
   </div>
@@ -49,49 +49,7 @@
   </div>
 </form>
 
-{{!-- <div class="container mt-4 mb-4">
-  <div class="row page-titles mx-0">
 
-    <form action="/carslist" method="post" class="request-form ftco-animate bg-primary">
-      <div class="row">
-        <div class="form-group  col-md-2 col-12 ">
-          <label for="" class="label">location</label>
-          <select type="text" class="form-control">
-            <option value="{{bookingdetails.location}}" style="color: black;">{{bookingdetails.location}}</option>
-            <option value="calicut beach" style="color: black;">Calicut beach</option>
-            <option value="malappuram" style="color: black;">Malappuram</option>
-          </select>
-        </div>
-
-        <div class="form-group col-md-2 col-12">
-          <label for="" class="label">Pick-up date</label>
-          <input type="date" class="form-control" id="pick_date" placeholder="Date" name="pickupDate"
-            onclick="date_pick()" value="{{bookingdetails.pickupDate}}">
-        </div>
-        <div class="form-group col-md-2 col-12">
-          <label for="" class="label">Pick-up time</label>
-          <input type="time" class="form-control timepicker" id="pickuptime" placeholder="Time" name="pickuptime"
-            onclick="pickuptime()" value="{{bookingdetails.pickuptime}}" disabled>
-        </div>
-        <div class="form-group  col-md-2 col-12">
-          <label for="" class="label">Drop-off date</label>
-          <input type="date" class="form-control" id="drop_date" placeholder="Date" name="dropoffDate"
-            onclick="dropdate_pick()" value="{{bookingdetails.dropoffDate}}" disabled>
-        </div>
-        <div class="form-group col-md-2 col-12">
-          <label for="" class="label">Drop-off time</label>
-          <input type="time" class="form-control timepicker" id="dropofftime" placeholder="Time" name="dropofftime"
-            value="{{bookingdetails.dropofftime}}" disabled>
-        </div>
-        <div class="form-group  mt-4  col-md-2 col-12" style="padding-top: 10px;">
-          <button type="submit" class="btn btn-secondary  py-2 px-4">submit</button>
-        </div>
-      </div>
-
-    </form>
-
-  </div>
-</div> --}}
 
 <section class="ftco-section bg-light">
   <div class="d-flex">

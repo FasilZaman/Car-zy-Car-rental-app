@@ -63,6 +63,7 @@ router.get('/login', async function (req, res, next) {
 
   } else {
     res.render('admin/adminlogin', { adminerr: req.session.adminerr, user: true })
+    req.session.adminerr = false
   }
 
 });
