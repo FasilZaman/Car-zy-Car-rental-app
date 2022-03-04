@@ -355,7 +355,6 @@
 <script>
 function date_pick(){
     var dtToday = new Date();
-    
     var month = dtToday.getMonth() + 1;
     var day = dtToday.getDate();
     var year = dtToday.getFullYear();
@@ -405,6 +404,7 @@ function picktime(){
   let minute = dtToday.getMinutes()
 
   if(month < 10) month = '0' + month.toString();
+  if(day < 10) day = '0' + day.toString();
   if(minute < 10) minute = '0' + minute.toString();
   if(hour < 10) hour = '0' + hour.toString();
 
@@ -414,11 +414,8 @@ function picktime(){
     let pickeddate = document.getElementById("pick_date").value
     
     
-    {{!-- alert(timenow)
     alert(pickeddate)
-    console.log(pickeddate)
     alert(today)
-    console.log(today) --}}
     
     let pickedtime = document.getElementById("pickuptime").value
    
