@@ -13,6 +13,17 @@ var adminRouter = require('./routes/admin');
 var app = express();
 var db=require('./config/connections')
 var session=require('express-session')
+var MongoDBStore = require('connect-mongodb-session')(session);
+
+var store = new MongoDBStore({
+  uri: 'mongodb+srv://Fasilzaman:Prg3NjzRlwR2WCRW@cluster0.bdpsf.mongodb.net/carzy?retryWrites=true&w=majority/carzy',
+  collection: 'carzySession'
+});
+
+store.on('error', function(error) {
+  console.log("====================================================================");
+  console.log("database session error",error);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,7 +52,7 @@ db.connect((err)=>{
   }
   
 })
-app.use(session({secret:"key",cookie:{maxAge:6000000,sameSite:'lax'}})) 
+app.use(session({secret:"key",cookie:{maxAge:6000000,sameSite:'lax'},store: store,resave: true,saveUninitialized: true})) 
 app.use(function(req, res, next) { res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0'); next(); });
 
 app.use('/', userRouter);

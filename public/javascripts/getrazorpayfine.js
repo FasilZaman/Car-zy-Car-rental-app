@@ -2,15 +2,15 @@ const { response } = require("../../app");
 const { post } = require("../../routes/admin");
 
 function getrazorpay() {
-    alert("qwerty")
+    // alert("qwerty")
    let bookingid = document.getElementById('bookingid').value
    alert(bookingid)
     $.ajax({
         url: '/razorpay?id='+bookingid,
         method: "get",
         success: (response) => {
-            alert(response)
-            console.log("qwerty");
+            // alert(response)
+            // console.log("qwerty");
             var options = {
                 "key": "rzp_test_eLURsrDuG4E6Yb", // Enter the Key ID generated from the Dashboard
                 "amount": response.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -40,13 +40,13 @@ function getrazorpay() {
             };
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response) {
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
+                // alert(response.error.code);
+                // alert(response.error.description);
+                // alert(response.error.source);
+                // alert(response.error.step);
+                // alert(response.error.reason);
+                // alert(response.error.metadata.order_id);
+                // alert(response.error.metadata.payment_id);
             });
             rzp1.open();
             e.preventDefault();
@@ -62,10 +62,10 @@ function verifypayment(payment) {
         method: 'post',
         success:(response)=>{
             if(response.status){
-                alert('qwe')
+                // alert('qwe')
                 window.location.href ='/finepayment'
             }else{
-                alert("paymentfailed")
+                // alert("paymentfailed")
             }
         }
     })

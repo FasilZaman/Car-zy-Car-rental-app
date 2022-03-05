@@ -6,7 +6,7 @@ function getrazorpay() {
         url: '/razorpay',
         method: "get",
         success: (response) => {
-            alert(response)
+            // alert(response)
             console.log("qwerty");
             var options = {
                 "key": "rzp_test_eLURsrDuG4E6Yb", // Enter the Key ID generated from the Dashboard
@@ -36,13 +36,13 @@ function getrazorpay() {
             };
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response) {
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
+                // alert(response.error.code);
+                // alert(response.error.description);
+                // alert(response.error.source);
+                // alert(response.error.step);
+                // alert(response.error.reason);
+                // alert(response.error.metadata.order_id);
+                // alert(response.error.metadata.payment_id);
             });
             rzp1.open();
             e.preventDefault();
@@ -60,7 +60,7 @@ function verifypayment(payment) {
             if(response.status){
                 window.location.href ='/ordersuccess'
             }else{
-                alert("paymentfailed")
+                // alert("paymentfailed")
             }
         }
     })
