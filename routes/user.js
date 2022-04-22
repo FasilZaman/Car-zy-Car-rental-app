@@ -17,6 +17,7 @@ const client = require('twilio')(accountSID, authTockon);
 const paypal = require('paypal-rest-sdk');
 const { ObjectId } = require('mongodb');
 const adminhelpers = require('../helpers/adminhelpers');
+const s3 = require('../config/s3')
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'Af9zpw5WTBmWLed-SFeHXO7fj-Jkga5zVQoe7CTZEFP8ynZE8X-XYxS2Yb3i3xMnbQOP2E66oD4F75U-',
@@ -225,11 +226,19 @@ router.post('/otp', (req, res) => {
     }).then(async (resp) => {
       if (resp.valid) {
         req.session.Mobilenum = number
-        await userhelpers.usersignup(req.session.temp).then((response) => {
-          fs.copyFile('./public/images/blankprofile.jpg', './public/profileimages/' + response.insertedId + 'dp.jpg', (err) => {
+        await userhelpers.usersignup(req.session.temp).then(async(response) => {
+         fs.copyFile('./public/images/blankprofile.jpg', './public/profileimages/' + response.insertedId + 'dp.jpg', (err) => {
             if (err) throw err;
             console.log('source.txt was copied to destination.txt');
           })
+          console.log(response.insertedId);
+          let file = {
+            path : './public/profileimages/' + response.insertedId + 'dp.jpg',
+            filename : "userProfilePicture/"+ response.insertedId +"dp.jpg"
+          }
+
+          result = await s3.upload(file)
+          console.log(result)
           // let user = await userHelper.getuserdetails(number)
           req.session.user = true
           res.redirect('/')
@@ -504,15 +513,29 @@ router.post('/editlicense', (req, res) => {
   if (req.session.user) {
     console.log(req.body.licenseNumber);
     userdetails = req.session.userDetails
-    userhelpers.license(userdetails, req.body.licenseNumber).then((response) => {
+    userhelpers.license(userdetails, req.body.licenseNumber).then(async (response) => {
       if (req.files) {
         if (req.files.licenseImage1) {
           let license1 = req.files.licenseImage1
-          license1.mv('./public/licenseimages/' + userdetails._id + 'license1.jpg')
+          await license1.mv('./public/licenseimages/' + userdetails._id + 'license1.jpg')
+          let file = {
+            path : './public/licenseimages/' + userdetails._id + 'license1.jpg',
+            filename : "userlicense/"+ userdetails._id + "license1.jpg"
+          }
+         
+          result = await s3.upload(file)
+          console.log(result)
         }
         if (req.files.licenseImage2) {
           let license2 = req.files.licenseImage2
-          license2.mv('./public/licenseimages/' + userdetails._id + 'license2.jpg')
+          await license2.mv('./public/licenseimages/' + userdetails._id + 'license2.jpg')
+          let file = {
+            path : './public/licenseimages/' + userdetails._id + 'license2.jpg',
+            filename : "userlicense/"+ userdetails._id + "license2.jpg"
+          }
+         
+          result = await s3.upload(file)
+          console.log(result)
         }
         res.redirect('/userprofile')
       } else {
@@ -543,7 +566,7 @@ router.post('/change', (req, res) => {
   console.log("qwerty : ", req.body);
   if (req.session.user) {
 
-    userhelpers.edituser(userdetails, req.body).then((response) => {
+    userhelpers.edituser(userdetails, req.body).then(async (response) => {
       if (response.emailnumbererror) {
         console.log("qwertyuiop");
         req.session.emailnumbererror = true
@@ -557,8 +580,16 @@ router.post('/change', (req, res) => {
       } else {
         if (req.files) {
           let profile = req.files.profilepic
-          profile.mv('./public/profileimages/' + userdetails._id + 'dp.jpg')
+          await profile.mv('./public/profileimages/' + userdetails._id + 'dp.jpg')
           console.log("qertyhhngcfxxyguvtgcgu");
+          let file = {
+            path : './public/profileimages/' + userdetails._id + 'dp.jpg',
+            filename : "userProfilePicture/"+ userdetails._id + "dp.jpg"
+          }
+         
+          result = await s3.upload(file)
+          console.log(result)
+
           res.redirect('/userprofile')
         } else {
           console.log("jSHAGSHAGSH");

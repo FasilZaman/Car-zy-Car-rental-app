@@ -11,7 +11,7 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 
 var app = express();
-var db=require('./config/connections')
+var db=require('./config/connections')    
 var session=require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
 
@@ -22,7 +22,7 @@ var store = new MongoDBStore({
 
 store.on('error', function(error) {
   console.log("====================================================================");
-  console.log("database session error",error);
+  // console.log("database session error",error);
 });
 
 // view engine setup
